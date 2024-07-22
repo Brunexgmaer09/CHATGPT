@@ -1,0 +1,422 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #212121;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    color: #ececf1;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #212121;
+    border-bottom: 1px solid #212121;
+}
+
+#model-select {
+    background-color: #212121;
+    color: #ececf1;
+    border: 1px solid #444;
+    border-radius: 20px;
+    padding: 5px 15px;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+#model-select:hover {
+    background-color: #333;
+    border-color: #666;
+}
+
+#model-select:focus {
+    border-color: #413f3e;
+    box-shadow: 0 0 5px rgba(75, 74, 74, 0.5);
+}
+
+#model-select::after {
+    content: '▼';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+#chat-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+    margin: 0 auto;
+    border-radius: 10px;
+    width: 100%;
+    background-color: #212121;
+    overflow: hidden;
+}
+
+#chat-messages {
+    flex-grow: 1;
+    max-height: 80vh;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch; /* Para melhor desempenho em dispositivos iOS */
+    overflow-y: auto;
+    padding: 30px 0;
+    background-color: #212121;
+}
+
+.message {
+    max-width: 100%;
+    border-radius: 50px;
+    padding: 20px;
+    line-height: 1.4;
+    word-wrap: break-word;
+    transition: all 0.3s ease;
+}
+
+.message:hover {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.user-message {
+    background-color: #393737;
+}
+
+.bot-message {
+    background-color: #252525;
+}
+
+.message.loading {
+    opacity: 0.7;
+}
+
+#suggestions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 20px;
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+#suggestions button {
+    background-color: #212121;
+    color: #ececf1;
+    border: 1px solid #212121;
+    border-radius: 20px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#suggestions button:hover {
+    background-color: #565869;
+}
+
+#suggestions button:focus {
+    outline: 2px solid #10a37f;
+}
+
+#suggestions.fade-out {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+#input-container {
+    display: flex;
+    padding: 20px;
+    background-color: #212121;
+    border-top: 1px solid #212121;
+}
+
+#user-input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #3a3a3a;
+    border-radius: 20px;
+    background-color: #3a3a3a;
+    color: #ffffff;
+}
+
+#user-input:focus {
+    outline: 2px solid #3a3a3a;
+}
+
+#send-button {
+    margin-left: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background-color: transparent;
+    color: #eeeded;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#send-button:hover {
+    background-color: #40414f;
+}
+
+#send-button:focus {
+    outline: 2px solid #707070;
+}
+
+#chat-messages::-webkit-scrollbar {
+    width: 10px;
+}
+
+#chat-messages::-webkit-scrollbar-track {
+    background: #343541;
+}
+
+#chat-messages::-webkit-scrollbar-thumb {
+    background: #565869;
+    border-radius: 5px;
+}
+
+#chat-messages::-webkit-scrollbar-thumb:hover {
+    background: #40414f;
+}
+
+.bot-message h3 {
+    font-size: 1.2em;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    color: #ffffff;
+}
+
+.bot-message strong {
+    font-weight: 600;
+    color: #fcfcfc;
+}
+
+.large-text {
+    font-size: 1.2em;
+    font-weight: bold;
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+
+.bold-text {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+pre {
+    background-color: #282c34; /* Fundo preto */
+    border-radius: 6px;
+    padding: 15px;
+    overflow-x: auto;
+    margin: 10px 0;
+    color: #ffffff; /* Texto branco para contraste */
+}
+
+code {
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Estilos para realçar a sintaxe (ajuste as cores conforme necessário) */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+    color: #6a9955;
+}
+
+.token.punctuation {
+    color: #d4d4d4;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+    color: #b5cea8;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+    color: #ce9178;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+    color: #d4d4d4;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+    color: #569cd6;
+}
+
+.token.function,
+.token.class-name {
+    color: #4ec9b0;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+    color: #d16969;
+}
+
+pre {
+    position: relative;
+}
+
+.copy-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: #282c34;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+.copy-button:hover {
+    opacity: 1;
+}
+
+@media (max-width: 600px) {
+    #chat-container {
+        max-width: 100%;
+    }
+    
+    #suggestions button {
+        font-size: 0.9em;
+    }
+}
+
+@keyframes typing {
+    0% { content: ''; }
+    20% { content: '•'; color: #4a4a4a; }
+    40% { content: '••'; color: #3a3a3a; }
+    60% { content: '•••'; color: #2a2a2a; }
+    80% { content: '••'; color: #3a3a3a; }
+    100% { content: '•'; color: #4a4a4a; }
+}
+
+.typing-animation::after {
+    content: '' !important;
+    animation: typing 1.2s infinite !important;
+    font-size: 24px !important; /* Aumenta o tamanho dos pontos */
+    line-height: 1 !important;
+    vertical-align: middle !important;
+}
+
+.typing-animation::before {
+    content: '' !important;
+    animation: blink 1.2s infinite !important;
+    display: inline-block !important;
+    width: 4px !important; /* Aumenta a largura do cursor */
+    height: 34px !important; /* Aumenta a altura do cursor */
+    margin-left: 5px !important;
+    background: rgb(212, 211, 211) !important;
+    vertical-align: middle !important;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+
+.code-block-container {
+    position: relative;
+    margin: 10px 0;
+    background-color: #282c34; /* Fundo escuro para o bloco de código */
+    border-radius: 6px;
+    overflow: hidden; /* Garante que o conteúdo não ultrapasse as bordas arredondadas */
+}
+
+.code-block-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #343541;
+    padding: 5px 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.code-block-header span {
+    color: #ececf1;
+}
+
+.code-block-header button {
+    background-color: transparent;
+    border: 1px solid #343541;
+    color: #ececf1;
+    padding: 2px 5px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.code-block-container pre {
+    margin: 0;
+    padding: 15px;
+    overflow-x: auto;
+    background-color: transparent; /* Remove o fundo do pre, já que o container tem o fundo */
+}
+
+.code-block-container code {
+    display: block;
+    white-space: pre-wrap; /* Permite quebras de linha */
+    word-wrap: break-word; /* Quebra palavras longas */
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.typing-container {
+    display: inline-block;
+    width: 100%; /* Garante que o container ocupe toda a largura disponível */
+}
+
+.typing-text {
+    color: #ececf1;
+    white-space: pre-wrap; /* Permite quebras de linha no texto digitado */
+    word-wrap: break-word; /* Quebra palavras longas */
+}
+
+.typing-cursor {
+    display: inline-block;
+    vertical-align: middle;
+    width: 2px;
+    height: 20px;
+    background-color: #ececf1;
+    animation: blink 0.7s infinite;
+    margin-left: 2px;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
