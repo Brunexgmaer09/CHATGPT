@@ -2,6 +2,8 @@
 
 Este projeto é uma interface de chat interativa inspirada no ChatGPT, utilizando o modelo GPT-4o-Mini da OpenAI. Ele oferece uma experiência de usuário semelhante ao ChatGPT, com uma interface web responsiva e um servidor backend para processar as solicitações.
 
+## Site Totalmente feito por (Brunex)
+
 ## Screenshots
 ![Screenshot da Interface do Chat](https://github.com/user-attachments/assets/533c8f64-cc18-4ac1-8865-57fe75b33811)
 ![Exemplo de Conversa](https://github.com/user-attachments/assets/b141a23d-51b3-4a06-a087-f8742203883d)
