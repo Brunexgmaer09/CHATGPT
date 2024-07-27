@@ -24,41 +24,37 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function detectLanguage(code) {
-        // Python
-        if (code.includes('print(') || code.startsWith('import ') || code.includes('def ') || code.includes('class ')) return 'python';
-        // JavaScript
-        if (code.includes('console.log(') || code.includes('function ') || code.includes('const ') || code.includes('let ') || code.includes('var ')) return 'javascript';        
-        // HTML
-        if (code.includes('<html>') || code.includes('<!DOCTYPE html>') || code.includes('<body>') || code.includes('<div>')) return 'html';
-        // C++
-        if (code.includes('#include') || code.includes('int main(') || code.includes('std::') || code.includes('using namespace std')) return 'cpp';
-        // Bash
-        if (code.startsWith('#!/bin/bash') || code.includes('echo ') ||  code.includes('npm ') || code.includes('fi') || code.includes('for ') || code.includes('while ')) return 'bash';
-        // C#
-        if (code.includes('using System;') || code.includes('namespace ') || code.includes('class ') || code.includes('public static void Main(')) return 'csharp';        
-        // Java
-        if (code.includes('public static void main(') || code.includes('import java.') || code.includes('class ') || code.includes('System.out.println(')) return 'java';        
-        // Ruby
-        if (code.includes('puts ') || code.includes('def ') || code.includes('end') || code.includes('class ')) return 'ruby';       
-        // PHP
-        if (code.includes('<?php') || code.includes('echo ') || code.includes('$') || code.includes('->')) return 'php';       
-        // Swift
-        if (code.includes('import Foundation') || code.includes('class ') || code.includes('func ') || code.includes('let ') || code.includes('var ')) return 'swift';   
-        // Rust
-        if (code.includes('fn main(') || code.includes('let ') || code.includes('extern crate') || code.includes('use ')) return 'rust';
-        // Go
-        if (code.includes('package main') || code.includes('import ') || code.includes('func main(') || code.includes('fmt.')) return 'go';
-        // TypeScript
-        if (code.includes('console.log(') || code.includes('function ') || code.includes('const ') || code.includes('let ') || code.includes('var ') || code.includes('import ') || code.includes('export ')) return 'typescript';
-        // SQL
-        if (code.includes('SELECT ') || code.includes('FROM ') || code.includes('INSERT INTO ') || code.includes('UPDATE ') || code.includes('DELETE FROM ')) return 'sql'; 
-        // JSON
-        if (code.trim().startsWith('{') && code.trim().endsWith('}') && code.includes(':')) return 'json';  
-        // Markdown
-        if (code.includes('# ') || code.includes('## ') || code.includes('### ') || code.includes('- ') || code.includes('* ') || code.includes('[') && code.includes('](')) return 'markdown';
-        return '<html>'; // default
+        // Primeiro, verifica se é HTML
+        if (code.includes('<!DOCTYPE html>') || code.includes('<html>')) {
+            return 'html';
+        }
+    
+        // Se não for HTML, verifica outras linguagens
+        const languagePatterns = {
+            javascript: /(const|let|var|function|=>|console\.log)/,
+            python: /(def|import|class|print\()/,
+            css: /(\{|\}|:|\s*[a-z-]+\s*:)/,
+            java: /(public|class|void|static)/,
+            csharp: /(using System|namespace|class|public)/,
+            php: /(<\?php|\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)/,
+            ruby: /(def|class|puts|require)/,
+            go: /(func|package|import|fmt\.)/,
+            rust: /(fn|let|mut|struct)/,
+            swift: /(func|var|let|class|import Foundation)/,
+            kotlin: /(fun|val|var|class|package)/,
+            typescript: /(interface|type|export|import.*from)/
+        };
+    
+        for (const [language, pattern] of Object.entries(languagePatterns)) {
+            if (pattern.test(code)) {
+                return language;
+            }
+        }
+    
+        // Se nenhuma linguagem específica for detectada
+        return 'plaintext';
     }
-
+    
     function createCodeBlock(code) {
         const codeBlockContainer = document.createElement('div');
         codeBlockContainer.className = 'code-block-container';
@@ -66,10 +62,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const codeBlockHeader = document.createElement('div');
         codeBlockHeader.className = 'code-block-header';
     
-        // Verifique se o código não é undefined antes de tentar dividi-lo
-        const lines = code && typeof code === 'string' ? code.split('\n') : [];
-        const languageIdentifier = lines.length > 0 ? lines[0].trim() : '';
-        const language = detectLanguage(code || '');
+        const lines = code.split('\n');
+        const languageIdentifier = lines[0].trim();
+        const language = detectLanguage(code);
     
         const languageSpan = document.createElement('span');
         languageSpan.textContent = languageIdentifier;
@@ -77,23 +72,40 @@ document.addEventListener('DOMContentLoaded', () => {
     
         const copyButton = document.createElement('button');
         copyButton.textContent = 'Copiar';
-        copyButton.onclick = () => copyCode(copyButton, code || '');
+        copyButton.onclick = () => copyCode(copyButton, code);
         codeBlockHeader.appendChild(copyButton);
     
         codeBlockContainer.appendChild(codeBlockHeader);
     
         const codeBlock = document.createElement('pre');
         const codeElement = document.createElement('code');
-        codeElement.className = `language-${language} hljs`;
+        codeElement.className = `language-${language}`;
         
-        // Remova a primeira linha (identificador de linguagem) e a segunda linha (se for "Copiar")
+        // Remove a primeira linha (identificador de linguagem) e a segunda linha (se for "Copiar")
         const codeContent = lines.slice(lines.length > 1 && lines[1].trim() === 'Copiar' ? 2 : 1).join('\n').trim();
-        codeElement.textContent = codeContent;
+        
+        // Escape de caracteres especiais
+        const escapedContent = codeContent
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    
+        codeElement.innerHTML = escapedContent;
     
         codeBlock.appendChild(codeElement);
         codeBlockContainer.appendChild(codeBlock);
     
         return { codeBlockContainer, codeElement };
+    }
+
+    function applyHighlightingToElement(element) {
+        element.querySelectorAll('pre code').forEach((block) => {
+            if (!block.classList.contains('hljs') && !block.classList.contains('language-html')) {
+                hljs.highlightElement(block);
+            }
+        });
     }
     
     function escapeHTML(unsafe) {
@@ -105,29 +117,18 @@ document.addEventListener('DOMContentLoaded', () => {
              .replace(/'/g, "&#039;");
     }
     
+    function isNearBottom() {
+        const threshold = 100; // pixels
+        const position = chatMessages.scrollTop + chatMessages.clientHeight;
+        const height = chatMessages.scrollHeight;
+        return height - position <= threshold;
+    }
+
     function scrollToBottom() {
-        const scrollHeight = chatMessages.scrollHeight;
-        const currentScroll = chatMessages.scrollTop;
-        const targetScroll = scrollHeight - chatMessages.clientHeight;
-        const distance = targetScroll - currentScroll;
-        
-        if (distance > 0) {
-            const duration = 0;
-            const start = performance.now();
-            
-            function step(timestamp) {
-                const elapsed = timestamp - start;
-                const progress = Math.min(elapsed / duration, 1);
-                const easeProgress = easeOutCubic(progress);
-                
-                chatMessages.scrollTop = currentScroll + distance * easeProgress;
-                
-                if (progress < 1) {
-                    requestAnimationFrame(step);
-                }
-            }
-            
-            requestAnimationFrame(step);
+        if (isNearBottom()) {
+            setTimeout(() => {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 10);
         }
     }
     
@@ -280,124 +281,138 @@ document.addEventListener('DOMContentLoaded', () => {
     async function sendMessage(overrideMessage = null) {
         const message = overrideMessage || userInput.value.trim();
         if (!message) return;
-        
-        
-            addMessage(message, true);
-            userInput.value = '';
-         
-            hideSuggestions();
-         
-            messageHistory.push({ role: "user", content: message });
-         
-            let botMessageElement = addMessage('', false);
-            botMessageElement.classList.add('current-message');
-            let fullResponse = '';
-         
-            try {
-                const response = await fetch('/chat', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ message, history: messageHistory }),
-                });
-        
-                if (!response.ok) {
-                    console.error("Erro na resposta da API:", response.statusText); // Debug
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-         
-                const reader = response.body.getReader();
-                const decoder = new TextDecoder();
-         
-                while (true) {
-                    const { done, value } = await reader.read();
-                    if (done) break;
-         
-                    const chunk = decoder.decode(value);
-                    const lines = chunk.split('\n\n');
-         
-                    for (const line of lines) {
-                        if (line.startsWith('data: ')) {
-                            const data = line.slice(6);
-                            if (data === '[DONE]') {
-                                break;
+    
+        addMessage(message, true);
+        userInput.value = '';
+    
+        hideSuggestions();
+    
+        messageHistory.push({ role: "user", content: message });
+    
+        let botMessageElement = addMessage('', false);
+        botMessageElement.classList.add('current-message');
+        let fullResponse = '';
+    
+        try {
+            const response = await fetch('http://localhost:3000/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message, history: messageHistory }),
+            });
+    
+            if (!response.ok) {
+                console.error("Erro na resposta da API:", response.statusText);
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+    
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+    
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+    
+                const chunk = decoder.decode(value);
+                const lines = chunk.split('\n\n');
+    
+                for (const line of lines) {
+                    if (line.startsWith('data: ')) {
+                        const data = line.slice(6);
+                        if (data === '[DONE]') {
+                            break;
+                        }
+                        try {
+                            const parsedData = JSON.parse(data);
+                            if (parsedData.content) {
+                                fullResponse += parsedData.content;
+                                updateBotMessage(botMessageElement, fullResponse);
+                                scrollToBottom();
+                                await new Promise(resolve => setTimeout(resolve, 0));
                             }
-                            try {
-                                const parsedData = JSON.parse(data);
-                                if (parsedData.content) {
-                                    fullResponse += parsedData.content;
-                                    updateBotMessage(botMessageElement, fullResponse);
-                                    // Rolar para baixo a cada atualização da mensagem
-                                    scrollToBottom(); 
-                                    await new Promise(resolve => setTimeout(resolve, 0));
-                                }
-                            } catch (error) {
-                                console.error('Error parsing JSON:', error);
-                            }
+                        } catch (error) {
+                            console.error('Error parsing JSON:', error);
                         }
                     }
-                    // Chamada de rolagem para baixo após a conclusão do recebimento de dados
-                    scrollToBottom();
-                    await new Promise(resolve => setTimeout(resolve, 0));
                 }
-         
-                const cursorElement = botMessageElement.querySelector('.typing-cursor');
-                if (cursorElement) {
-                    cursorElement.remove();
-                }
-         
-                messageHistory.push({ role: "assistant", content: fullResponse });
-         
-                if (messageHistory.length > 10) {
-                    messageHistory = messageHistory.slice(-10);
-                }
-         
-                botMessageElement.classList.remove('current-message');
-                hideIcons(botMessageElement);
-         
-                document.querySelectorAll('.message:not(.current-message)').forEach(hideIcons);
-         
-            } catch (error) {
-                console.error('Error:', error);
-                updateBotMessage(botMessageElement, 'Desculpe, ocorreu um erro ao processar sua mensagem.');
             }
-         
-            applyHighlighting();
-            scrollToBottom(); // Aqui está novamente, garantindo que ele role para baixo ao final da mensagem.
-         }
+    
+            const cursorElement = botMessageElement.querySelector('.typing-cursor');
+            if (cursorElement) {
+                cursorElement.remove();
+            }
+    
+            messageHistory.push({ role: "assistant", content: fullResponse });
+    
+            if (messageHistory.length > 10) {
+                messageHistory = messageHistory.slice(-10);
+            }
+    
+            botMessageElement.classList.remove('current-message');
+            hideIcons(botMessageElement);
+    
+            document.querySelectorAll('.message:not(.current-message)').forEach(hideIcons);
+    
+        } catch (error) {
+            console.error('Error:', error);
+            updateBotMessage(botMessageElement, 'Desculpe, ocorreu um erro ao processar sua mensagem.');
+        }
+    
+        applyHighlighting();
+        scrollToBottom();
+    }
          
         
-        function updateBotMessage(element, content) {
-            const typingContainer = element.querySelector('.typing-container');
-            if (typingContainer) {
-                const textSpan = typingContainer.querySelector('.typing-text');
-                
-                // Divide o conteúdo em partes de código e texto normal
-                const parts = content.split('```');
-                
-                // Limpa o conteúdo existente
-                textSpan.innerHTML = '';
-                
-                parts.forEach((part, index) => {
-                    if (index % 2 === 0) {
-                        // Texto normal
-                        const textNode = document.createElement('span');
-                        textNode.innerHTML = parseMarkdown(escapeHTML(part));
-                        textSpan.appendChild(textNode);
-                    } else {
-                        // Bloco de código
-                        const { codeBlockContainer, codeElement } = createCodeBlock(part.trim());
-                        hljs.highlightElement(codeElement);
-                        textSpan.appendChild(codeBlockContainer);
-                    }
-                });
-            } else {
-                element.innerHTML = '';
-                addMessage(content, false, element);
-            }
-            scrollToBottom();
+    function updateBotMessage(element, content) {
+        const typingContainer = element.querySelector('.typing-container');
+        if (typingContainer) {
+            const textSpan = typingContainer.querySelector('.typing-text');
+            
+            // Limpa o conteúdo existente
+            textSpan.innerHTML = '';
+            
+            // Divide o conteúdo em partes de código e texto normal
+            const parts = content.split('```');
+            
+            parts.forEach((part, index) => {
+                if (index % 2 === 0) {
+                    // Texto normal
+                    const textNode = document.createElement('span');
+                    textNode.innerHTML = parseMarkdown(escapeHTML(part));
+                    textSpan.appendChild(textNode);
+                } else {
+                    // Bloco de código
+                    const { codeBlockContainer, codeElement } = createCodeBlock(part.trim());
+                    textSpan.appendChild(codeBlockContainer);
+                }
+            });
+    
+            // Cria um MutationObserver para detectar mudanças no conteúdo
+            const observer = new MutationObserver(() => {
+                scrollToBottom();
+                applyHighlightingToElement(textSpan);
+            });
+    
+            // Configura o observer para observar mudanças no conteúdo
+            observer.observe(textSpan, { childList: true, subtree: true, characterData: true });
+    
+            // Aplica o highlighting inicial
+            applyHighlightingToElement(textSpan);
+        } else {
+            element.innerHTML = '';
+            addMessage(content, false, element);
         }
+        scrollToBottom();
+    }
+        
+    function applyHighlightingToElement(element) {
+        element.querySelectorAll('pre code').forEach((block) => {
+            if (!block.classList.contains('hljs')) {
+                hljs.highlightElement(block);
+            }
+        });
+    }
         
         function addSuggestionButtons() {
             const suggestions = [
@@ -449,9 +464,24 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('resize', scrollToBottom);
         });
         
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'childList') {
+                    mutation.addedNodes.forEach((node) => {
+                        if (node.nodeType === Node.ELEMENT_NODE) {
+                            node.querySelectorAll('pre code').forEach((block) => {
+                                hljs.highlightElement(block);
+                            });
+                        }
+                    });
+                }
+            });
+        });
+        
+        observer.observe(document.body, { childList: true, subtree: true });
+
         // Configuração do Highlight.js
         document.addEventListener('DOMContentLoaded', (event) => {
-            document.querySelectorAll('pre code').forEach((el) => {
-                hljs.highlightElement(el);
-            });
+            hljs.configure({ ignoreUnescapedHTML: true });
+            hljs.highlightAll();
         });
