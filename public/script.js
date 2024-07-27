@@ -302,24 +302,24 @@ document.addEventListener('DOMContentLoaded', () => {
         botMessageElement.classList.add('current-message');
         let fullResponse = '';
     
-        try {
-            const response = await fetch('http://localhost:3000/chat', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ message, history: messageHistory }),
-            });
-    
-            if (!response.ok) {
-                console.error("Erro na resposta da API:", response.statusText);
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-    
-            const reader = response.body.getReader();
-            const decoder = new TextDecoder();
-    
-            while (true) {
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message, history: messageHistory }),
+                });
+        
+                if (!response.ok) {
+                    console.error("Erro na resposta da API:", response.statusText); // Debug
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+         
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+         
+                while (true) {
                 const { done, value } = await reader.read();
                 if (done) break;
     
