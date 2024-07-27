@@ -314,6 +314,7 @@ pre {
     border-top-right-radius: 0px;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
+    max-width: 100%; /* Ensure it doesn't overflow its parent */
 }
 
 .code-block-header {
@@ -344,20 +345,40 @@ pre {
     border-top-left-radius: 1px;
     border-top-right-radius: 1px;
     margin: 0;
-    padding: 0px;
-    overflow-x: auto;
-    background-color: transparent; /* Remove o fundo do pre, já que o container tem o fundo */
+    padding: 10px; /* Add some padding */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    background-color: transparent;
+    max-width: 100%; /* Ensure code doesn't cause container to expand */
 }
 
 .code-block-container code {
-    display: block;
-    white-space: pre-wrap; /* Permite quebras de linha */
-    word-wrap: break-word; /* Quebra palavras longas */
+    display: inline-block; /* Changed from block to inline-block */
+    white-space: pre; /* Changed from pre-wrap to pre */
+    word-wrap: normal; /* Changed from break-word to normal */
     font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
     font-size: 14px;
     line-height: 1.5;
     border-top-left-radius: 1px;
     border-top-right-radius: 1px;
+    min-width: 100%; /* Ensure code takes at least full width of container */
+}
+
+/* Styling the scrollbar */
+.code-block-container pre::-webkit-scrollbar {
+    height: 8px; /* Height of horizontal scrollbar */
+}
+
+.code-block-container pre::-webkit-scrollbar-track {
+    background: #1e1e24; /* Darker than the code background */
+}
+
+.code-block-container pre::-webkit-scrollbar-thumb {
+    background: #4a4a4a; /* Lighter than the track */
+    border-radius: 4px;
+}
+
+.code-block-container pre::-webkit-scrollbar-thumb:hover {
+    background: #5a5a5a; /* Even lighter on hover */
 }
 
 .typing-container {
