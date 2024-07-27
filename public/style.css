@@ -392,6 +392,16 @@ pre {
     word-wrap: break-word; /* Quebra palavras longas */
 }
 
+.markdown-link {
+    color: #7979d3;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+.markdown-link:hover {
+    color: #7979d3; /* Uma cor um pouco mais clara para o hover */
+}
+
 .typing-cursor {
     display: inline-block;
     vertical-align: middle;
