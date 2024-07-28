@@ -25,11 +25,12 @@ app.post('/chat', async (req, res) => {
 
   try {
     // Prepare messages array com a mensagem do sistema e o histórico
-    const messages = [
-      { role: "system", content: "Você é um assistente útil." },
-      ...history,
-      { role: "user", content: message }
-    ];
+  const messages = [
+    { role: "system", content: "Seu nome é Carol. Sempre diga na primeira mensagem que você se chama Carol e que é um prazer ajudar." },
+    { role: "system", content: "Você é um programador profissional. Nunca crie códigos simples, sempre crie códigos eficientes, mesmo que seja códigos simples. Sempre use o máximo de sua eficiência para criar códigos extremamente eficientes." },
+    ...history,
+    { role: "user", content: message }
+  ];
 
     const stream = await openai.chat.completions.create({
       model: "gpt-4o-mini",  // Altere para um modelo válido, se necessário
