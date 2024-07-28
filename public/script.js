@@ -23,37 +23,43 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    function detectLanguage(code) {
-        // Primeiro, verifica se é HTML
-        if (code.includes('<!DOCTYPE html>') || code.includes('<html>')) {
-            return 'html';
-        }
-    
-        // Se não for HTML, verifica outras linguagens
-        const languagePatterns = {
-            javascript: /(const|let|var|function|=>|console\.log)/,
-            python: /(def|import|class|print\()/,
-            css: /(\{|\}|:|\s*[a-z-]+\s*:)/,
-            java: /(public|class|void|static)/,
-            csharp: /(using System|namespace|class|public)/,
-            php: /(<\?php|\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)/,
-            ruby: /(def|class|puts|require)/,
-            go: /(func|package|import|fmt\.)/,
-            rust: /(fn|let|mut|struct)/,
-            swift: /(func|var|let|class|import Foundation)/,
-            kotlin: /(fun|val|var|class|package)/,
-            typescript: /(interface|type|export|import.*from)/
-        };
-    
-        for (const [language, pattern] of Object.entries(languagePatterns)) {
-            if (pattern.test(code)) {
-                return language;
-            }
-        }
-    
-        // Se nenhuma linguagem específica for detectada
+function detectLanguage(code) {
+    // Primeiro, verifica se é HTML
+    if (code.includes('<!DOCTYPE html>') || code.includes('<html>') || /<\w+>/.test(code)) {
         return 'html';
     }
+
+    // Remove comentários e strings para evitar falsos positivos
+    const cleanCode = code.replace(/\/\/.*|\/\*[\s\S]*?\*\/|'(?:\\.|[^\\'])*'|"(?:\\.|[^\\"])*"/g, '');
+
+    const languagePatterns = {
+        javascript: /(const|let|var|function\s+\w+|\(\s*\)\s*=>|console\.log|if\s*\(|for\s*\(|while\s*\()/,
+        python: /(def\s+\w+|import\s+\w+|class\s+\w+|print\s*\(|if\s+[\w\s]+:)/,
+        css: /(\{|\}|:|\s*[a-z-]+\s*:)/,
+        java: /(public\s+class|void\s+main|System\.out\.println)/,
+        csharp: /(using\s+System|namespace\s+\w+|public\s+class|Console\.WriteLine)/,
+        php: /(<\?php|\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*|echo\s|function\s+\w+)/,
+        ruby: /(def\s+\w+|class\s+\w+|puts\s|require\s|attr_accessor)/,
+        go: /(func\s+\w+|package\s+\w+|import\s+\(|fmt\.)/,
+        rust: /(fn\s+\w+|let\s+mut|struct\s+\w+|impl\s+|use\s+\w+)/,
+        swift: /(func\s+\w+|var\s+\w+|let\s+\w+|class\s+\w+|import\s+Foundation)/,
+        kotlin: /(fun\s+\w+|val\s+\w+|var\s+\w+|class\s+\w+|package\s+\w+)/,
+        typescript: /(interface\s+\w+|type\s+\w+|export\s+|import\s+.*from)/,
+        sql: /(SELECT|INSERT|UPDATE|DELETE|FROM|WHERE|CREATE TABLE)/i,
+        bash: /(#!/bin/bash|echo\s|if\s+\[\[|for\s+\w+\s+in)/,
+        powershell: /(\$\w+\s*=|\$PSVersionTable|Write-Host|Get-\w+)/,
+        markdown: /(^#{1,6}\s|^\*\s|\[.*\]\(.*\))/m
+    };
+
+    for (const [language, pattern] of Object.entries(languagePatterns)) {
+        if (pattern.test(cleanCode)) {
+            return language;
+        }
+    }
+
+    // Se nenhuma linguagem específica for detectada
+    return 'plaintext';
+}
     
     function createCodeBlock(code) {
         const codeBlockContainer = document.createElement('div');
