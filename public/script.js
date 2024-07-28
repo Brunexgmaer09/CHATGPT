@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     
         // Se nenhuma linguagem específica for detectada
-        return 'plaintext';
+        return 'html';
     }
     
     function createCodeBlock(code) {
