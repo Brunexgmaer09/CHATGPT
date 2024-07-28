@@ -28,7 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (code.includes('<!DOCTYPE html>') || code.includes('<html>')) {
             return 'html';
         }
-    
+
+        if (code.includes('#include') || code.includes('int main()')) return 'cpp';
+        if (code.includes('using System;') || code.includes('namespace ') || code.includes('class ') || code.includes('public static void Main(')) return 'csharp';        
        // Remove comentários e strings para evitar falsos positivos
        const cleanCode = code.replace(/\/\/.*|\/\*[\s\S]*?\*\/|'(?:\\.|[^\\'])*'|"(?:\\.|[^\\"])*"/g, '');
 
@@ -38,7 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
             python: /(def\s+\w+|import\s+\w+|class\s+\w+|print\s*\(|if\s+[\w\s]+:)/,
             css: /(\{|\}|:|\s*[a-z-]+\s*:)/,
             java: /(public\s+class|void\s+main|System\.out\.println)/,
-            csharp: /(using\s+System|namespace\s+\w+|public\s+class|Console\.WriteLine)/,
             php: /(<\?php|\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*|echo\s|function\s+\w+)/,
             ruby: /(def\s+\w+|class\s+\w+|puts\s|require\s|attr_accessor)/,
             go: /(func\s+\w+|package\s+\w+|import\s+\(|fmt\.)/,
