@@ -33,7 +33,7 @@ app.post('/chat', async (req, res) => {
   ];
 
     const stream = await openai.chat.completions.create({
-      model: "gpt-4o-latest",  // Altere para um modelo válido, se necessário
+      model: "chatgpt-4o-latest",  // Altere para um modelo válido, se necessário
       messages: messages,
       stream: true,
     });
