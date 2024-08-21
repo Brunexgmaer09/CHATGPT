@@ -1,7 +1,7 @@
 body {
     font-family: 'Roboto', Arial, sans-serif;
     font-weight: 400;
-    background-color: #000000;
+    background-color: #141414;
     margin: 0;
     padding: 0;
     display: flex;
@@ -23,14 +23,14 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    background-color: #000000;
-    border-bottom: 1px solid #000000;
+    background-color: #141414;
+    border-bottom: 1px solid #141414;
 }
 
 #model-select {
-    background-color: #000000;
+    background-color: #141414;
     color: #ececf1;
-    border: 1px solid #000000;
+    border: 1px solid #141414;
     border-radius: 20px;
     padding: 5px 15px;
     appearance: none;
@@ -68,7 +68,7 @@ header {
     margin: 0 auto;
     border-radius: 10px;
     width: 100%;
-    background-color: #000000;
+    background-color: #141414;
     overflow: hidden;
 }
 
@@ -79,7 +79,7 @@ header {
     -webkit-overflow-scrolling: touch; /* Para melhor desempenho em dispositivos iOS */
     overflow-y: auto;
     padding: 20px 0;
-    background-color: #000000;
+    background-color: #141414;
 }
 
 .message {
@@ -96,7 +96,7 @@ header {
 }
 
 .user-message {
-    background-color: #000000;
+    background-color: #141414;
     max-width: 100%;
     border-radius: 30px;
     padding: 30px;
@@ -106,7 +106,7 @@ header {
 }
 
 .bot-message {
-    background-color: #000000;
+    background-color: #141414;
 }
 
 .message.loading {
@@ -123,9 +123,9 @@ header {
 }
 
 #suggestions button {
-    background-color: #000000;
+    background-color: #141414;
     color: #ececf1;
-    border: 1px solid #000000;
+    border: 1px solid #141414;
     border-radius: 20px;
     padding: 10px 15px;
     cursor: pointer;
@@ -148,16 +148,16 @@ header {
 #input-container {
     display: flex;
     padding: 20px;
-    background-color: #000000;
-    border-top: 1px solid #000000;
+    background-color: #141414;
+    border-top: 1px solid #141414;
 }
 
 #user-input {
     flex-grow: 1;
     padding: 10px;
-    border: 5px solid #000000;
+    border: 5px solid #141414;
     border-radius: 20px;
-    background-color: #0c0c0c;
+    background-color: #141414;
     color: #ffffff;
     resize: none; /* Impede o redimensionamento manual */
     overflow-y: auto; /* Adiciona uma barra de rolagem vertical quando necessário */
@@ -231,7 +231,7 @@ header {
 }
 
 pre {
-    background-color: #000000; /* Fundo preto */
+    background-color: #141414; /* Fundo preto */
     border-radius: 6px;
     padding: 15px;
     overflow-x: auto;
