@@ -1,6 +1,7 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #212121;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-weight: 400;
+    background-color: #000000;
     margin: 0;
     padding: 0;
     display: flex;
@@ -9,19 +10,27 @@ body {
     color: #ececf1;
 }
 
+h1, h2, h3 {
+    font-weight: 700; /* negrito */
+}
+
+.light-text {
+    font-weight: 300; /* leve */
+}
+
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    background-color: #212121;
-    border-bottom: 1px solid #212121;
+    background-color: #000000;
+    border-bottom: 1px solid #000000;
 }
 
 #model-select {
-    background-color: #212121;
+    background-color: #000000;
     color: #ececf1;
-    border: 1px solid #444;
+    border: 1px solid #000000;
     border-radius: 20px;
     padding: 5px 15px;
     appearance: none;
@@ -59,7 +68,7 @@ header {
     margin: 0 auto;
     border-radius: 10px;
     width: 100%;
-    background-color: #212121;
+    background-color: #000000;
     overflow: hidden;
 }
 
@@ -70,7 +79,7 @@ header {
     -webkit-overflow-scrolling: touch; /* Para melhor desempenho em dispositivos iOS */
     overflow-y: auto;
     padding: 20px 0;
-    background-color: #212121;
+    background-color: #000000;
 }
 
 .message {
@@ -87,7 +96,7 @@ header {
 }
 
 .user-message {
-    background-color: #393737;
+    background-color: #000000;
     max-width: 100%;
     border-radius: 30px;
     padding: 30px;
@@ -97,7 +106,7 @@ header {
 }
 
 .bot-message {
-    background-color: #252525;
+    background-color: #000000;
 }
 
 .message.loading {
@@ -114,9 +123,9 @@ header {
 }
 
 #suggestions button {
-    background-color: #212121;
+    background-color: #000000;
     color: #ececf1;
-    border: 1px solid #212121;
+    border: 1px solid #000000;
     border-radius: 20px;
     padding: 10px 15px;
     cursor: pointer;
@@ -139,16 +148,16 @@ header {
 #input-container {
     display: flex;
     padding: 20px;
-    background-color: #212121;
-    border-top: 1px solid #212121;
+    background-color: #000000;
+    border-top: 1px solid #000000;
 }
 
 #user-input {
     flex-grow: 1;
     padding: 10px;
-    border: 5px solid #3a3a3a;
+    border: 5px solid #000000;
     border-radius: 20px;
-    background-color: #3a3a3a;
+    background-color: #0c0c0c;
     color: #ffffff;
     resize: none; /* Impede o redimensionamento manual */
     overflow-y: auto; /* Adiciona uma barra de rolagem vertical quando necessário */
