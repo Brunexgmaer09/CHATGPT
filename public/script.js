@@ -294,7 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    let currentModel = 'gpt-4o-latest';
+    let currentModel = 'chatgpt-4o-latest';
 
     function updateModel() {
         currentModel = document.getElementById('model-select').value;
