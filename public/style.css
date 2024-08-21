@@ -354,7 +354,7 @@ pre {
     border-top-left-radius: 1px;
     border-top-right-radius: 1px;
     margin: 0;
-    padding: 10px; /* Add some padding */
+    padding: 0px; /* Add some padding */
     overflow-x: auto; /* Enable horizontal scrolling */
     background-color: transparent;
     max-width: 100%; /* Ensure code doesn't cause container to expand */
