@@ -231,7 +231,7 @@ header {
 }
 
 pre {
-    background-color: #282c34; /* Fundo preto */
+    background-color: #000000; /* Fundo preto */
     border-radius: 6px;
     padding: 15px;
     overflow-x: auto;
@@ -255,7 +255,7 @@ pre {
     position: absolute;
     top: 5px;
     right: 5px;
-    background-color: #282c34;
+    background-color: #202020;
     color: white;
     border: none;
     border-radius: 3px;
@@ -330,7 +330,7 @@ pre {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #2e2e35;
+    background-color: #202020;
     padding: 5px 10px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
