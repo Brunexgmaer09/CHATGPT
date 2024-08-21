@@ -294,6 +294,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
+    let currentModel = 'gpt-4o-latest';
+
+    function updateModel() {
+        currentModel = document.getElementById('model-select').value;
+        document.getElementById('current-model').textContent = `Modelo atual: ${currentModel}`;
+        console.log('Modelo atualizado para:', currentModel);
+        
+        // Limpar o histórico
+        messageHistory = [];
+        document.getElementById('chat-messages').innerHTML = '';
+    }
+    
+    document.getElementById('model-select').addEventListener('change', updateModel);
+    
     async function sendMessage(overrideMessage = null) {
         const message = overrideMessage || userInput.value.trim();
         if (!message) return;
@@ -309,24 +323,28 @@ document.addEventListener('DOMContentLoaded', () => {
         botMessageElement.classList.add('current-message');
         let fullResponse = '';
     
-            try {
-                const response = await fetch('/chat', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ message, history: messageHistory }),
-                });
-        
-                if (!response.ok) {
-                    console.error("Erro na resposta da API:", response.statusText); // Debug
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-         
-                const reader = response.body.getReader();
-                const decoder = new TextDecoder();
-         
-                while (true) {
+        try {
+            const response = await fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    message, 
+                    history: messageHistory,
+                    model: currentModel
+                }),
+            });
+    
+            if (!response.ok) {
+                console.error("Erro na resposta da API:", response.statusText);
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+     
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+     
+            while (true) {
                 const { done, value } = await reader.read();
                 if (done) break;
     

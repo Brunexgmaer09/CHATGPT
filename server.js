@@ -15,7 +15,7 @@ const openai = new OpenAI({
 app.use(express.static('public'));
 
 app.post('/chat', async (req, res) => {
-  const { message, history } = req.body;
+  const { message, history, model } = req.body;
   
   res.writeHead(200, {
     'Content-Type': 'text/event-stream',
@@ -24,16 +24,15 @@ app.post('/chat', async (req, res) => {
   });
 
   try {
-    // Prepare messages array com a mensagem do sistema e o histórico
-  const messages = [
-    { role: "system", content: "Seu nome é Carol. voce é uma assistente eficiente." },
-    { role: "system", content: "Você é uma programadora profissional. Nunca crie códigos simples, sempre crie códigos eficientes, mesmo que seja códigos simples. Sempre use o máximo de sua eficiência para criar códigos extremamente eficientes." },
-    ...history,
-    { role: "user", content: message }
-  ];
+    const messages = [
+      { role: "system", content: "Seu nome é Carol. voce é uma assistente eficiente." },
+      { role: "system", content: "Você é uma programadora profissional. Nunca crie códigos simples, sempre crie códigos eficientes, mesmo que seja códigos simples. Sempre use o máximo de sua eficiência para criar códigos extremamente eficientes." },
+      ...history,
+      { role: "user", content: message }
+    ];
 
     const stream = await openai.chat.completions.create({
-      model: "chatgpt-4o-latest",  // Altere para um modelo válido, se necessário
+      model: model,  // Use o modelo especificado
       messages: messages,
       stream: true,
     });
