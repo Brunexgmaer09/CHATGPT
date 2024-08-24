@@ -23,43 +23,40 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    function detectLanguage(code) {
-        // Primeiro, verifica se é HTML
-        if (code.includes('<!DOCTYPE html>') || code.includes('<html>')) {
-            return 'html';
-        }
+function detectLanguage(code) {
+    // Normaliza o código removendo comentários e strings
+    const cleanCode = code.replace(/\/\/.*|\/\*[\s\S]*?\*\/|'(?:\\.|[^\\'])*'|"(?:\\.|[^\\"])*"/g, '');
 
-        if (code.includes('#include') || code.includes('int main()')) return 'cpp';
-        if (code.includes('using System;') || code.includes('namespace ') || code.includes('class ') || code.includes('public static void Main(')) return 'csharp';        
-       // Remove comentários e strings para evitar falsos positivos
-       const cleanCode = code.replace(/\/\/.*|\/\*[\s\S]*?\*\/|'(?:\\.|[^\\'])*'|"(?:\\.|[^\\"])*"/g, '');
+    // Map de expressões regulares para identificar as linguagens
+    const languagePatterns = new Map([
+        ['html', /<!DOCTYPE html>|<html>/],
+        ['cpp', /(?:#include\b.*|int\s+main\s*\(\s*\))/],
+        ['csharp', /(?:using\s+System;|namespace\s+\w+|class\s+\w+|public\s+static\s+void\s+Main\s*\()/],
+        ['javascript', /\b(?:const|let|var|function|=>|console\.log|if|for|while)\b/],
+        ['python', /\b(?:def|import|class|print|if)\b.*:/],
+        ['css', /(?:\{|\}):|[a-z-]+:/],
+        ['java', /\b(?:public\s+class|void\s+main|System\.out\.println)\b/],
+        ['php', /(?:<\?php|\$\w+|\becho\b|function\s+\w+)/],
+        ['ruby', /\b(?:def|class|puts|require|attr_accessor)\b/],
+        ['go', /\b(?:func\s+\w+|package\s+\w+|import\s+\(\s*fmt\s*\.\s*)\b/],
+        ['rust', /\b(?:fn\s+\w+|let\s+mut|struct\s+\w+|impl\s+|use\s+\w+)\b/],
+        ['swift', /\b(?:func|var|let|class|import\s+Foundation)\b/],
+        ['kotlin', /\b(?:fun|val|var|class|package)\b/],
+        ['typescript', /\b(?:interface|type|export|import\s+.*from)\b/],
+        ['sql', /\b(?:SELECT|INSERT|UPDATE|DELETE|FROM|WHERE|CREATE\s+TABLE)\b/i],
+        ['powershell', /\$\w+\s*=|\$PSVersionTable|Write-Host|Get-\w+/],
+        ['markdown', /(^#{1,6}\s|^\*\s|\[.*\]\(.*\))/m]
+    ]);
 
-        // Se não for HTML, verifica outras linguagens
-        const languagePatterns = {
-            javascript: /(const|let|var|function\s+\w+|\(\s*\)\s*=>|console\.log|if\s*\(|for\s*\(|while\s*\()/,
-            python: /(def\s+\w+|import\s+\w+|class\s+\w+|print\s*\(|if\s+[\w\s]+:)/,
-            css: /(\{|\}|:|\s*[a-z-]+\s*:)/,
-            java: /(public\s+class|void\s+main|System\.out\.println)/,
-            php: /(<\?php|\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*|echo\s|function\s+\w+)/,
-            ruby: /(def\s+\w+|class\s+\w+|puts\s|require\s|attr_accessor)/,
-            go: /(func\s+\w+|package\s+\w+|import\s+\(|fmt\.)/,
-            rust: /(fn\s+\w+|let\s+mut|struct\s+\w+|impl\s+|use\s+\w+)/,
-            swift: /(func\s+\w+|var\s+\w+|let\s+\w+|class\s+\w+|import\s+Foundation)/,
-            kotlin: /(fun\s+\w+|val\s+\w+|var\s+\w+|class\s+\w+|package\s+\w+)/,
-            typescript: /(interface\s+\w+|type\s+\w+|export\s+|import\s+.*from)/,
-            sql: /(SELECT|INSERT|UPDATE|DELETE|FROM|WHERE|CREATE TABLE)/i,
-            powershell: /(\$\w+\s*=|\$PSVersionTable|Write-Host|Get-\w+)/,
-            markdown: /(^#{1,6}\s|^\*\s|\[.*\]\(.*\))/m
-        };
-    
-        for (const [language, pattern] of Object.entries(languagePatterns)) {
-            if (pattern.test(code)) {
-                return language;
-            }
+    // Itera sobre o Map e retorna a primeira linguagem detectada
+    for (const [language, pattern] of languagePatterns) {
+        if (pattern.test(cleanCode)) {
+            return language;
         }
-    
-        // Se nenhuma linguagem específica for detectada
-        return 'plaintext';
+    }
+
+    // Retorna 'plaintext' se nenhuma linguagem específica for identificada
+    return 'plaintext';
     }
     
     function createCodeBlock(code) {
