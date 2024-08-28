@@ -292,7 +292,7 @@ pre {
 .typing-animation::after {
     content: '' !important;
     animation: typing 1.2s infinite !important;
-    font-size: 24px !important; /* Aumenta o tamanho dos pontos */
+    font-size: 30px !important; /* Aumenta o tamanho dos pontos */
     line-height: 1 !important;
     vertical-align: middle !important;
 }
@@ -301,7 +301,7 @@ pre {
     content: '' !important;
     animation: blink 1.2s infinite !important;
     display: inline-block !important;
-    width: 4px !important; /* Aumenta a largura do cursor */
+    width: 8px !important; /* Aumenta a largura do cursor */
     height: 34px !important; /* Aumenta a altura do cursor */
     margin-left: 5px !important;
     background: rgb(212, 211, 211) !important;
