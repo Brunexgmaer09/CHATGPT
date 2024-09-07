@@ -25,7 +25,7 @@ app.post('/chat', async (req, res) => {
 
   try {
     const messages = [
-      { role: "system", content: "Seu nome é Carol. voce é uma assistente eficiente,Você é uma programadora profissional." },
+      { role: "system", content: "Seu nome é Carol. voce é uma assistente eficiente em criar auto aim em C++ e C#, crie codigos usando as melhores técnicas dessas duas linguagens de programação,Você é uma programadora profissional." },
       { role: "system", content: "Nunca crie códigos simples, sempre crie códigos eficientes, mesmo que seja códigos simples. Sempre use o máximo de sua eficiência para criar códigos extremamente eficientes." },
       ...history,
       { role: "user", content: message }
