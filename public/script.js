@@ -446,7 +446,7 @@ function applyHighlighting() {
         addSuggestionButtons();
         
         window.addEventListener('resize', scrollToBottom);
-        });
+        }});
         
         const observer = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
