@@ -52,48 +52,36 @@ document.addEventListener('DOMContentLoaded', () => {
         return 'plaintext';
     }
    
-    function createCodeBlock(code) {
-        const codeBlockContainer = document.createElement('div');
-        codeBlockContainer.className = 'code-block-container';
-    
-        const codeBlockHeader = document.createElement('div');
-        codeBlockHeader.className = 'code-block-header';
-    
-        const lines = code.split('\n');
-        const languageIdentifier = lines[0].trim();
-        let language = hljs.getLanguage(languageIdentifier) ? languageIdentifier : detectLanguage(code);
-    
-        const languageSpan = document.createElement('span');
-        languageSpan.textContent = language;
-        codeBlockHeader.appendChild(languageSpan);
-    
-        const copyButton = document.createElement('button');
-        copyButton.textContent = 'Copiar';
-        copyButton.onclick = () => copyCode(copyButton, code);
-        codeBlockHeader.appendChild(copyButton);
-    
-        codeBlockContainer.appendChild(codeBlockHeader);
-    
-        const codeBlock = document.createElement('pre');
-        const codeElement = document.createElement('code');
-        codeElement.className = `language-${language}`;
-        
-        const codeContent = lines.slice(lines.length > 1 && lines[1].trim() === 'Copiar' ? 2 : 1).join('\n').trim();
-        
-        const escapedContent = codeContent
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#039;');
-    
-        codeElement.innerHTML = escapedContent;
-    
-        codeBlock.appendChild(codeElement);
-        codeBlockContainer.appendChild(codeBlock);
-    
-        return { codeBlockContainer, codeElement };
-    }
+function createCodeBlock(code) {
+    const codeBlockContainer = document.createElement('div');
+    codeBlockContainer.className = 'code-block-container';
+
+    const codeBlockHeader = document.createElement('div');
+    codeBlockHeader.className = 'code-block-header';
+
+    const result = hljs.highlightAuto(code);
+    const languageSpan = document.createElement('span');
+    languageSpan.textContent = result.language;
+    codeBlockHeader.appendChild(languageSpan);
+
+    const copyButton = document.createElement('button');
+    copyButton.textContent = 'Copiar';
+    copyButton.onclick = () => copyCode(copyButton, code);
+    codeBlockHeader.appendChild(copyButton);
+
+    codeBlockContainer.appendChild(codeBlockHeader);
+
+    const codeBlock = document.createElement('pre');
+    const codeElement = document.createElement('code');
+    codeElement.className = `language-${result.language}`;
+    codeElement.textContent = code;
+    codeBlock.appendChild(codeElement);
+    codeBlockContainer.appendChild(codeBlock);
+
+    hljs.highlightElement(codeElement);
+
+    return { codeBlockContainer, codeElement };
+}
 
     function applyHighlightingToElement(element) {
         element.querySelectorAll('pre code').forEach((block) => {
@@ -148,50 +136,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    function addMessage(message, isUser = false, existingElement = null) {
-        let messageElement = existingElement || document.createElement('div');
-        if (!existingElement) {
-            messageElement.classList.add('message');
-            messageElement.classList.add(isUser ? 'user-message' : 'bot-message');
-            chatMessages.appendChild(messageElement);
-        }
-    
-        if (!isUser) {
-            const typingContainer = document.createElement('div');
-            typingContainer.className = 'typing-container';
-            const textSpan = document.createElement('span');
-            textSpan.className = 'typing-text';
-            const cursorSpan = document.createElement('span');
-            cursorSpan.className = 'typing-cursor';
-            typingContainer.appendChild(textSpan);
-            typingContainer.appendChild(cursorSpan);
-            messageElement.innerHTML = '';
-            messageElement.appendChild(typingContainer);
-    
-            // Adiciona os botões de ação
-            const actionsContainer = document.createElement('div');
-            actionsContainer.className = 'message-actions';
-    
-            const copyButton = createActionButton('copy', 'Copiar mensagem');
-            const regenerateButton = createActionButton('redo', 'Regenerar resposta');
-            const likeButton = createActionButton('thumbs-up', 'Gostei');
-    
-            actionsContainer.appendChild(copyButton);
-            actionsContainer.appendChild(regenerateButton);
-            actionsContainer.appendChild(likeButton);
-    
-            messageElement.appendChild(actionsContainer);
-    
-            // Adiciona eventos de mouse para mostrar/ocultar ícones
-            messageElement.addEventListener('mouseenter', () => showIcons(messageElement));
-            messageElement.addEventListener('mouseleave', () => hideIcons(messageElement));
-        } else {
-            messageElement.textContent = message;
-        }
-    
-        scrollToBottom();
-        return messageElement;
+function addMessage(message, isUser = false) {
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('message');
+    messageElement.classList.add(isUser ? 'user-message' : 'bot-message');
+
+    if (isUser) {
+        messageElement.textContent = message;
+    } else {
+        const typingContainer = document.createElement('div');
+        typingContainer.className = 'typing-container';
+        const textSpan = document.createElement('span');
+        textSpan.className = 'typing-text';
+        const cursorSpan = document.createElement('span');
+        cursorSpan.className = 'typing-cursor';
+        typingContainer.appendChild(textSpan);
+        typingContainer.appendChild(cursorSpan);
+        messageElement.appendChild(typingContainer);
     }
+
+    requestAnimationFrame(() => {
+        chatMessages.appendChild(messageElement);
+        scrollToBottom();
+    });
+
+    return messageElement;
+}
     
     function createActionButton(iconName, title) {
         const button = document.createElement('button');
@@ -386,46 +356,37 @@ document.addEventListener('DOMContentLoaded', () => {
     }
          
         
-    function updateBotMessage(element, content) {
-        const typingContainer = element.querySelector('.typing-container');
-        if (typingContainer) {
-            const textSpan = typingContainer.querySelector('.typing-text');
-            
-            // Limpa o conteúdo existente
-            textSpan.innerHTML = '';
-            
-            // Divide o conteúdo em partes de código e texto normal
-            const parts = content.split('```');
-            
-            parts.forEach((part, index) => {
-                if (index % 2 === 0) {
-                    // Texto normal
-                    const textNode = document.createElement('span');
-                    textNode.innerHTML = parseMarkdown(escapeHTML(part));
-                    textSpan.appendChild(textNode);
-                } else {
-                    // Bloco de código
-                    const { codeBlockContainer, codeElement } = createCodeBlock(part.trim());
-                    textSpan.appendChild(codeBlockContainer);
-                }
-            });
-    
-            // Cria um MutationObserver para detectar mudanças no conteúdo
-            const observer = new MutationObserver(() => {
-                scrollToBottom();
-                applyHighlightingToElement(textSpan);
-            });
-    
-            // Configura o observer para observar mudanças no conteúdo
-            observer.observe(textSpan, { childList: true, subtree: true, characterData: true });
-    
-            // Aplica o highlighting inicial
-            applyHighlightingToElement(textSpan);
-        } else {
-            element.innerHTML = parseMarkdown(escapeHTML(content));
+function updateBotMessage(element, content) {
+    const typingContainer = element.querySelector('.typing-container');
+    if (typingContainer) {
+        const textSpan = typingContainer.querySelector('.typing-text');
+        textSpan.innerHTML = '';
+        let cursorMoved = false;
+
+        const parts = content.split('```');
+        parts.forEach((part, index) => {
+            if (index % 2 === 0) {
+                const textNode = document.createElement('span');
+                textNode.innerHTML = parseMarkdown(escapeHTML(part));
+                textSpan.appendChild(textNode);
+            } else {
+                const code = part.trim();
+                const { codeBlockContainer, codeElement } = createCodeBlock(code);
+                textSpan.appendChild(codeBlockContainer);
+                applyHighlightingToElement(codeElement);
+                cursorMoved = true;
+            }
+        });
+
+        if (!cursorMoved) {
+            // Mover o cursor para o fim do texto se não estiver em um bloco de código
+            textSpan.appendChild(typingContainer.querySelector('.typing-cursor'));
         }
-        scrollToBottom();
+    } else {
+        element.innerHTML = parseMarkdown(escapeHTML(content));
     }
+    scrollToBottom();
+}
         
     function applyHighlightingToElement(element) {
         element.querySelectorAll('pre code').forEach((block) => {
@@ -454,14 +415,16 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
         
-        function applyHighlighting() {
-            document.querySelectorAll('pre code').forEach((block) => {
-                if (!block.classList.contains('hljs')) {
-                    hljs.highlightElement(block);
-                }
-            });
-            scrollToBottom();
+function applyHighlighting() {
+    document.querySelectorAll('pre code').forEach((block) => {
+        if (!block.classList.contains('hljs')) {
+            // Usando highlightAuto para tentar detectar automaticamente a linguagem
+            const result = hljs.highlightAuto(block.textContent);
+            block.classList.add('language-' + result.language);
+            hljs.highlightElement(block);
         }
+    });
+
         
         if (sendButton) {
             sendButton.addEventListener('click', () => sendMessage());
