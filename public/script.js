@@ -4,10 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const sendButton = document.getElementById('send-button');
     const suggestionsContainer = document.getElementById('suggestions');
     
+    
     let isSuggestionsVisible = true;
     let messageHistory = [];
     
     function copyCode(button, code) {
+        // Remover a primeira linha (identificador de linguagem) e a segunda linha (se for "Copiar")
         const lines = code.split('\n');
         const codeContent = lines.slice(lines[1].trim() === 'Copiar' ? 2 : 1).join('\n').trim();
         
@@ -22,70 +24,92 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function detectLanguage(code) {
-        const cleanCode = code.replace(/\/\/.*|\/\*[\s\S]*?\*\/|'(?:\\.|[^\\'])*'|"(?:\\.|[^\\"])*"/g, '');
-        
-        const languagePatterns = new Map([
-            ['html', /<!DOCTYPE html>|<html>/],
-            ['cpp', /(?:#include\b.*|int\s+main\s*\(\s*\))/],
-            ['csharp', /(?:using\s+System;|namespace\s+\w+|class\s+\w+|public\s+static\s+void\s+Main\s*\()/],
-            ['javascript', /\b(?:const|let|var|function|=>|console\.log|if|for|while)\b/],
-            ['python', /\b(?:def|import|class|print|if)\b.*:/],
-            ['css', /(?:\{|\}):|[a-z-]+:/],
-            ['java', /\b(?:public\s+class|void\s+main|System\.out\.println)\b/],
-            ['php', /(?:<\?php|\$\w+|\becho\b|function\s+\w+)/],
-            ['ruby', /\b(?:def|class|puts|require|attr_accessor)\b/],
-            ['go', /\b(?:func\s+\w+|package\s+\w+|import\s+\(\s*fmt\s*\.\s*)\b/],
-            ['rust', /\b(?:fn\s+\w+|let\s+mut|struct\s+\w+|impl\s+|use\s+\w+)\b/],
-            ['swift', /\b(?:func|var|let|class|import\s+Foundation)\b/],
-            ['kotlin', /\b(?:fun|val|var|class|package)\b/],
-            ['typescript', /\b(?:interface|type|export|import\s+.*from)\b/],
-            ['sql', /\b(?:SELECT|INSERT|UPDATE|DELETE|FROM|WHERE|CREATE\s+TABLE)\b/i],
-            ['powershell', /\$\w+\s*=|\$PSVersionTable|Write-Host|Get-\w+/],
-            ['markdown', /(^#{1,6}\s|^\*\s|\[.*\]\(.*\))/m]
-        ]);
-        
-        for (const [language, pattern] of languagePatterns) {
-            if (pattern.test(cleanCode)) {
+        // Primeiro, verifica se é HTML
+        if (code.includes('<!DOCTYPE html>') || code.includes('<html>')) {
+            return 'html';
+        }
+
+        if (code.includes('#include') || code.includes('int main()')) return 'cpp';
+        if (code.includes('using System;') || code.includes('namespace ') || code.includes('class ') || code.includes('public static void Main(')) return 'csharp';        
+       // Remove comentários e strings para evitar falsos positivos
+       const cleanCode = code.replace(/\/\/.*|\/\*[\s\S]*?\*\/|'(?:\\.|[^\\'])*'|"(?:\\.|[^\\"])*"/g, '');
+
+        // Se não for HTML, verifica outras linguagens
+        const languagePatterns = {
+            javascript: /(const|let|var|function\s+\w+|\(\s*\)\s*=>|console\.log|if\s*\(|for\s*\(|while\s*\()/,
+            python: /(def\s+\w+|import\s+\w+|class\s+\w+|print\s*\(|if\s+[\w\s]+:)/,
+            css: /(\{|\}|:|\s*[a-z-]+\s*:)/,
+            java: /(public\s+class|void\s+main|System\.out\.println)/,
+            php: /(<\?php|\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*|echo\s|function\s+\w+)/,
+            ruby: /(def\s+\w+|class\s+\w+|puts\s|require\s|attr_accessor)/,
+            go: /(func\s+\w+|package\s+\w+|import\s+\(|fmt\.)/,
+            rust: /(fn\s+\w+|let\s+mut|struct\s+\w+|impl\s+|use\s+\w+)/,
+            swift: /(func\s+\w+|var\s+\w+|let\s+\w+|class\s+\w+|import\s+Foundation)/,
+            kotlin: /(fun\s+\w+|val\s+\w+|var\s+\w+|class\s+\w+|package\s+\w+)/,
+            typescript: /(interface\s+\w+|type\s+\w+|export\s+|import\s+.*from)/,
+            sql: /(SELECT|INSERT|UPDATE|DELETE|FROM|WHERE|CREATE TABLE)/i,
+            powershell: /(\$\w+\s*=|\$PSVersionTable|Write-Host|Get-\w+)/,
+            markdown: /(^#{1,6}\s|^\*\s|\[.*\]\(.*\))/m
+        };
+    
+        for (const [language, pattern] of Object.entries(languagePatterns)) {
+            if (pattern.test(code)) {
                 return language;
             }
         }
+    
+        // Se nenhuma linguagem específica for detectada
         return 'plaintext';
     }
-   
-function createCodeBlock(code) {
-    const codeBlockContainer = document.createElement('div');
-    codeBlockContainer.className = 'code-block-container';
-
-    const codeBlockHeader = document.createElement('div');
-    codeBlockHeader.className = 'code-block-header';
-
-    const result = hljs.highlightAuto(code);
-    const languageSpan = document.createElement('span');
-    languageSpan.textContent = result.language;
-    codeBlockHeader.appendChild(languageSpan);
-
-    const copyButton = document.createElement('button');
-    copyButton.textContent = 'Copiar';
-    copyButton.onclick = () => copyCode(copyButton, code);
-    codeBlockHeader.appendChild(copyButton);
-
-    codeBlockContainer.appendChild(codeBlockHeader);
-
-    const codeBlock = document.createElement('pre');
-    const codeElement = document.createElement('code');
-    codeElement.className = `language-${result.language}`;
-    codeElement.textContent = code;
-    codeBlock.appendChild(codeElement);
-    codeBlockContainer.appendChild(codeBlock);
-
-    hljs.highlightElement(codeElement);
-
-    return { codeBlockContainer, codeElement };
-}
+    
+    function createCodeBlock(code) {
+        const codeBlockContainer = document.createElement('div');
+        codeBlockContainer.className = 'code-block-container';
+    
+        const codeBlockHeader = document.createElement('div');
+        codeBlockHeader.className = 'code-block-header';
+    
+        const lines = code.split('\n');
+        const languageIdentifier = lines[0].trim();
+        const language = detectLanguage(code);
+    
+        const languageSpan = document.createElement('span');
+        languageSpan.textContent = languageIdentifier;
+        codeBlockHeader.appendChild(languageSpan);
+    
+        const copyButton = document.createElement('button');
+        copyButton.textContent = 'Copiar';
+        copyButton.onclick = () => copyCode(copyButton, code);
+        codeBlockHeader.appendChild(copyButton);
+    
+        codeBlockContainer.appendChild(codeBlockHeader);
+    
+        const codeBlock = document.createElement('pre');
+        const codeElement = document.createElement('code');
+        codeElement.className = `language-${language}`;
+        
+        // Remove a primeira linha (identificador de linguagem) e a segunda linha (se for "Copiar")
+        const codeContent = lines.slice(lines.length > 1 && lines[1].trim() === 'Copiar' ? 2 : 1).join('\n').trim();
+        
+        // Escape de caracteres especiais
+        const escapedContent = codeContent
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    
+        codeElement.innerHTML = escapedContent;
+    
+        codeBlock.appendChild(codeElement);
+        codeBlockContainer.appendChild(codeBlock);
+    
+        return { codeBlockContainer, codeElement };
+    }
 
     function applyHighlightingToElement(element) {
         element.querySelectorAll('pre code').forEach((block) => {
-            if (!block.classList.contains('hljs')) {
+            if (!block.classList.contains('hljs') && !block.classList.contains('language-html')) {
                 hljs.highlightElement(block);
             }
         });
@@ -136,32 +160,50 @@ function createCodeBlock(code) {
         }
     }
     
-function addMessage(message, isUser = false) {
-    const messageElement = document.createElement('div');
-    messageElement.classList.add('message');
-    messageElement.classList.add(isUser ? 'user-message' : 'bot-message');
-
-    if (isUser) {
-        messageElement.textContent = message;
-    } else {
-        const typingContainer = document.createElement('div');
-        typingContainer.className = 'typing-container';
-        const textSpan = document.createElement('span');
-        textSpan.className = 'typing-text';
-        const cursorSpan = document.createElement('span');
-        cursorSpan.className = 'typing-cursor';
-        typingContainer.appendChild(textSpan);
-        typingContainer.appendChild(cursorSpan);
-        messageElement.appendChild(typingContainer);
-    }
-
-    requestAnimationFrame(() => {
-        chatMessages.appendChild(messageElement);
+    function addMessage(message, isUser = false, existingElement = null) {
+        let messageElement = existingElement || document.createElement('div');
+        if (!existingElement) {
+            messageElement.classList.add('message');
+            messageElement.classList.add(isUser ? 'user-message' : 'bot-message');
+            chatMessages.appendChild(messageElement);
+        }
+    
+        if (!isUser) {
+            const typingContainer = document.createElement('div');
+            typingContainer.className = 'typing-container';
+            const textSpan = document.createElement('span');
+            textSpan.className = 'typing-text';
+            const cursorSpan = document.createElement('span');
+            cursorSpan.className = 'typing-cursor';
+            typingContainer.appendChild(textSpan);
+            typingContainer.appendChild(cursorSpan);
+            messageElement.innerHTML = '';
+            messageElement.appendChild(typingContainer);
+    
+            // Adiciona os botões de ação
+            const actionsContainer = document.createElement('div');
+            actionsContainer.className = 'message-actions';
+    
+            const copyButton = createActionButton('copy', 'Copiar mensagem');
+            const regenerateButton = createActionButton('redo', 'Regenerar resposta');
+            const likeButton = createActionButton('thumbs-up', 'Gostei');
+    
+            actionsContainer.appendChild(copyButton);
+            actionsContainer.appendChild(regenerateButton);
+            actionsContainer.appendChild(likeButton);
+    
+            messageElement.appendChild(actionsContainer);
+    
+            // Adiciona eventos de mouse para mostrar/ocultar ícones
+            messageElement.addEventListener('mouseenter', () => showIcons(messageElement));
+            messageElement.addEventListener('mouseleave', () => hideIcons(messageElement));
+        } else {
+            messageElement.textContent = message;
+        }
+    
         scrollToBottom();
-    });
-
-    return messageElement;
-}
+        return messageElement;
+    }
     
     function createActionButton(iconName, title) {
         const button = document.createElement('button');
@@ -356,37 +398,46 @@ function addMessage(message, isUser = false) {
     }
          
         
-function updateBotMessage(element, content) {
-    const typingContainer = element.querySelector('.typing-container');
-    if (typingContainer) {
-        const textSpan = typingContainer.querySelector('.typing-text');
-        textSpan.innerHTML = '';
-        let cursorMoved = false;
-
-        const parts = content.split('```');
-        parts.forEach((part, index) => {
-            if (index % 2 === 0) {
-                const textNode = document.createElement('span');
-                textNode.innerHTML = parseMarkdown(escapeHTML(part));
-                textSpan.appendChild(textNode);
-            } else {
-                const code = part.trim();
-                const { codeBlockContainer, codeElement } = createCodeBlock(code);
-                textSpan.appendChild(codeBlockContainer);
-                applyHighlightingToElement(codeElement);
-                cursorMoved = true;
-            }
-        });
-
-        if (!cursorMoved) {
-            // Mover o cursor para o fim do texto se não estiver em um bloco de código
-            textSpan.appendChild(typingContainer.querySelector('.typing-cursor'));
+    function updateBotMessage(element, content) {
+        const typingContainer = element.querySelector('.typing-container');
+        if (typingContainer) {
+            const textSpan = typingContainer.querySelector('.typing-text');
+            
+            // Limpa o conteúdo existente
+            textSpan.innerHTML = '';
+            
+            // Divide o conteúdo em partes de código e texto normal
+            const parts = content.split('```');
+            
+            parts.forEach((part, index) => {
+                if (index % 2 === 0) {
+                    // Texto normal
+                    const textNode = document.createElement('span');
+                    textNode.innerHTML = parseMarkdown(escapeHTML(part));
+                    textSpan.appendChild(textNode);
+                } else {
+                    // Bloco de código
+                    const { codeBlockContainer, codeElement } = createCodeBlock(part.trim());
+                    textSpan.appendChild(codeBlockContainer);
+                }
+            });
+    
+            // Cria um MutationObserver para detectar mudanças no conteúdo
+            const observer = new MutationObserver(() => {
+                scrollToBottom();
+                applyHighlightingToElement(textSpan);
+            });
+    
+            // Configura o observer para observar mudanças no conteúdo
+            observer.observe(textSpan, { childList: true, subtree: true, characterData: true });
+    
+            // Aplica o highlighting inicial
+            applyHighlightingToElement(textSpan);
+        } else {
+            element.innerHTML = parseMarkdown(escapeHTML(content));
         }
-    } else {
-        element.innerHTML = parseMarkdown(escapeHTML(content));
+        scrollToBottom();
     }
-    scrollToBottom();
-}
         
     function applyHighlightingToElement(element) {
         element.querySelectorAll('pre code').forEach((block) => {
@@ -415,16 +466,14 @@ function updateBotMessage(element, content) {
             });
         }
         
-function applyHighlighting() {
-    document.querySelectorAll('pre code').forEach((block) => {
-        if (!block.classList.contains('hljs')) {
-            // Usando highlightAuto para tentar detectar automaticamente a linguagem
-            const result = hljs.highlightAuto(block.textContent);
-            block.classList.add('language-' + result.language);
-            hljs.highlightElement(block);
+        function applyHighlighting() {
+            document.querySelectorAll('pre code').forEach((block) => {
+                if (!block.classList.contains('hljs')) {
+                    hljs.highlightElement(block);
+                }
+            });
+            scrollToBottom();
         }
-    });
-
         
         if (sendButton) {
             sendButton.addEventListener('click', () => sendMessage());
@@ -446,7 +495,7 @@ function applyHighlighting() {
         addSuggestionButtons();
         
         window.addEventListener('resize', scrollToBottom);
-        }});
+        });
         
         const observer = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
