@@ -4,12 +4,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const sendButton = document.getElementById('send-button');
     const suggestionsContainer = document.getElementById('suggestions');
     
-    
     let isSuggestionsVisible = true;
     let messageHistory = [];
     
     function copyCode(button, code) {
-        // Remover a primeira linha (identificador de linguagem) e a segunda linha (se for "Copiar")
         const lines = code.split('\n');
         const codeContent = lines.slice(lines[1].trim() === 'Copiar' ? 2 : 1).join('\n').trim();
         
@@ -23,42 +21,37 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-function detectLanguage(code) {
-    // Normaliza o código removendo comentários e strings
-    const cleanCode = code.replace(/\/\/.*|\/\*[\s\S]*?\*\/|'(?:\\.|[^\\'])*'|"(?:\\.|[^\\"])*"/g, '');
-
-    // Map de expressões regulares para identificar as linguagens
-    const languagePatterns = new Map([
-        ['html', /<!DOCTYPE html>|<html>/],
-        ['cpp', /(?:#include\b.*|int\s+main\s*\(\s*\))/],
-        ['csharp', /(?:using\s+System;|namespace\s+\w+|class\s+\w+|public\s+static\s+void\s+Main\s*\()/],
-        ['javascript', /\b(?:const|let|var|function|=>|console\.log|if|for|while)\b/],
-        ['python', /\b(?:def|import|class|print|if)\b.*:/],
-        ['css', /(?:\{|\}):|[a-z-]+:/],
-        ['java', /\b(?:public\s+class|void\s+main|System\.out\.println)\b/],
-        ['php', /(?:<\?php|\$\w+|\becho\b|function\s+\w+)/],
-        ['ruby', /\b(?:def|class|puts|require|attr_accessor)\b/],
-        ['go', /\b(?:func\s+\w+|package\s+\w+|import\s+\(\s*fmt\s*\.\s*)\b/],
-        ['rust', /\b(?:fn\s+\w+|let\s+mut|struct\s+\w+|impl\s+|use\s+\w+)\b/],
-        ['swift', /\b(?:func|var|let|class|import\s+Foundation)\b/],
-        ['kotlin', /\b(?:fun|val|var|class|package)\b/],
-        ['typescript', /\b(?:interface|type|export|import\s+.*from)\b/],
-        ['sql', /\b(?:SELECT|INSERT|UPDATE|DELETE|FROM|WHERE|CREATE\s+TABLE)\b/i],
-        ['powershell', /\$\w+\s*=|\$PSVersionTable|Write-Host|Get-\w+/],
-        ['markdown', /(^#{1,6}\s|^\*\s|\[.*\]\(.*\))/m]
-    ]);
-
-    // Itera sobre o Map e retorna a primeira linguagem detectada
-    for (const [language, pattern] of languagePatterns) {
-        if (pattern.test(cleanCode)) {
-            return language;
+    function detectLanguage(code) {
+        const cleanCode = code.replace(/\/\/.*|\/\*[\s\S]*?\*\/|'(?:\\.|[^\\'])*'|"(?:\\.|[^\\"])*"/g, '');
+        
+        const languagePatterns = new Map([
+            ['html', /<!DOCTYPE html>|<html>/],
+            ['cpp', /(?:#include\b.*|int\s+main\s*\(\s*\))/],
+            ['csharp', /(?:using\s+System;|namespace\s+\w+|class\s+\w+|public\s+static\s+void\s+Main\s*\()/],
+            ['javascript', /\b(?:const|let|var|function|=>|console\.log|if|for|while)\b/],
+            ['python', /\b(?:def|import|class|print|if)\b.*:/],
+            ['css', /(?:\{|\}):|[a-z-]+:/],
+            ['java', /\b(?:public\s+class|void\s+main|System\.out\.println)\b/],
+            ['php', /(?:<\?php|\$\w+|\becho\b|function\s+\w+)/],
+            ['ruby', /\b(?:def|class|puts|require|attr_accessor)\b/],
+            ['go', /\b(?:func\s+\w+|package\s+\w+|import\s+\(\s*fmt\s*\.\s*)\b/],
+            ['rust', /\b(?:fn\s+\w+|let\s+mut|struct\s+\w+|impl\s+|use\s+\w+)\b/],
+            ['swift', /\b(?:func|var|let|class|import\s+Foundation)\b/],
+            ['kotlin', /\b(?:fun|val|var|class|package)\b/],
+            ['typescript', /\b(?:interface|type|export|import\s+.*from)\b/],
+            ['sql', /\b(?:SELECT|INSERT|UPDATE|DELETE|FROM|WHERE|CREATE\s+TABLE)\b/i],
+            ['powershell', /\$\w+\s*=|\$PSVersionTable|Write-Host|Get-\w+/],
+            ['markdown', /(^#{1,6}\s|^\*\s|\[.*\]\(.*\))/m]
+        ]);
+        
+        for (const [language, pattern] of languagePatterns) {
+            if (pattern.test(cleanCode)) {
+                return language;
+            }
         }
+        return 'plaintext';
     }
-
-    // Retorna 'plaintext' se nenhuma linguagem específica for identificada
-    return 'plaintext';
-    }
-    
+   
     function createCodeBlock(code) {
         const codeBlockContainer = document.createElement('div');
         codeBlockContainer.className = 'code-block-container';
@@ -68,10 +61,10 @@ function detectLanguage(code) {
     
         const lines = code.split('\n');
         const languageIdentifier = lines[0].trim();
-        const language = detectLanguage(code);
+        let language = hljs.getLanguage(languageIdentifier) ? languageIdentifier : detectLanguage(code);
     
         const languageSpan = document.createElement('span');
-        languageSpan.textContent = languageIdentifier;
+        languageSpan.textContent = language;
         codeBlockHeader.appendChild(languageSpan);
     
         const copyButton = document.createElement('button');
@@ -85,10 +78,8 @@ function detectLanguage(code) {
         const codeElement = document.createElement('code');
         codeElement.className = `language-${language}`;
         
-        // Remove a primeira linha (identificador de linguagem) e a segunda linha (se for "Copiar")
         const codeContent = lines.slice(lines.length > 1 && lines[1].trim() === 'Copiar' ? 2 : 1).join('\n').trim();
         
-        // Escape de caracteres especiais
         const escapedContent = codeContent
             .replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')
@@ -106,7 +97,7 @@ function detectLanguage(code) {
 
     function applyHighlightingToElement(element) {
         element.querySelectorAll('pre code').forEach((block) => {
-            if (!block.classList.contains('hljs') && !block.classList.contains('language-html')) {
+            if (!block.classList.contains('hljs')) {
                 hljs.highlightElement(block);
             }
         });
