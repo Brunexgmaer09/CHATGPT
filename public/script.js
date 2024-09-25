@@ -28,32 +28,35 @@ document.addEventListener('DOMContentLoaded', () => {
         if (code.includes('<!DOCTYPE html>') || code.includes('<html>')) {
             return 'html';
         }
-
+    
+        // Verifica por C++ e C#
         if (code.includes('#include') || code.includes('int main()')) return 'cpp';
-        if (code.includes('using System;') || code.includes('namespace ') || code.includes('class ') || code.includes('public static void Main(')) return 'csharp';        
-       // Remove comentários e strings para evitar falsos positivos
-       const cleanCode = code.replace(/\/\/.*|\/\*[\s\S]*?\*\/|'(?:\\.|[^\\'])*'|"(?:\\.|[^\\"])*"/g, '');
-
-        // Se não for HTML, verifica outras linguagens
+        if (code.includes('using System;') || code.includes('namespace ') || code.includes('class ') || code.includes('public static void Main(')) return 'csharp';
+    
+        // Remove comentários e strings para evitar falsos positivos
+        const cleanCode = code.replace(/\/\/.*|\/\*[\s\S]*?\*\/|'(?:\\.|[^\\'])*'|"(?:\\.|[^\\"])*"/g, '');
+    
+        // Mapeamento de padrões de linguagem
         const languagePatterns = {
-            javascript: /(const|let|var|function\s+\w+|\(\s*\)\s*=>|console\.log|if\s*\(|for\s*\(|while\s*\()/,
-            python: /(def\s+\w+|import\s+\w+|class\s+\w+|print\s*\(|if\s+[\w\s]+:)/,
-            css: /(\{|\}|:|\s*[a-z-]+\s*:)/,
-            java: /(public\s+class|void\s+main|System\.out\.println)/,
-            php: /(<\?php|\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*|echo\s|function\s+\w+)/,
-            ruby: /(def\s+\w+|class\s+\w+|puts\s|require\s|attr_accessor)/,
-            go: /(func\s+\w+|package\s+\w+|import\s+\(|fmt\.)/,
-            rust: /(fn\s+\w+|let\s+mut|struct\s+\w+|impl\s+|use\s+\w+)/,
-            swift: /(func\s+\w+|var\s+\w+|let\s+\w+|class\s+\w+|import\s+Foundation)/,
-            kotlin: /(fun\s+\w+|val\s+\w+|var\s+\w+|class\s+\w+|package\s+\w+)/,
-            typescript: /(interface\s+\w+|type\s+\w+|export\s+|import\s+.*from)/,
-            sql: /(SELECT|INSERT|UPDATE|DELETE|FROM|WHERE|CREATE TABLE)/i,
-            powershell: /(\$\w+\s*=|\$PSVersionTable|Write-Host|Get-\w+)/,
-            markdown: /(^#{1,6}\s|^\*\s|\[.*\]\(.*\))/m
+            javascript: /\b(const|let|var|function|=>|console\.log)\b/,
+            python: /\b(def|import|class|print)\b/,
+            css: /\{\s*[a-z-]+\s*:\s*[^}]+\}/,
+            java: /\b(public\s+class|System\.out\.println)\b/,
+            php: /\b(<\?php|\$[a-zA-Z_\x7f-\xff])\b/,
+            ruby: /\b(def\s+\w+|class\s+\w+|puts)\b/,
+            go: /\b(func|package|fmt\.)\b/,
+            rust: /\b(fn|let\s+mut|struct|impl)\b/,
+            swift: /\b(func|var|let|class|import)\b/,
+            kotlin: /\b(fun|val|var|class|package)\b/,
+            typescript: /\b(interface|type|export|import)\b/,
+            sql: /\b(SELECT|INSERT|UPDATE|DELETE|FROM|WHERE|CREATE)\b/i,
+            powershell: /\b(\$\w+\s*=|\$PSVersionTable|Get-)\b/,
+            markdown: /(^#{1,6}\s|\*|\[.*\]\(.*\))/m
         };
     
+        // Verifica as linguagens
         for (const [language, pattern] of Object.entries(languagePatterns)) {
-            if (pattern.test(code)) {
+            if (pattern.test(cleanCode)) {
                 return language;
             }
         }
@@ -63,20 +66,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function createCodeBlock(code) {
+        // Cria o container do bloco de código
         const codeBlockContainer = document.createElement('div');
         codeBlockContainer.className = 'code-block-container';
     
+        // Cria o cabeçalho do bloco de código
         const codeBlockHeader = document.createElement('div');
         codeBlockHeader.className = 'code-block-header';
     
         const lines = code.split('\n');
-        const languageIdentifier = lines[0].trim();
-        const language = detectLanguage(code);
     
+        // Detecta a linguagem com base no conteudo
+        const language = detectLanguage(code);
+        
+        // Criação do identificador de linguagem (se houver)
         const languageSpan = document.createElement('span');
-        languageSpan.textContent = language; // Usar a linguagem detectada
+        languageSpan.textContent = language || 'plaintext';  // Fallback para 'plaintext'
         codeBlockHeader.appendChild(languageSpan);
     
+        // Botão de copiar código
         const copyButton = document.createElement('button');
         copyButton.textContent = 'Copiar';
         copyButton.onclick = () => copyCode(copyButton, code);
@@ -84,23 +92,18 @@ document.addEventListener('DOMContentLoaded', () => {
     
         codeBlockContainer.appendChild(codeBlockHeader);
     
+        // Criação do bloco de código
         const codeBlock = document.createElement('pre');
         const codeElement = document.createElement('code');
-        codeElement.className = `language-${language}`;
-        
+        codeElement.className = `language-${language || 'plaintext'}`;
+    
         // Remove a primeira linha (identificador de linguagem) e a segunda linha (se for "Copiar")
         const codeContent = lines.slice(lines.length > 1 && lines[1].trim() === 'Copiar' ? 2 : 1).join('\n').trim();
-        
+    
         // Escape de caracteres especiais
-        const escapedContent = codeContent
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#039;');
+        const escapedContent = escapeHTML(codeContent);
     
         codeElement.innerHTML = escapedContent;
-    
         codeBlock.appendChild(codeElement);
         codeBlockContainer.appendChild(codeBlock);
     
@@ -109,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function applyHighlightingToElement(element) {
         element.querySelectorAll('pre code').forEach((block) => {
-            if (!block.classList.contains('hljs') && !block.classList.contains('language-html')) {
+            if (!block.classList.contains('hljs')) {
                 hljs.highlightElement(block);
             }
         });
@@ -269,19 +272,57 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function parseMarkdown(text) {
-        // Links
-        text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="markdown-link">$1</a>');
-        
-        // Cabeçalhos
-        text = text.replace(/^### (.*$)/gim, '<span class="large-text">$1</span>');
-        
-        // Negrito
-        text = text.replace(/\*\*(.*?)\*\*/g, '<span class="bold-text">$1</span>');
-        
-        // Quebras de linha
-        text = text.replace(/\n/g, '<br>');
-        
-        return text;
+        // Segurança: Escapa caracteres especiais de HTML para evitar XSS
+        const escapeHTML = (unsafe) => {
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        };
+    
+        // Primeiro, escape o HTML
+        let escapedText = escapeHTML(text);
+    
+        // Conversão de Markdown para HTML
+        return escapedText
+            // Links: [Texto](URL)
+            .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="markdown-link">$1</a>')
+            
+            // Cabeçalhos: ### Título
+            .replace(/^### (.*)$/gim, '<span class="large-text">$1</span>')
+            .replace(/^## (.*)$/gim, '<h2>$1</h2>')
+            .replace(/^# (.*)$/gim, '<h1>$1</h1>')
+            
+            // Negrito: **texto**
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    
+            // Itálico: *texto*
+            .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    
+            // Citações: > texto
+            .replace(/^> (.*)$/gim, '<blockquote>$1</blockquote>')
+    
+            // Listas não ordenadas: * item
+            .replace(/^\* (.*)$/gim, '<ul><li>$1</li></ul>')
+            
+            // Listas ordenadas: 1. item
+            .replace(/^\d+\. (.*)$/gim, '<ol><li>$1</li></ol>')
+    
+            // Código em linha: `código`
+            .replace(/`([^`]+)`/g, '<code>$1</code>')
+    
+            // Blocos de código com linguagem: ```lang
+            .replace(/```([a-zA-Z]+)\n([\s\S]*?)```/g, (match, lang, code) => {
+                // Faz o escape dos caracteres no código
+                const escapedCode = escapeHTML(code.trim());
+                // Retorna o bloco de código com a classe da linguagem especificada
+                return `<pre><code class="language-${lang}">${escapedCode}</code></pre>`;
+            })
+    
+            // Quebras de linha
+            .replace(/\n/g, '<br>');
     }
     
     function hideSuggestions() {
