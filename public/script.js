@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const language = detectLanguage(code);
     
         const languageSpan = document.createElement('span');
-        languageSpan.textContent = languageIdentifier;
+        languageSpan.textContent = language; // Usar a linguagem detectada
         codeBlockHeader.appendChild(languageSpan);
     
         const copyButton = document.createElement('button');
