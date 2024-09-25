@@ -231,24 +231,97 @@ header {
 }
 
 pre {
-    background-color: #141414; /* Fundo preto */
-    border-radius: 6px;
-    padding: 15px;
-    overflow-x: auto;
-    margin: 10px 0;
-    color: #ffffff; /* Texto branco para contraste */
+    margin: 0;
+    padding: 12px;
+    background-color: #1e1e1e;
+    position: relative;
 }
 
 code {
-    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-family: 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
     font-size: 14px;
     line-height: 1.5;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
 }
 
-pre {
-    position: relative;
+/* Estilos para o highlight.js - Tema inspirado no Visual Studio Code */
+.hljs {
+    color: #d4d4d4;
+    background: #1e1e1e;
+}
+
+.hljs-keyword,
+.hljs-literal,
+.hljs-symbol,
+.hljs-name {
+    color: #569cd6;
+}
+
+.hljs-link {
+    color: #569cd6;
+    text-decoration: underline;
+}
+
+.hljs-built_in,
+.hljs-type {
+    color: #4ec9b0;
+}
+
+.hljs-number,
+.hljs-class {
+    color: #b8d7a3;
+}
+
+.hljs-string,
+.hljs-meta-string {
+    color: #ce9178;
+}
+
+.hljs-regexp,
+.hljs-template-tag {
+    color: #d16969;
+}
+
+.hljs-title,
+.hljs-subst {
+    color: #dcdcaa;
+}
+
+.hljs-comment,
+.hljs-quote {
+    color: #6a9955;
+}
+
+.hljs-doctag {
+    color: #608b4e;
+}
+
+.hljs-meta,
+.hljs-meta-keyword,
+.hljs-tag {
+    color: #9b9b9b;
+}
+
+.hljs-variable,
+.hljs-template-variable {
+    color: #bd63c5;
+}
+
+.hljs-attr,
+.hljs-attribute,
+.hljs-builtin-name {
+    color: #9cdcfe;
+}
+
+.hljs-section {
+    color: gold;
+}
+
+.hljs-emphasis {
+    font-style: italic;
+}
+
+.hljs-strong {
+    font-weight: bold;
 }
 
 .copy-button {
@@ -314,27 +387,20 @@ pre {
 }
 
 .code-block-container {
-    position: relative;
-    margin: 10px 0;
-    background-color: #282c34;
+    background-color: #1e1e1e;
     border-radius: 6px;
+    margin: 10px 0;
     overflow: hidden;
-    border-top-left-radius: 0px;
-    border-top-right-radius: 0px;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    max-width: 100%; /* Ensure it doesn't overflow its parent */
 }
 
 .code-block-header {
+    background-color: #323233;
+    color: #cccccc;
+    padding: 8px 12px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #202020;
-    padding: 5px 10px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    color: #333;
+    font-family: 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
 }
 
 .code-block-header span {
@@ -342,12 +408,13 @@ pre {
 }
 
 .code-block-header button {
-    background-color: transparent;
-    border: 1px solid #2e2e35;
-    color: #ececf1;
-    padding: 2px 5px;
+    background-color: #4d4d4d;
+    color: #cccccc;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 12px;
+    transition: background-color 0.2s;
 }
 
 .code-block-container pre {
@@ -370,6 +437,10 @@ pre {
     border-top-left-radius: 1px;
     border-top-right-radius: 1px;
     min-width: 100%; /* Ensure code takes at least full width of container */
+}
+
+.code-block-header button:hover {
+    background-color: #5a5a5a;
 }
 
 /* Styling the scrollbar */
