@@ -90,7 +90,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const codeBlock = document.createElement('pre');
         const codeElement = document.createElement('code');
         codeElement.className = `language-${language}`;
-        
+    
+        // Move a inicialização de escapedContent para antes de ser usado
+        const codeContent = lines.slice(lines.length > 1 && lines[1].trim() === 'Copiar' ? 2 : 1).join('\n').trim();
+    
+        const escapedContent = codeContent
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    
         // Adiciona marcação para chaves em C#
         if (language === 'csharp') {
             let depth = 0;
@@ -104,27 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         return `<span class="hljs-punctuation" data-depth="${depth--}">${p1}</span>`;
                     }
                 }
-            );
-        } else {
-            codeElement.innerHTML = escapedContent;
-        }
-        
-        // Remove a primeira linha (identificador de linguagem) e a segunda linha (se for "Copiar")
-        const codeContent = lines.slice(lines.length > 1 && lines[1].trim() === 'Copiar' ? 2 : 1).join('\n').trim();
-        
-        // Escape de caracteres especiais
-        const escapedContent = codeContent
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#039;');
-    
-        // Adiciona marcação para chaves em C#
-        if (language === 'csharp') {
-            codeElement.innerHTML = escapedContent.replace(
-                /(\{|\})/g,
-                '<span class="hljs-punctuation">$1</span>'
             );
         } else {
             codeElement.innerHTML = escapedContent;
