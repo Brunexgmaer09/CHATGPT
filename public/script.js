@@ -66,25 +66,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function createCodeBlock(code) {
-        // Cria o container do bloco de código
         const codeBlockContainer = document.createElement('div');
         codeBlockContainer.className = 'code-block-container';
     
-        // Cria o cabeçalho do bloco de código
         const codeBlockHeader = document.createElement('div');
         codeBlockHeader.className = 'code-block-header';
     
         const lines = code.split('\n');
-    
-        // Detecta a linguagem com base no conteudo
+        const languageIdentifier = lines[0].trim();
         const language = detectLanguage(code);
-        
-        // Criação do identificador de linguagem (se houver)
+    
         const languageSpan = document.createElement('span');
-        languageSpan.textContent = language || 'plaintext';  // Fallback para 'plaintext'
+        languageSpan.textContent = language;
         codeBlockHeader.appendChild(languageSpan);
     
-        // Botão de copiar código
         const copyButton = document.createElement('button');
         copyButton.textContent = 'Copiar';
         copyButton.onclick = () => copyCode(copyButton, code);
@@ -92,18 +87,28 @@ document.addEventListener('DOMContentLoaded', () => {
     
         codeBlockContainer.appendChild(codeBlockHeader);
     
-        // Criação do bloco de código
         const codeBlock = document.createElement('pre');
         const codeElement = document.createElement('code');
-        codeElement.className = `language-${language || 'plaintext'}`;
-    
+        codeElement.className = `language-${language}`;
+        
+        // Adiciona a classe language-csharp se o código for C#
+        if (language === 'csharp') {
+            codeElement.classList.add('language-csharp');
+        }
+        
         // Remove a primeira linha (identificador de linguagem) e a segunda linha (se for "Copiar")
         const codeContent = lines.slice(lines.length > 1 && lines[1].trim() === 'Copiar' ? 2 : 1).join('\n').trim();
-    
+        
         // Escape de caracteres especiais
-        const escapedContent = escapeHTML(codeContent);
+        const escapedContent = codeContent
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
     
         codeElement.innerHTML = escapedContent;
+    
         codeBlock.appendChild(codeElement);
         codeBlockContainer.appendChild(codeBlock);
     

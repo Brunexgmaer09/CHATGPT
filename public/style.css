@@ -324,6 +324,51 @@ code {
     font-weight: bold;
 }
 
+/* Estilo para blocos de código C# */
+.language-csharp {
+    position: relative;
+}
+
+.language-csharp .hljs-punctuation:not(.hljs-subst) {
+    position: relative;
+}
+
+/* Linha pontilhada para chaves de abertura */
+.language-csharp .hljs-punctuation:not(.hljs-subst):first-child {
+    margin-left: 10px;
+}
+
+.language-csharp .hljs-punctuation:not(.hljs-subst):first-child::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background-image: linear-gradient(#cccccc 33%, transparent 0%);
+    background-position: right;
+    background-size: 1px 6px;
+    background-repeat: repeat-y;
+}
+
+/* Linha pontilhada para chaves de fechamento */
+.language-csharp .hljs-punctuation:not(.hljs-subst):last-child {
+    margin-right: 10px;
+}
+
+.language-csharp .hljs-punctuation:not(.hljs-subst):last-child::after {
+    content: '';
+    position: absolute;
+    right: -10px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background-image: linear-gradient(#cccccc 33%, transparent 0%);
+    background-position: right;
+    background-size: 1px 6px;
+    background-repeat: repeat-y;
+}
+
 .copy-button {
     position: absolute;
     top: 5px;
