@@ -361,12 +361,39 @@ code {
     position: absolute;
     right: -10px;
     top: 0;
+    bottom: 100%;
+    width: 1px;
+    background-image: linear-gradient(#cccccc 33%, transparent 0%);
+    background-position: right;
+    background-size: 1px 6px;
+    background-repeat: repeat-y;
+}
+
+/* Ajuste para garantir que as linhas se estendam por todo o bloco */
+.language-csharp {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.language-csharp::before,
+.language-csharp::after {
+    content: '';
+    position: absolute;
+    top: 0;
     bottom: 0;
     width: 1px;
     background-image: linear-gradient(#cccccc 33%, transparent 0%);
     background-position: right;
     background-size: 1px 6px;
     background-repeat: repeat-y;
+}
+
+.language-csharp::before {
+    left: 0;
+}
+
+.language-csharp::after {
+    right: 0;
 }
 
 .copy-button {
