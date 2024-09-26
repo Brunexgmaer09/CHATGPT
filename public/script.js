@@ -91,9 +91,22 @@ document.addEventListener('DOMContentLoaded', () => {
         const codeElement = document.createElement('code');
         codeElement.className = `language-${language}`;
         
-        // Adiciona a classe language-csharp se o código for C#
+        // Adiciona marcação para chaves em C#
         if (language === 'csharp') {
-            codeElement.classList.add('language-csharp');
+            let depth = 0;
+            codeElement.innerHTML = escapedContent.replace(
+                /(\{|\})/g,
+                (match, p1) => {
+                    if (p1 === '{') {
+                        depth++;
+                        return `<span class="hljs-punctuation" data-depth="${depth}">${p1}</span>`;
+                    } else {
+                        return `<span class="hljs-punctuation" data-depth="${depth--}">${p1}</span>`;
+                    }
+                }
+            );
+        } else {
+            codeElement.innerHTML = escapedContent;
         }
         
         // Remove a primeira linha (identificador de linguagem) e a segunda linha (se for "Copiar")

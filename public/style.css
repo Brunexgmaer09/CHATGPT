@@ -331,11 +331,23 @@ code {
     padding-right: 15px;
 }
 
+/* Remove as linhas verticais contínuas */
 .language-csharp::before,
 .language-csharp::after {
+    display: none;
+}
+
+/* Estilo para as chaves */
+.language-csharp .hljs-punctuation {
+    position: relative;
+}
+
+/* Linha pontilhada para chave de abertura */
+.language-csharp .hljs-punctuation:first-child::before {
     content: '';
     position: absolute;
-    top: 0;
+    left: -10px;
+    top: 100%;
     bottom: 0;
     width: 1px;
     background-image: linear-gradient(#cccccc 33%, transparent 0%);
@@ -344,37 +356,39 @@ code {
     background-repeat: repeat-y;
 }
 
-.language-csharp::before {
-    left: 5px;
+/* Linha pontilhada para chave de fechamento */
+.language-csharp .hljs-punctuation:last-child::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: -100vh;
+    bottom: 100%;
+    width: 1px;
+    background-image: linear-gradient(#cccccc 33%, transparent 0%);
+    background-position: right;
+    background-size: 1px 6px;
+    background-repeat: repeat-y;
 }
 
-.language-csharp::after {
-    right: 5px;
-}
-
-.language-csharp .hljs-punctuation {
-    position: relative;
-}
-
-.language-csharp .hljs-punctuation:first-child::before,
+/* Linha horizontal para conectar as chaves */
+.language-csharp .hljs-punctuation:first-child::after,
 .language-csharp .hljs-punctuation:last-child::after {
     content: '';
     position: absolute;
-    top: 0;
-    bottom: 0;
+    left: -10px;
     width: 10px;
+    height: 1px;
     background-image: linear-gradient(to right, #cccccc 33%, transparent 0%);
-    background-position: left;
-    background-size: 10px 1px;
+    background-size: 6px 1px;
     background-repeat: repeat-x;
 }
 
-.language-csharp .hljs-punctuation:first-child::before {
-    left: -15px;
+.language-csharp .hljs-punctuation:first-child::after {
+    top: 50%;
 }
 
 .language-csharp .hljs-punctuation:last-child::after {
-    right: -15px;
+    bottom: 50%;
 }
 
 .copy-button {
