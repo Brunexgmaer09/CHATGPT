@@ -107,7 +107,15 @@ document.addEventListener('DOMContentLoaded', () => {
             .replace(/"/g, '&quot;')
             .replace(/'/g, '&#039;');
     
-        codeElement.innerHTML = escapedContent;
+        // Adiciona marcação para chaves em C#
+        if (language === 'csharp') {
+            codeElement.innerHTML = escapedContent.replace(
+                /(\{|\})/g,
+                '<span class="hljs-punctuation">$1</span>'
+            );
+        } else {
+            codeElement.innerHTML = escapedContent;
+        }
     
         codeBlock.appendChild(codeElement);
         codeBlockContainer.appendChild(codeBlock);

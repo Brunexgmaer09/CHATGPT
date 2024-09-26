@@ -327,52 +327,8 @@ code {
 /* Estilo para blocos de código C# */
 .language-csharp {
     position: relative;
-}
-
-.language-csharp .hljs-punctuation:not(.hljs-subst) {
-    position: relative;
-}
-
-/* Linha pontilhada para chaves de abertura */
-.language-csharp .hljs-punctuation:not(.hljs-subst):first-child {
-    margin-left: 10px;
-}
-
-.language-csharp .hljs-punctuation:not(.hljs-subst):first-child::before {
-    content: '';
-    position: absolute;
-    left: -10px;
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background-image: linear-gradient(#cccccc 33%, transparent 0%);
-    background-position: right;
-    background-size: 1px 6px;
-    background-repeat: repeat-y;
-}
-
-/* Linha pontilhada para chaves de fechamento */
-.language-csharp .hljs-punctuation:not(.hljs-subst):last-child {
-    margin-right: 10px;
-}
-
-.language-csharp .hljs-punctuation:not(.hljs-subst):last-child::after {
-    content: '';
-    position: absolute;
-    right: -10px;
-    top: 0;
-    bottom: 100%;
-    width: 1px;
-    background-image: linear-gradient(#cccccc 33%, transparent 0%);
-    background-position: right;
-    background-size: 1px 6px;
-    background-repeat: repeat-y;
-}
-
-/* Ajuste para garantir que as linhas se estendam por todo o bloco */
-.language-csharp {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 .language-csharp::before,
@@ -389,11 +345,36 @@ code {
 }
 
 .language-csharp::before {
-    left: 0;
+    left: 5px;
 }
 
 .language-csharp::after {
-    right: 0;
+    right: 5px;
+}
+
+.language-csharp .hljs-punctuation {
+    position: relative;
+}
+
+.language-csharp .hljs-punctuation:first-child::before,
+.language-csharp .hljs-punctuation:last-child::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 10px;
+    background-image: linear-gradient(to right, #cccccc 33%, transparent 0%);
+    background-position: left;
+    background-size: 10px 1px;
+    background-repeat: repeat-x;
+}
+
+.language-csharp .hljs-punctuation:first-child::before {
+    left: -15px;
+}
+
+.language-csharp .hljs-punctuation:last-child::after {
+    right: -15px;
 }
 
 .copy-button {
