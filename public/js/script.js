@@ -249,32 +249,32 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function parseMarkdown(text) {
-        const escapeHTML = (unsafe) => {
-            return unsafe
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-        };
-
+        // Primeiro, escape o HTML
         let escapedText = escapeHTML(text);
-
+    
+        // Conversão de Markdown para HTML
         return escapedText
+            // Links: [Texto](URL)
             .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="markdown-link">$1</a>')
+            // Cabeçalhos: ### Título
             .replace(/^### (.*)$/gim, '<span class="large-text">$1</span>')
+            // Cabeçalhos: ## Título
             .replace(/^## (.*)$/gim, '<h2>$1</h2>')
+            // Cabeçalho 1: # Título
             .replace(/^# (.*)$/gim, '<h1>$1</h1>')
+            // Negrito: **texto**
             .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            // Itálico: *texto*
             .replace(/\*(.*?)\*/g, '<em>$1</em>')
+            // Citações: > texto
             .replace(/^> (.*)$/gim, '<blockquote>$1</blockquote>')
-            .replace(/^\* (.*)$/gim, '<ul class="markdown-list"><li>$1</li></ul>')
-            .replace(/^\d+\. (.*)$/gim, '<ol class="markdown-list"><li>$1</li></ol>')
+            // Listas não ordenadas: * item
+            .replace(/^\* (.*)$/gim, '<ul><li>$1</li></ul>')
+            // Listas ordenadas: 1. item
+            .replace(/^\d+\. (.*)$/gim, '<ol><li>$1</li></ol>')
+            // Código em linha: `código`
             .replace(/`([^`]+)`/g, '<code>$1</code>')
-            .replace(/```([a-zA-Z]+)\n([\s\S]*?)```/g, (match, lang, code) => {
-                const escapedCode = escapeHTML(code.trim());
-                return `<pre><code class="language-${lang}">${escapedCode}</code></pre>`;
-            })
+            // Quebras de linha
             .replace(/\n/g, '<br>');
     }
 
@@ -401,10 +401,12 @@ document.addEventListener('DOMContentLoaded', () => {
             
             parts.forEach((part, index) => {
                 if (index % 2 === 0) {
+                    // Texto normal
                     const textNode = document.createElement('span');
-                    textNode.innerHTML = parseMarkdown(escapeHTML(part));
+                    textNode.innerHTML = parseMarkdown(part);
                     textSpan.appendChild(textNode);
                 } else {
+                    // Bloco de código
                     const { codeBlockContainer, codeElement } = createCodeBlock(part.trim());
                     textSpan.appendChild(codeBlockContainer);
                 }
