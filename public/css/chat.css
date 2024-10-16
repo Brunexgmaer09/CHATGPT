@@ -116,3 +116,17 @@
 #chat-messages::-webkit-scrollbar-thumb:hover {
     background: #b3b3b3;
 }
+
+.typing-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 20px;
+    background-color: #333;
+    animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}

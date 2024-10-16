@@ -394,19 +394,19 @@ document.addEventListener('DOMContentLoaded', () => {
         if (typingContainer) {
             const textSpan = typingContainer.querySelector('.typing-text');
             
-            // Limpa o conteúdo existente
+            // Clear existing content
             textSpan.innerHTML = '';
             
             const parts = content.split('```');
             
             parts.forEach((part, index) => {
                 if (index % 2 === 0) {
-                    // Texto normal
+                    // Normal text
                     const textNode = document.createElement('span');
                     textNode.innerHTML = parseMarkdown(part);
                     textSpan.appendChild(textNode);
                 } else {
-                    // Bloco de código
+                    // Code block
                     const { codeBlockContainer, codeElement } = createCodeBlock(part.trim());
                     textSpan.appendChild(codeBlockContainer);
                 }
