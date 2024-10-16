@@ -443,11 +443,29 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateCursorPosition(textSpan) {
         const cursor = textSpan.querySelector('.typing-cursor');
         if (cursor) {
-            const lastElement = textSpan.lastElementChild;
-            if (lastElement && lastElement !== cursor) {
-                lastElement.appendChild(cursor);
+            const lastTextNode = findLastTextNode(textSpan);
+            if (lastTextNode) {
+                const tempSpan = document.createElement('span');
+                tempSpan.appendChild(lastTextNode.cloneNode());
+                textSpan.appendChild(tempSpan);
+                tempSpan.appendChild(cursor);
+            } else {
+                textSpan.appendChild(cursor);
             }
         }
+    }
+
+    function findLastTextNode(element) {
+        if (element.nodeType === Node.TEXT_NODE) {
+            return element;
+        }
+        for (let i = element.childNodes.length - 1; i >= 0; i--) {
+            const lastTextNode = findLastTextNode(element.childNodes[i]);
+            if (lastTextNode) {
+                return lastTextNode;
+            }
+        }
+        return null;
     }
 
     function applyHighlighting() {
