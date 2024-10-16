@@ -354,7 +354,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             const parsedData = JSON.parse(data);
                             if (parsedData.content) {
                                 fullResponse += parsedData.content;
-                                updateBotMessage(botMessageElement, fullResponse, true);
+                                updateBotMessage(botMessageElement, fullResponse);
                                 scrollToBottom();
                                 await new Promise(resolve => setTimeout(resolve, 0));
                             }
@@ -364,8 +364,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             }
-            // Remove the cursor after the response is complete
-            updateBotMessage(botMessageElement, fullResponse, false);
             const cursorElement = botMessageElement.querySelector('.typing-cursor');
             if (cursorElement) {
                 cursorElement.remove();
@@ -391,7 +389,7 @@ document.addEventListener('DOMContentLoaded', () => {
         scrollToBottom();
     }
 
-    function updateBotMessage(element, content, isTyping = true) {
+    function updateBotMessage(element, content) {
         const typingContainer = element.querySelector('.typing-container');
         if (typingContainer) {
             const textSpan = typingContainer.querySelector('.typing-text');
@@ -414,58 +412,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-            // Add cursor only if still typing
-            if (isTyping) {
-                const cursorSpan = document.createElement('span');
-                cursorSpan.className = 'typing-cursor';
-                textSpan.appendChild(cursorSpan);
-            }
-
             const observer = new MutationObserver(() => {
                 scrollToBottom();
                 applyHighlightingToElement(textSpan);
-                if (isTyping) {
-                    updateCursorPosition(textSpan);
-                }
             });
 
             observer.observe(textSpan, { childList: true, subtree: true, characterData: true });
 
-            if (isTyping) {
-                updateCursorPosition(textSpan);
-            }
+            applyHighlightingToElement(textSpan);
         } else {
             element.innerHTML = parseMarkdown(escapeHTML(content));
         }
         scrollToBottom();
-    }
-
-    function updateCursorPosition(textSpan) {
-        const cursor = textSpan.querySelector('.typing-cursor');
-        if (cursor) {
-            const lastTextNode = findLastTextNode(textSpan);
-            if (lastTextNode) {
-                const tempSpan = document.createElement('span');
-                tempSpan.appendChild(lastTextNode.cloneNode());
-                textSpan.appendChild(tempSpan);
-                tempSpan.appendChild(cursor);
-            } else {
-                textSpan.appendChild(cursor);
-            }
-        }
-    }
-
-    function findLastTextNode(element) {
-        if (element.nodeType === Node.TEXT_NODE) {
-            return element;
-        }
-        for (let i = element.childNodes.length - 1; i >= 0; i--) {
-            const lastTextNode = findLastTextNode(element.childNodes[i]);
-            if (lastTextNode) {
-                return lastTextNode;
-            }
-        }
-        return null;
     }
 
     function applyHighlighting() {
