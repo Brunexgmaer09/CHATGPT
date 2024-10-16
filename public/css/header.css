@@ -1,0 +1,50 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #dddddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header .logo img {
+    height: 40px;
+}
+
+#model-select {
+    background-color: #f0f0f0;
+    color: #333333;
+    border: 1px solid #cccccc;
+    border-radius: 20px;
+    padding: 8px 20px;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+#model-select:hover {
+    background-color: #e0e0e0;
+    border-color: #bbbbbb;
+}
+
+#model-select:focus {
+    border-color: #888888;
+    box-shadow: 0 0 5px rgba(136, 136, 136, 0.5);
+}
+
+#model-select::after {
+    content: '▼';
+    position: absolute;
+    right: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+#current-model {
+    font-size: 14px;
+    color: #555555;
+}
