@@ -47,6 +47,7 @@
 .code-block-container code {
     display: block;
     white-space: pre;
+    border-radius: 10px;
     word-wrap: normal;
     font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
     font-size: 14px;

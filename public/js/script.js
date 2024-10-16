@@ -85,9 +85,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const codeContent = lines.slice(lines.length > 1 && lines[1].trim() === 'Copiar' ? 2 : 1).join('\n').trim();
 
-        const escapedContent = escapeHTML(codeContent);
-
-        codeElement.innerHTML = escapedContent;
+        // Use textContent em vez de innerHTML para evitar injeção de HTML
+        codeElement.textContent = codeContent;
         codeBlock.appendChild(codeElement);
         codeBlockContainer.appendChild(codeBlock);
 
@@ -395,6 +394,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (typingContainer) {
             const textSpan = typingContainer.querySelector('.typing-text');
             
+            // Limpa o conteúdo existente
             textSpan.innerHTML = '';
             
             const parts = content.split('```');

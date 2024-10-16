@@ -25,7 +25,7 @@
 }
 
 .message {
-    max-width: 70%;
+    max-width: 1800px;
     border-radius: 10px;
     padding: 15px 20px;
     margin-bottom: 10px;
@@ -41,7 +41,7 @@
 }
 
 .user-message {
-    background-color: #d1e7dd;
+    background-color: #ffffff;
     align-self: flex-end;
 }
 
