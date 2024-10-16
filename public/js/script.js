@@ -412,18 +412,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
+            // Add cursor after the last element
+            const cursorSpan = document.createElement('span');
+            cursorSpan.className = 'typing-cursor';
+            textSpan.appendChild(cursorSpan);
+
             const observer = new MutationObserver(() => {
                 scrollToBottom();
                 applyHighlightingToElement(textSpan);
+                updateCursorPosition(textSpan);
             });
 
             observer.observe(textSpan, { childList: true, subtree: true, characterData: true });
 
             applyHighlightingToElement(textSpan);
+            updateCursorPosition(textSpan);
         } else {
             element.innerHTML = parseMarkdown(escapeHTML(content));
         }
         scrollToBottom();
+    }
+
+    function updateCursorPosition(textSpan) {
+        const cursor = textSpan.querySelector('.typing-cursor');
+        if (cursor) {
+            const lastElement = textSpan.lastElementChild;
+            if (lastElement && lastElement !== cursor) {
+                lastElement.appendChild(cursor);
+            }
+        }
     }
 
     function applyHighlighting() {

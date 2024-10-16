@@ -120,13 +120,20 @@
 .typing-cursor {
     display: inline-block;
     width: 2px;
-    height: 20px;
+    height: 1em;
     background-color: #333;
     animation: blink 0.7s infinite;
+    vertical-align: bottom;
 }
 
 @keyframes blink {
     0% { opacity: 0; }
     50% { opacity: 1; }
     100% { opacity: 0; }
+}
+
+.typing-text {
+    display: inline-block;
+    white-space: pre-wrap;
+    word-break: break-word;
 }
