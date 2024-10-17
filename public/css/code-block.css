@@ -4,6 +4,7 @@
     border-radius: 6px;
     margin: 10px 0;
     overflow: hidden;
+    max-width: 100%; /* Garante que o container não ultrapasse a largura do pai */
 }
 
 .code-block-container .typing-cursor {
@@ -46,7 +47,7 @@
     border-top-right-radius: 1px;
     margin: 0;
     padding: 12px;
-    overflow-x: auto;
+    overflow-x: auto; /* Adiciona rolagem horizontal */
     background-color: transparent;
     max-width: 100%;
 }

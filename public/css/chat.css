@@ -31,6 +31,7 @@
     margin-bottom: 10px;
     line-height: 1.6;
     word-wrap: break-word;
+    overflow-wrap: break-word;
     background-color: #f0f0f0;
     transition: box-shadow 0.3s ease;
     position: relative;
@@ -136,4 +137,5 @@
     display: inline-block;
     white-space: pre-wrap;
     word-break: break-word;
+    max-width: 100%;
 }
