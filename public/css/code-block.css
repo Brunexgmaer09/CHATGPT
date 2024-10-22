@@ -14,7 +14,7 @@
 }
 
 .code-block-header {
-    background-color: #e2e3e5;
+    background-color: #7b7b7b;
     color: #555555;
     padding: 8px 12px;
     display: flex;
@@ -24,7 +24,7 @@
 }
 
 .code-block-header span {
-    color: #333333;
+    color: #ffffff;
 }
 
 .code-block-header button {
@@ -47,8 +47,8 @@
     border-top-right-radius: 1px;
     margin: 0;
     padding: 12px;
-    overflow-x: auto; /* Adiciona rolagem horizontal */
-    background-color: transparent;
+    overflow-x: auto;
+    background-color: #282c34;
     max-width: 100%;
 }
 
@@ -79,4 +79,16 @@
 
 .code-block-container pre::-webkit-scrollbar-thumb:hover {
     background: #b3b3b3;
+}
+
+.code-block-container .code-block-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.2em;
+    background-color: #8ab4f8;
+    margin-left: 2px;
+    animation: blink 0.7s infinite;
+    vertical-align: middle;
+    position: relative;
+    z-index: 2;
 }

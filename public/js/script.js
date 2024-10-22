@@ -64,8 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const codeBlockHeader = document.createElement('div');
         codeBlockHeader.className = 'code-block-header';
 
-        const lines = code.split('\n');
-
         const language = detectLanguage(code);
         
         const languageSpan = document.createElement('span');
@@ -82,11 +80,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const codeBlock = document.createElement('pre');
         const codeElement = document.createElement('code');
         codeElement.className = `language-${language || 'plaintext'}`;
+        codeElement.textContent = code;
 
-        const codeContent = lines.slice(lines.length > 1 && lines[1].trim() === 'Copiar' ? 2 : 1).join('\n').trim();
-
-        // Use textContent em vez de innerHTML para evitar injeção de HTML
-        codeElement.textContent = codeContent;
         codeBlock.appendChild(codeElement);
         codeBlockContainer.appendChild(codeBlock);
 
@@ -393,6 +388,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const typingContainer = element.querySelector('.typing-container');
         if (typingContainer) {
             const textSpan = typingContainer.querySelector('.typing-text');
+            const cursor = typingContainer.querySelector('.typing-cursor');
             
             // Clear existing content
             textSpan.innerHTML = '';
@@ -408,18 +404,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     // Code block
                     const { codeBlockContainer, codeElement } = createCodeBlock(part.trim());
+                    
+                    // Adiciona o cursor ao final do bloco de código
+                    const codeCursor = document.createElement('span');
+                    codeCursor.className = 'code-block-cursor';
+                    codeElement.appendChild(codeCursor);
+                    
                     textSpan.appendChild(codeBlockContainer);
                 }
             });
 
-            const observer = new MutationObserver(() => {
-                scrollToBottom();
-                applyHighlightingToElement(textSpan);
-            });
-
-            observer.observe(textSpan, { childList: true, subtree: true, characterData: true });
-
-            applyHighlightingToElement(textSpan);
+            // Move o cursor para o final do conteúdo
+            if (cursor) {
+                textSpan.appendChild(cursor);
+            }
         } else {
             element.innerHTML = parseMarkdown(escapeHTML(content));
         }

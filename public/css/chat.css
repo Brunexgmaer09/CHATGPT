@@ -123,16 +123,27 @@
 .typing-cursor {
     display: inline-block;
     width: 2px;
-    height: 1em;
-    background-color: #333;
+    height: 1.2em;
+    background-color: #8ab4f8;
+    margin-left: 2px;
     animation: blink 0.7s infinite;
-    vertical-align: bottom;
+    vertical-align: middle;
+}
+
+.code-block-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.2em;
+    background-color: #8ab4f8;
+    margin-left: 2px;
+    animation: blink 0.7s infinite;
+    position: relative;
 }
 
 @keyframes blink {
-    0% { opacity: 0; }
-    50% { opacity: 1; }
-    100% { opacity: 0; }
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
 }
 
 .typing-text {
