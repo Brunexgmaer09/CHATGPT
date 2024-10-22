@@ -30,15 +30,17 @@
 </head>
 <body>
     <header>
+        <button class="menu-button">
+            <i class="fas fa-bars"></i>
+        </button>
         <div class="logo">
-            <img src="Logo.png" alt="Logo">
+            <img src="favicon.ico" alt="Gemini">
         </div>
         <select id="model-select">
             <option value="o1-preview">o1-preview</option>
             <option value="gpt-4o-mini">GPT-4o-mini</option>
             <option value="gpt-4o-2024-08-06">gpt-4o-2024-08-06</option>
         </select>
-        <div id="current-model">Modelo atual: GPT-4o-latest</div>
     </header>
     
     <div id="chat-container">
@@ -47,8 +49,17 @@
             <!-- Botões de sugestão serão adicionados aqui pelo JavaScript -->
         </div>
         <div id="input-container">
-            <textarea id="user-input" placeholder="Mensagem ChatGPT" rows="1"></textarea>
-            <button id="send-button">Enviar</button>
+            <div class="input-wrapper">
+                <textarea id="user-input" placeholder="Pergunte ao ChatGPT" rows="1"></textarea>
+                <div class="input-buttons">
+                    <button class="input-action-button">
+                        <i class="fas fa-image"></i>
+                    </button>
+                    <button class="input-action-button">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 

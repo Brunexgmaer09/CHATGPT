@@ -35,3 +35,28 @@
     50% { color: #0d6efd; }
     100% { color: #333333; }
 }
+
+.menu-button {
+    background: none;
+    border: none;
+    color: #ffffff;
+    padding: 8px;
+    margin-right: 16px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.menu-button:hover {
+    background-color: #2d2d2d;
+}
+
+#send-button {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #8ab4f8;
+    cursor: pointer;
+}
