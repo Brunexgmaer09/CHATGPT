@@ -113,10 +113,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function scrollToBottom() {
-        if (isNearBottom()) {
-            setTimeout(() => {
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }, 10);
+        const chatMessages = document.getElementById('chat-messages');
+        const lastMessage = chatMessages.lastElementChild;
+        
+        if (lastMessage) {
+            lastMessage.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            
+            // Ajuste adicional para garantir que a mensagem fique visível acima do input
+            const inputContainer = document.getElementById('input-container');
+            const inputHeight = inputContainer.offsetHeight;
+            chatMessages.scrollTop = chatMessages.scrollHeight + inputHeight;
         }
     }
 
@@ -430,10 +436,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (cursor) {
                 textSpan.appendChild(cursor);
             }
+            
+            scrollToBottom(); // Adicione esta linha
         } else {
             element.innerHTML = parseMarkdown(escapeHTML(content));
+            scrollToBottom(); // E esta linha
         }
-        scrollToBottom();
     }
 
     function applyHighlighting() {
