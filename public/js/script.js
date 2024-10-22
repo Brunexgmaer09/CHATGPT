@@ -287,7 +287,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateModel() {
         currentModel = document.getElementById('model-select').value;
-        document.getElementById('current-model').textContent = `Modelo atual: ${currentModel}`;
         console.log('Modelo atualizado para:', currentModel);
         
         messageHistory = [];

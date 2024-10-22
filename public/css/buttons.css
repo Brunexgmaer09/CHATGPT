@@ -51,12 +51,22 @@
 }
 
 #send-button {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
     background: none;
     border: none;
     color: #8ab4f8;
+    padding: 8px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 8px;
+}
+
+#send-button:hover {
+    background-color: rgba(138, 180, 248, 0.1);
+    border-radius: 50%;
+}
+
+#send-button i {
+    font-size: 20px;
 }
