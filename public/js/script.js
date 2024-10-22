@@ -150,6 +150,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (!isUser) {
+            const messageContainer = document.createElement('div');
+            messageContainer.className = 'message-container';
+            
+            const iconContainer = document.createElement('div');
+            iconContainer.className = 'bot-icon';
+            const iconImg = document.createElement('img');
+            iconImg.src = 'favicon.ico';
+            iconImg.alt = 'ChatGPT Icon';
+            iconContainer.appendChild(iconImg);
+            
             const typingContainer = document.createElement('div');
             typingContainer.className = 'typing-container';
             const textSpan = document.createElement('span');
@@ -158,8 +168,11 @@ document.addEventListener('DOMContentLoaded', () => {
             cursorSpan.className = 'typing-cursor';
             typingContainer.appendChild(textSpan);
             typingContainer.appendChild(cursorSpan);
+            
+            messageContainer.appendChild(iconContainer);
+            messageContainer.appendChild(typingContainer);
             messageElement.innerHTML = '';
-            messageElement.appendChild(typingContainer);
+            messageElement.appendChild(messageContainer);
 
             const actionsContainer = document.createElement('div');
             actionsContainer.className = 'message-actions hidden';

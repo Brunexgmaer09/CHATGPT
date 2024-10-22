@@ -2,7 +2,7 @@
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    max-width: 1024px;
+    max-width: 2524px;
     margin: 0 auto;
     padding: 24px;
     width: 100%;
@@ -155,4 +155,35 @@
     white-space: pre-wrap;
     word-break: break-word;
     max-width: 100%;
+}
+
+.message-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.bot-icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    margin-top: 4px;
+}
+
+.bot-icon img {
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+}
+
+.typing-container {
+    flex-grow: 1;
+}
+
+.bot-message {
+    padding-left: 16px;
+}
+
+.user-message {
+    padding-right: 16px;
 }
