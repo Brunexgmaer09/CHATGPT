@@ -60,3 +60,123 @@ header .logo img {
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 4px;
 }
+
+.theme-button {
+    background: none;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 8px 16px;
+    margin-left: 16px;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    background-color: #2d2d2d;
+    border: 1px solid #3d3d3d;
+    transition: background-color 0.2s;
+}
+
+.theme-button:hover {
+    background-color: #3d3d3d;
+}
+
+/* Estilos para o tema claro */
+body.light-theme {
+    background-color: #ffffff;
+    color: #1f1f1f;
+}
+
+body.light-theme #chat-container {
+    background-color: #ffffff;
+}
+
+body.light-theme #chat-messages {
+    background-color: #ffffff;
+}
+
+body.light-theme .bot-message {
+    background-color: #f7f7f8;
+    color: #1f1f1f;
+}
+
+body.light-theme .user-message {
+    background-color: #f0f7ff;
+    color: #1f1f1f;
+}
+
+body.light-theme #model-select {
+    background-color: #f0f0f0;
+    color: #1f1f1f;
+    border: 1px solid #e0e0e0;
+}
+
+body.light-theme #model-select option {
+    background-color: #ffffff;
+    color: #1f1f1f;
+}
+
+body.light-theme .theme-button {
+    background-color: #f0f0f0;
+    color: #1f1f1f;
+    border: 1px solid #e0e0e0;
+}
+
+body.light-theme .theme-button:hover {
+    background-color: #e0e0e0;
+}
+
+body.light-theme .typing-text {
+    color: #1f1f1f;
+}
+
+body.light-theme .message-container {
+    color: #1f1f1f;
+}
+
+body.light-theme header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+body.light-theme .menu-button {
+    color: #1f1f1f;
+}
+
+body.light-theme .menu-button:hover {
+    background-color: #f0f0f0;
+}
+
+body.light-theme .input-wrapper {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+}
+
+body.light-theme #user-input {
+    color: #1f1f1f;
+    background-color: #ffffff;
+}
+
+body.light-theme #input-container {
+    background-color: #ffffff;
+    border-top: 1px solid #e0e0e0;
+}
+
+body.light-theme .input-action-button {
+    color: #1f1f1f;
+}
+
+body.light-theme .input-action-button:hover {
+    background-color: #f0f0f0;
+}
+
+body.light-theme #send-button {
+    color: #1f1f1f;
+}
+
+body.light-theme #send-button:hover {
+    background-color: #f0f0f0;
+}
+
+body.light-theme #user-input::placeholder {
+    color: #666666;
+}

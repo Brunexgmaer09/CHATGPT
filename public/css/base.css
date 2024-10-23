@@ -25,3 +25,34 @@ h1, h2, h3 {
 .light-text {
     font-weight: 300; /* Leve */
 }
+
+body.light-theme {
+    background-color: #ffffff;
+    color: #1f1f1f;
+}
+
+body.light-theme .sidebar {
+    background-color: #f8f9fa;
+    border-right: 1px solid #e0e0e0;
+}
+
+body.light-theme .sidebar-footer {
+    border-top: 1px solid #e0e0e0;
+}
+
+body.light-theme .user-avatar {
+    background-color: #e0e0e0;
+    color: #1f1f1f;
+}
+
+body.light-theme .user-email {
+    color: #1f1f1f;
+}
+
+body.light-theme .section-placeholder {
+    color: #666;
+}
+
+body.light-theme .chat-history-item:hover {
+    background-color: #f0f0f0;
+}

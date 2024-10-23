@@ -536,4 +536,34 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.sidebar').classList.remove('active');
         document.querySelector('.sidebar-overlay').classList.remove('active');
     });
+
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = themeToggle.querySelector('i');
+    let currentTheme = localStorage.getItem('theme') || 'dark';
+
+    // Função para atualizar o tema
+    function updateTheme(theme) {
+        if (theme === 'light') {
+            document.body.classList.add('light-theme');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+            document.documentElement.style.colorScheme = 'light';
+        } else {
+            document.body.classList.remove('light-theme');
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+            document.documentElement.style.colorScheme = 'dark';
+        }
+        localStorage.setItem('theme', theme);
+        currentTheme = theme;
+    }
+
+    // Aplicar tema inicial
+    updateTheme(currentTheme);
+
+    // Adicionar evento de clique no botão
+    themeToggle.addEventListener('click', () => {
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        updateTheme(newTheme);
+    });
 });

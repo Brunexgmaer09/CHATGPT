@@ -360,3 +360,37 @@ code.hljs {
 .chat-history-item:hover {
     background-color: #2d2d2d;
 }
+
+body.light-theme #chat-messages {
+    background-color: #ffffff;
+}
+
+body.light-theme .bot-message {
+    background-color: #f8f9fa;
+    color: #1f1f1f;
+}
+
+body.light-theme .user-message {
+    background-color: #f0f7ff;
+    color: #1f1f1f;
+}
+
+body.light-theme #chat-messages::-webkit-scrollbar-track {
+    background: #f0f0f0;
+}
+
+body.light-theme #chat-messages::-webkit-scrollbar-thumb {
+    background: #c0c0c0;
+}
+
+body.light-theme #chat-messages::-webkit-scrollbar-thumb:hover {
+    background: #a0a0a0;
+}
+
+body.light-theme .typing-cursor {
+    background-color: #1f1f1f;
+}
+
+body.light-theme .sidebar-overlay {
+    background-color: rgba(0, 0, 0, 0.2);
+}
