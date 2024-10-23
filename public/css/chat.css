@@ -2,7 +2,7 @@
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    max-width: 2524px;
+    max-width: 1024px; /* Reduzido de 2524px para um valor mais razoável */
     margin: 0 auto;
     padding: 24px;
     width: 100%;    
@@ -18,14 +18,15 @@
 }
 
 .message {
-    padding: 24px 16px;
+    padding: 24px 32px;
     margin-bottom: 16px;
     border-radius: 8px;
     line-height: 1.5;
     background-color: transparent;
     width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
+    max-width: 900px; /* Definindo uma largura máxima para as mensagens */
+    margin-left: auto;
+    margin-right: auto;
     box-sizing: border-box;
 }
 
@@ -162,8 +163,10 @@
 
 .message-container {
     width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    gap: 16px;
 }
 
 .bot-icon {
@@ -180,15 +183,18 @@
 }
 
 .typing-container {
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
+    flex: 1;
+    max-width: calc(100% - 40px); /* Considerando o espaço do ícone */
 }
 
 .bot-message {
     padding-left: 16px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 0 20px 20px 20px; /* Superior-direita, inferior-direita, inferior-esquerda, superior-esquerda */
 }
 
 .user-message {
     padding-right: 16px;
+    background-color: rgba(138, 180, 248, 0.05);
+    border-radius: 20px 0 20px 20px; /* Superior-direita, inferior-direita, inferior-esquerda, superior-esquerda */
 }

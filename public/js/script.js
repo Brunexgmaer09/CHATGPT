@@ -367,6 +367,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             }
                         } catch (error) {
                             console.error('Error parsing JSON:', error);
+                            // Continua a execução sem interromper o fluxo
+                            continue;
                         }
                     }
                 }
