@@ -79,8 +79,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const codeBlock = document.createElement('pre');
         const codeElement = document.createElement('code');
+        
+        // Remove a primeira linha se ela contiver apenas o nome da linguagem
+        const codeLines = code.split('\n');
+        const cleanedCode = codeLines[0].trim().toLowerCase() === language.toLowerCase() ? 
+            codeLines.slice(1).join('\n') : 
+            code;
+
         codeElement.className = `language-${language || 'plaintext'}`;
-        codeElement.textContent = code;
+        codeElement.textContent = cleanedCode;
 
         codeBlock.appendChild(codeElement);
         codeBlockContainer.appendChild(codeBlock);
@@ -116,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isNearBottom()) {
             setTimeout(() => {
                 chatMessages.scrollTop = chatMessages.scrollHeight;
-            }, 5);
+            }, 10);
         }
     }
 

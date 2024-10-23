@@ -7,27 +7,35 @@
     padding: 24px;
     width: 100%;    
     overflow-x: hidden;
+    background-color: #1f1f1f;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 #chat-messages {
     flex-grow: 1;
+    max-height: 84vh;
     overflow-y: auto;
-    margin-bottom: 24px;
+    padding: 20px;
+    border-radius: 50px;
+    background-color: #1f1f1f;
     scroll-behavior: smooth;
-    height: calc(100vh - 180px); /* Ajusta a altura considerando o header e input */
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
 }
 
 .message {
-    padding: 24px 32px;
-    margin-bottom: 16px;
-    border-radius: 8px;
-    line-height: 1.5;
-    background-color: transparent;
-    width: 100%;
-    max-width: 900px; /* Definindo uma largura máxima para as mensagens */
-    margin-left: auto;
-    margin-right: auto;
-    box-sizing: border-box;
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    line-height: 1.6;
+    word-wrap: break-word;
+    transition: box-shadow 0.3s ease;
+    position: relative;
+    max-width: 1800px;
+}
+
+.message:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
 #input-container {
@@ -59,13 +67,16 @@
     color: #ffffff;
     font-size: 16px;
     padding: 8px;
-    min-height: 24px;
+    min-height: 40px;
+    max-height: 150px;
     resize: none;
     font-family: 'Google Sans', sans-serif;
+    background-color: #2d2d2d;
+    border: 1px solid #3d3d3d;
 }
 
 #user-input:focus {
-    outline: none;
+    outline: 2px solid #8ab4f8;
 }
 
 .input-buttons {
@@ -188,20 +199,16 @@
 }
 
 .bot-message {
-    padding-left: 16px;
     background-color: rgba(255, 255, 255, 0.05);
-    border-radius: 0 20px 20px 20px; /* Superior-direita, inferior-direita, inferior-esquerda, superior-esquerda */
+    align-self: flex-start;
 }
 
 .user-message {
-    padding-right: 16px;
     background-color: rgba(138, 180, 248, 0.05);
-    border-radius: 20px 0 20px 20px; /* Superior-direita, inferior-direita, inferior-esquerda, superior-esquerda */
+    align-self: flex-end;
 }
 
 .typing-text code {
-    color: inherit;
-    background-color: #c5c5c5;
     padding: 3px 5px;
     border-radius: 4px;
     font-family: 'Fira Code', monospace;

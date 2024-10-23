@@ -1,6 +1,6 @@
 .code-block-container {
     position: relative;
-    background-color: #e2e3e5;
+    background-color: #282c34;
     border-radius: 6px;
     margin: 10px 0;
     overflow: hidden;
@@ -15,8 +15,7 @@
 }
 
 .code-block-header {
-    background-color: #7b7b7b;
-    color: #555555;
+    background-color: #21252b;
     padding: 8px 12px;
     display: flex;
     justify-content: space-between;
@@ -25,12 +24,12 @@
 }
 
 .code-block-header span {
-    color: #ffffff;
+    color: #abb2bf;
 }
 
 .code-block-header button {
-    background-color: #6c757d;
-    color: #ffffff;
+    background-color: #3a404a;
+    color: #abb2bf;
     border: none;
     padding: 4px 8px;
     border-radius: 4px;
@@ -46,7 +45,6 @@
 .code-block-container pre {
     margin: 0;
     padding: 12px;
-    background-color: #282c34;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     white-space: pre;
