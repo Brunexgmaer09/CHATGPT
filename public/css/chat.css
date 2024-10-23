@@ -203,11 +203,21 @@
 .bot-message {
     background-color: rgba(255, 255, 255, 0.05);
     align-self: flex-start;
+    border-radius: 0 16px 16px 16px;
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    line-height: 1.6;
+    word-wrap: break-word;
 }
 
 .user-message {
     background-color: rgba(138, 180, 248, 0.05);
     align-self: flex-end;
+    border-radius: 16px 0 16px 16px;
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    line-height: 1.6;
+    word-wrap: break-word;
 }
 
 .typing-text code {

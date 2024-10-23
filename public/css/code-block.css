@@ -1,7 +1,7 @@
 .code-block-container {
     position: relative;
     background-color: #282c34;
-    border-radius: 6px;
+    border-radius: 8px;
     margin: 10px 0;
     overflow: hidden;
     width: 100%;
@@ -21,6 +21,7 @@
     justify-content: space-between;
     align-items: center;
     font-family: 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
+    border-radius: 8px 8px 0 0;
 }
 
 .code-block-header span {
@@ -49,6 +50,7 @@
     -webkit-overflow-scrolling: touch;
     white-space: pre;
     width: 100%;
+    border-radius: 0 0 8px 8px;
 }
 
 .code-block-container code {
@@ -90,4 +92,10 @@
     vertical-align: middle;
     position: relative;
     z-index: 2;
+}
+
+pre code.hljs {
+    padding: 12px;
+    border-radius: 0 0 8px 8px;
+    background-color: #282c34;
 }
