@@ -43,9 +43,11 @@
 }
 
 .code-block-container pre {
+    border-top-left-radius: 1px;
+    border-top-right-radius: 1px;
     margin: 0;
     padding: 12px;
-    overflow-x: auto; /* Adiciona barra de rolagem horizontal quando necessário */
+    overflow-x: auto; /* Garante a rolagem horizontal */
     background-color: #282c34;
     max-width: 100%;
     -webkit-overflow-scrolling: touch; /* Melhora a rolagem em dispositivos iOS */
@@ -54,36 +56,31 @@
 .code-block-container code {
     display: block;
     white-space: pre;
-    word-wrap: normal; /* Evita quebra de palavras */
+    border-radius: 10px;
+    word-wrap: normal; /* Impede quebra de palavras */
     font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
     font-size: 14px;
     line-height: 1.5;
     min-width: 100%;
+    overflow: visible; /* Permite que o conteúdo se estenda além do container */
 }
 
-/* Estilização da barra de rolagem horizontal */
+/* Scrollbar Personalizada para Blocos de Código */
 .code-block-container pre::-webkit-scrollbar {
-    height: 8px; /* Altura da barra de rolagem horizontal */
+    height: 8px;
 }
 
 .code-block-container pre::-webkit-scrollbar-track {
-    background: #1e1e1e;
-    border-radius: 4px;
+    background: #f1f1f1;
 }
 
 .code-block-container pre::-webkit-scrollbar-thumb {
-    background: #4a4a4a;
+    background: #cccccc;
     border-radius: 4px;
 }
 
 .code-block-container pre::-webkit-scrollbar-thumb:hover {
-    background: #555555;
-}
-
-/* Suporte para Firefox */
-.code-block-container pre {
-    scrollbar-width: thin;
-    scrollbar-color: #4a4a4a #1e1e1e;
+    background: #b3b3b3;
 }
 
 .code-block-container .code-block-cursor {
