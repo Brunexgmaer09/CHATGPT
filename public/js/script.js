@@ -429,6 +429,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             element.innerHTML = parseMarkdown(escapeHTML(content));
         }
+        scrollToBottom();
     }
 
     function applyHighlighting() {
