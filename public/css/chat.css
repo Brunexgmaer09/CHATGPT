@@ -18,15 +18,15 @@
 }
 
 .message {
-    padding: 24px 32px;
+    padding: 24px 16px;
     margin-bottom: 16px;
     border-radius: 8px;
     line-height: 1.5;
     background-color: transparent;
-    max-width: 1024px;
-    margin-left: auto;
-    margin-right: auto;
     width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
 }
 
 #input-container {
@@ -161,9 +161,9 @@
 }
 
 .message-container {
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 .bot-icon {
@@ -180,7 +180,9 @@
 }
 
 .typing-container {
-    flex-grow: 1;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 .bot-message {
