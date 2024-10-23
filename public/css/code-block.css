@@ -49,8 +49,6 @@
     background-color: #282c34;
     max-width: 100%;
     -webkit-overflow-scrolling: touch; /* Melhora a rolagem em dispositivos iOS */
-    scrollbar-width: thin;
-    scrollbar-color: #4a4a4a #1e1e1e;
 }
 
 .code-block-container code {
@@ -63,7 +61,7 @@
     min-width: 100%;
 }
 
-/* Scrollbar Personalizada para Blocos de Código */
+/* Estilização da barra de rolagem horizontal */
 .code-block-container pre::-webkit-scrollbar {
     height: 8px; /* Altura da barra de rolagem horizontal */
 }
@@ -80,6 +78,12 @@
 
 .code-block-container pre::-webkit-scrollbar-thumb:hover {
     background: #555555;
+}
+
+/* Suporte para Firefox */
+.code-block-container pre {
+    scrollbar-width: thin;
+    scrollbar-color: #4a4a4a #1e1e1e;
 }
 
 .code-block-container .code-block-cursor {

@@ -5,7 +5,8 @@
     max-width: 2524px;
     margin: 0 auto;
     padding: 24px;
-    width: 100%;
+    width: 100%;    
+    overflow-x: hidden;
 }
 
 #chat-messages {
