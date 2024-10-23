@@ -43,20 +43,20 @@
 }
 
 .code-block-container pre {
-    border-top-left-radius: 1px;
-    border-top-right-radius: 1px;
     margin: 0;
     padding: 12px;
-    overflow-x: auto;
+    overflow-x: auto; /* Adiciona barra de rolagem horizontal quando necessário */
     background-color: #282c34;
     max-width: 100%;
+    -webkit-overflow-scrolling: touch; /* Melhora a rolagem em dispositivos iOS */
+    scrollbar-width: thin;
+    scrollbar-color: #4a4a4a #1e1e1e;
 }
 
 .code-block-container code {
     display: block;
     white-space: pre;
-    border-radius: 10px;
-    word-wrap: normal;
+    word-wrap: normal; /* Evita quebra de palavras */
     font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
     font-size: 14px;
     line-height: 1.5;
@@ -65,20 +65,21 @@
 
 /* Scrollbar Personalizada para Blocos de Código */
 .code-block-container pre::-webkit-scrollbar {
-    height: 8px;
+    height: 8px; /* Altura da barra de rolagem horizontal */
 }
 
 .code-block-container pre::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: #1e1e1e;
+    border-radius: 4px;
 }
 
 .code-block-container pre::-webkit-scrollbar-thumb {
-    background: #cccccc;
+    background: #4a4a4a;
     border-radius: 4px;
 }
 
 .code-block-container pre::-webkit-scrollbar-thumb:hover {
-    background: #b3b3b3;
+    background: #555555;
 }
 
 .code-block-container .code-block-cursor {
