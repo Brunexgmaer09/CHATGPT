@@ -50,8 +50,8 @@
     background-color: #2d2d2d;
 }
 
-#send-button {
-    background: none;
+.input-action-button {
+    background: transparent;
     border: none;
     color: #8ab4f8;
     padding: 8px;
@@ -59,12 +59,29 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 8px;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.input-action-button:hover {
+    background-color: rgba(138, 180, 248, 0.1);
+}
+
+#send-button {
+    background: transparent;
+    border: none;
+    color: #8ab4f8;
+    padding: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s;
 }
 
 #send-button:hover {
     background-color: rgba(138, 180, 248, 0.1);
-    border-radius: 50%;
 }
 
 #send-button i {
