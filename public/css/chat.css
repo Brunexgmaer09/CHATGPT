@@ -200,10 +200,15 @@
 }
 
 .typing-text code {
-    color: #8ab4f8;
-    background-color: rgba(138, 180, 248, 0.1);
-    padding: 2px 4px;
+    color: inherit;
+    background-color: #c5c5c5;
+    padding: 3px 5px;
     border-radius: 4px;
+    font-family: 'Fira Code', monospace;
+}
+
+code.hljs {
+    padding: 3px 5px;
 }
 
 .sidebar {
