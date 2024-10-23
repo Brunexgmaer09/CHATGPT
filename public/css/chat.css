@@ -116,16 +116,16 @@
 }
 
 #chat-messages::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: #1e1e1e;
 }
 
 #chat-messages::-webkit-scrollbar-thumb {
-    background: #cccccc;
+    background: #4a4a4a;
     border-radius: 4px;
 }
 
 #chat-messages::-webkit-scrollbar-thumb:hover {
-    background: #b3b3b3;
+    background: #555555;
 }
 
 .typing-cursor {
@@ -197,4 +197,11 @@
     padding-right: 16px;
     background-color: rgba(138, 180, 248, 0.05);
     border-radius: 20px 0 20px 20px; /* Superior-direita, inferior-direita, inferior-esquerda, superior-esquerda */
+}
+
+.typing-text code {
+    color: #8ab4f8;
+    background-color: rgba(138, 180, 248, 0.1);
+    padding: 2px 4px;
+    border-radius: 4px;
 }

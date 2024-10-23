@@ -113,10 +113,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function scrollToBottom() {
-        if (isNearBottom()) {
-            setTimeout(() => {
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }, 10);
+        const chatMessages = document.getElementById('chat-messages');
+        const scrollHeight = chatMessages.scrollHeight;
+        const currentScroll = chatMessages.scrollTop + chatMessages.clientHeight;
+        
+        // Se estiver próximo do final (dentro de 500px), role suavemente
+        if (scrollHeight - currentScroll < 500) {
+            chatMessages.scrollTo({
+                top: scrollHeight,
+                behavior: 'smooth'
+            });
+        } else {
+            // Se estiver muito distante, role instantaneamente
+            chatMessages.scrollTop = scrollHeight;
         }
     }
 
