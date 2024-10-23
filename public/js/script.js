@@ -506,4 +506,38 @@ document.addEventListener('DOMContentLoaded', () => {
         hljs.configure({ ignoreUnescapedHTML: true });
         hljs.highlightAll();
     });
+
+    const menuButton = document.querySelector('.menu-button');
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.querySelector('.sidebar-overlay');
+
+    if (menuButton && sidebar && overlay) {
+        menuButton.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        });
+
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+
+        // Fechar sidebar quando pressionar ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            }
+        });
+    }
+
+    document.querySelector('.new-chat-button').addEventListener('click', () => {
+        // Limpar o histórico de mensagens
+        document.getElementById('chat-messages').innerHTML = '';
+        messageHistory = [];
+        
+        // Fechar a sidebar
+        document.querySelector('.sidebar').classList.remove('active');
+        document.querySelector('.sidebar-overlay').classList.remove('active');
+    });
 });

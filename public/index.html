@@ -43,6 +43,47 @@
         </select>
     </header>
     
+    <!-- Adicionar após o header -->
+    <div class="sidebar-overlay"></div>
+    <div class="sidebar">
+        <div class="sidebar-content">
+            <!-- Botão New Chat -->
+            <button class="new-chat-button">
+                <i class="fas fa-plus"></i>
+                Start new chat
+            </button>
+
+            <!-- Seções -->
+            <div class="sidebar-section">
+                <h3>Starred</h3>
+                <div class="section-content">
+                    <p class="section-placeholder">Star chats you use often</p>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Recents</h3>
+                <div id="chat-history-list">
+                    <!-- Histórico será preenchido via JavaScript -->
+                </div>
+            </div>
+
+            <!-- Footer da Sidebar -->
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">BO</div>
+                    <span class="user-email">brunooliveiirah@gmail.com</span>
+                </div>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">
+                        <i class="fas fa-question-circle"></i>
+                        Help & support
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <div id="chat-container">
         <div id="chat-messages"></div>
         <div id="suggestions">
