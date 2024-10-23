@@ -12,6 +12,8 @@
     flex-grow: 1;
     overflow-y: auto;
     margin-bottom: 24px;
+    scroll-behavior: smooth;
+    height: calc(100vh - 180px); /* Ajusta a altura considerando o header e input */
 }
 
 .message {

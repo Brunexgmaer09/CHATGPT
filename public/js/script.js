@@ -113,16 +113,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function scrollToBottom() {
-        const chatMessages = document.getElementById('chat-messages');
-        const lastMessage = chatMessages.lastElementChild;
-        
-        if (lastMessage) {
-            lastMessage.scrollIntoView({ behavior: 'smooth', block: 'end' });
-            
-            // Ajuste adicional para garantir que a mensagem fique visível acima do input
-            const inputContainer = document.getElementById('input-container');
-            const inputHeight = inputContainer.offsetHeight;
-            chatMessages.scrollTop = chatMessages.scrollHeight + inputHeight;
+        if (isNearBottom()) {
+            setTimeout(() => {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 10);
         }
     }
 
@@ -408,39 +402,26 @@ document.addEventListener('DOMContentLoaded', () => {
             const textSpan = typingContainer.querySelector('.typing-text');
             const cursor = typingContainer.querySelector('.typing-cursor');
             
-            // Clear existing content
             textSpan.innerHTML = '';
             
             const parts = content.split('```');
             
             parts.forEach((part, index) => {
                 if (index % 2 === 0) {
-                    // Normal text
                     const textNode = document.createElement('span');
                     textNode.innerHTML = parseMarkdown(part);
                     textSpan.appendChild(textNode);
                 } else {
-                    // Code block
                     const { codeBlockContainer, codeElement } = createCodeBlock(part.trim());
-                    
-                    // Adiciona o cursor ao final do bloco de código
-                    const codeCursor = document.createElement('span');
-                    codeCursor.className = 'code-block-cursor';
-                    codeElement.appendChild(codeCursor);
-                    
                     textSpan.appendChild(codeBlockContainer);
                 }
             });
 
-            // Move o cursor para o final do conteúdo
             if (cursor) {
                 textSpan.appendChild(cursor);
             }
-            
-            scrollToBottom(); // Adicione esta linha
         } else {
             element.innerHTML = parseMarkdown(escapeHTML(content));
-            scrollToBottom(); // E esta linha
         }
     }
 
