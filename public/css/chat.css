@@ -222,7 +222,6 @@
 
 .typing-text code {
     background-color: rgba(255, 255, 255, 0.1);
-    color: #00bef3;
     padding: 3px 5px;
     border-radius: 4px;
     font-family: 'Fira Code', monospace;
@@ -432,7 +431,6 @@ body.light-theme .markdown-link:hover {
 /* Estilo para código inline no tema escuro */
 body.light-theme .typing-text code {
     background-color: rgba(0, 0, 0, 0.05);
-    color: #0098db;
     padding: 3px 5px;
     border-radius: 4px;
     font-family: 'Fira Code', monospace;
