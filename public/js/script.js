@@ -73,37 +73,44 @@ document.addEventListener('DOMContentLoaded', () => {
         const codeBlockHeader = document.createElement('div');
         codeBlockHeader.className = 'code-block-header';
 
-        const language = detectLanguage(code);
+        // Detecta a linguagem e remove qualquer menção duplicada
+        const lines = code.split('\n');
+        const firstLine = lines[0].trim().toLowerCase();
+        const supportedLanguages = [
+            'javascript', 'python', 'html', 'css', 'java', 'cpp', 'csharp', 
+            'php', 'ruby', 'go', 'rust', 'swift', 'kotlin', 'typescript', 
+            'sql', 'bash', 'plaintext', 'shell', 'powershell'
+        ];
+
+        // Remove linhas que contenham apenas o nome da linguagem (em qualquer formato)
+        const cleanedLines = lines.filter(line => {
+            const trimmedLine = line.trim().toLowerCase();
+            // Remove linhas que são apenas o nome da linguagem
+            if (supportedLanguages.includes(trimmedLine)) return false;
+            // Remove linhas que contêm "Copiar"
+            if (trimmedLine === 'copiar') return false;
+            // Remove spans que contêm o nome da linguagem
+            if (trimmedLine.includes('<span') && supportedLanguages.some(lang => trimmedLine.toLowerCase().includes(lang))) return false;
+            return true;
+        });
+
+        const language = supportedLanguages.find(lang => firstLine.includes(lang)) || 'plaintext';
         
         const languageSpan = document.createElement('span');
-        languageSpan.textContent = language || 'plaintext';
+        languageSpan.textContent = language;
         codeBlockHeader.appendChild(languageSpan);
 
         const copyButton = document.createElement('button');
         copyButton.textContent = 'Copiar';
-        copyButton.onclick = () => copyCode(copyButton, code);
+        copyButton.onclick = () => copyCode(copyButton, cleanedLines.join('\n'));
         codeBlockHeader.appendChild(copyButton);
 
         codeBlockContainer.appendChild(codeBlockHeader);
 
         const codeBlock = document.createElement('pre');
         const codeElement = document.createElement('code');
-        
-        // Remove a primeira linha se ela contiver apenas o nome da linguagem
-        const codeLines = code.split('\n');
-        const firstLine = codeLines[0].trim().toLowerCase();
-        const supportedLanguages = [
-            'javascript', 'python', 'html', 'css', 'java', 'cpp', 'csharp', 
-            'php', 'ruby', 'go', 'rust', 'swift', 'kotlin', 'typescript', 
-            'sql', 'bash', 'plaintext', 'shell', 'powershell'
-        ];
-        
-        const cleanedCode = supportedLanguages.includes(firstLine) ?
-            codeLines.slice(1).join('\n') : 
-            code;
-
-        codeElement.className = `language-${language || 'plaintext'}`;
-        codeElement.textContent = cleanedCode;
+        codeElement.className = `language-${language}`;
+        codeElement.textContent = cleanedLines.join('\n').trim();
 
         codeBlock.appendChild(codeElement);
         codeBlockContainer.appendChild(codeBlock);
