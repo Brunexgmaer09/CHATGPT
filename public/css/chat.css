@@ -404,3 +404,24 @@ body.light-theme .typing-cursor {
 body.light-theme .sidebar-overlay {
     background-color: rgba(0, 0, 0, 0.2);
 }
+
+.markdown-link {
+    color: #00bef3;  /* Mesmo azul usado no code-block-header span */
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.markdown-link:hover {
+    color: #33ceff;
+    text-decoration: underline;
+}
+
+/* Estilo para o tema claro */
+body.light-theme .markdown-link {
+    color: #0098db;  /* Mesmo azul usado no tema claro do code-block-header */
+}
+
+body.light-theme .markdown-link:hover {
+    color: #00b3ff;
+}

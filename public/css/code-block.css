@@ -25,7 +25,8 @@
 }
 
 .code-block-header span {
-    color: #abb2bf;
+    color: #00bef3;  /* Azul claro similar ao React */
+    font-weight: 500;
 }
 
 .code-block-header button {
@@ -98,4 +99,9 @@ pre code.hljs {
     padding: 12px;
     border-radius: 0 0 8px 8px;
     background-color: #282c34;
+}
+
+/* Adicionar estilos para o tema claro */
+body.light-theme .code-block-header span {
+    color: #0098db;  /* Azul um pouco mais escuro para melhor contraste no tema claro */
 }

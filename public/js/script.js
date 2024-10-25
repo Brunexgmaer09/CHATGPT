@@ -9,7 +9,16 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function copyCode(button, code) {
         const lines = code.split('\n');
-        const codeContent = lines.slice(lines[1].trim() === 'Copiar' ? 2 : 1).join('\n').trim();
+        const firstLine = lines[0].trim().toLowerCase();
+        const supportedLanguages = [
+            'javascript', 'python', 'html', 'css', 'java', 'cpp', 'csharp', 
+            'php', 'ruby', 'go', 'rust', 'swift', 'kotlin', 'typescript', 
+            'sql', 'bash', 'plaintext', 'shell', 'powershell'
+        ];
+        
+        const codeContent = supportedLanguages.includes(firstLine) ?
+            lines.slice(1).join('\n').trim() :
+            code.trim();
         
         navigator.clipboard.writeText(codeContent).then(() => {
             button.textContent = 'Copiado!';
@@ -82,7 +91,14 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Remove a primeira linha se ela contiver apenas o nome da linguagem
         const codeLines = code.split('\n');
-        const cleanedCode = codeLines[0].trim().toLowerCase() === language.toLowerCase() ? 
+        const firstLine = codeLines[0].trim().toLowerCase();
+        const supportedLanguages = [
+            'javascript', 'python', 'html', 'css', 'java', 'cpp', 'csharp', 
+            'php', 'ruby', 'go', 'rust', 'swift', 'kotlin', 'typescript', 
+            'sql', 'bash', 'plaintext', 'shell', 'powershell'
+        ];
+        
+        const cleanedCode = supportedLanguages.includes(firstLine) ?
             codeLines.slice(1).join('\n') : 
             code;
 
