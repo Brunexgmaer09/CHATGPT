@@ -12,11 +12,32 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
+// Adicione esta função de validação de modelo
+function isValidModel(model) {
+  const validModels = [
+    'gpt-4-turbo',
+    'gpt-4-turbo-2024-04-09',
+    'gpt-4-turbo-preview',
+    'gpt-4-0125-preview',
+    'o1-preview',
+    'o1-preview-2024-09-12',
+    'o1-mini',
+    'o1-mini-2024-09-12'
+  ];
+  return validModels.includes(model);
+}
+
 app.use(express.static('public'));
 
 app.post('/chat', async (req, res) => {
   const { message, history, model } = req.body;
   
+  // Validar o modelo
+  if (!isValidModel(model)) {
+    res.status(400).json({ error: 'Modelo inválido' });
+    return;
+  }
+
   res.writeHead(200, {
     'Content-Type': 'text/event-stream',
     'Cache-Control': 'no-cache',

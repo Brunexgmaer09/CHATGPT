@@ -329,6 +329,58 @@ document.addEventListener('DOMContentLoaded', () => {
         currentModel = document.getElementById('model-select').value;
         console.log('Modelo atualizado para:', currentModel);
         
+        // Objeto com informações dos modelos
+        const modelInfo = {
+            'gpt-4-turbo': {
+                contextWindow: '128,000 tokens',
+                maxOutput: '4,096 tokens',
+                trainingData: 'Up to Dec 2023'
+            },
+            'gpt-4-turbo-2024-04-09': {
+                contextWindow: '128,000 tokens',
+                maxOutput: '4,096 tokens',
+                trainingData: 'Up to Dec 2023'
+            },
+            'gpt-4-turbo-preview': {
+                contextWindow: '128,000 tokens',
+                maxOutput: '4,096 tokens',
+                trainingData: 'Up to Dec 2023'
+            },
+            'gpt-4-0125-preview': {
+                contextWindow: '128,000 tokens',
+                maxOutput: '4,096 tokens',
+                trainingData: 'Up to Dec 2023'
+            },
+            'o1-preview': {
+                contextWindow: '128,000 tokens',
+                maxOutput: '32,768 tokens',
+                trainingData: 'Up to Oct 2023'
+            },
+            'o1-preview-2024-09-12': {
+                contextWindow: '128,000 tokens',
+                maxOutput: '32,768 tokens',
+                trainingData: 'Up to Oct 2023'
+            },
+            'o1-mini': {
+                contextWindow: '128,000 tokens',
+                maxOutput: '65,536 tokens',
+                trainingData: 'Up to Oct 2023'
+            },
+            'o1-mini-2024-09-12': {
+                contextWindow: '128,000 tokens',
+                maxOutput: '65,536 tokens',
+                trainingData: 'Up to Oct 2023'
+            }
+        };
+
+        // Atualiza informações do modelo na interface (opcional)
+        const info = modelInfo[currentModel];
+        console.log(`Modelo: ${currentModel}`);
+        console.log(`Contexto: ${info.contextWindow}`);
+        console.log(`Saída máxima: ${info.maxOutput}`);
+        console.log(`Dados de treinamento: ${info.trainingData}`);
+        
+        // Limpa o histórico ao trocar de modelo
         messageHistory = [];
         document.getElementById('chat-messages').innerHTML = '';
     }
