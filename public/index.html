@@ -133,6 +133,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/x86asm.min.js"></script>
     
     <!-- Inicialize o Highlight.js -->
+    <script>
+        hljs.configure({ ignoreUnescapedHTML: true });
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((el) => {
+                hljs.highlightElement(el);
+            });
+        });
+    </script>
     <script>hljs.highlightAll();</script>
     <script>hljs.configure({ ignoreUnescapedHTML: true });</script>
 

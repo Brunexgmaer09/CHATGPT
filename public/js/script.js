@@ -62,9 +62,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const codeBlockTabs = document.createElement('div');
         codeBlockTabs.className = 'code-block-tabs';
+
+        // Mapeamento de aliases de linguagem
+        const languageAliases = {
+            'assembly': 'x86asm',
+            'asm': 'x86asm'
+        };
+
+        const lines = code.split('\n');
+        const firstLine = lines[0].trim().toLowerCase();
+        
+        // Verifica se é um alias e usa o mapeamento correspondente
+        let language = languageAliases[firstLine] || firstLine;
+
+        const supportedLanguages = [
+            'javascript', 'python', 'html', 'css', 'java', 'cpp', 'csharp', 
+            'php', 'ruby', 'go', 'rust', 'swift', 'kotlin', 'typescript', 
+            'sql', 'bash', 'plaintext', 'shell', 'powershell', 'x86asm'
+        ];
+
+        if (!supportedLanguages.includes(language)) {
+            language = 'plaintext';
+        }
+
         const tab = document.createElement('div');
         tab.className = 'code-block-tab active';
-        tab.textContent = 'JavaScript';
+        tab.textContent = language.charAt(0).toUpperCase() + language.slice(1);
         codeBlockTabs.appendChild(tab);
 
         const codeBlockActions = document.createElement('div');
@@ -85,11 +108,10 @@ document.addEventListener('DOMContentLoaded', () => {
         lineNumbers.className = 'line-numbers';
 
         const codeElement = document.createElement('code');
-        codeElement.className = 'hljs language-javascript';
-        codeElement.textContent = code.trim();
+        codeElement.className = `hljs language-${language}`;
+        codeElement.textContent = lines.slice(1).join('\n').trim();
 
-        const lines = code.trim().split('\n');
-        for (let i = 1; i <= lines.length; i++) {
+        for (let i = 1; i < lines.length; i++) {
             const lineNumber = document.createElement('div');
             lineNumber.textContent = i;
             lineNumbers.appendChild(lineNumber);
