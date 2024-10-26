@@ -1,0 +1,70 @@
+.code-block-container {
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 20px 0;
+    font-family: 'Fira Code', monospace;
+}
+
+.code-block-header {
+    background-color: #252526;
+    padding: 8px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #cccccc;
+    font-size: 14px;
+}
+
+.code-block-tabs {
+    display: flex;
+    gap: 10px;
+}
+
+.code-block-tab {
+    padding: 4px 8px;
+    background-color: #2d2d2d;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.code-block-tab.active {
+    background-color: #3c3c3c;
+}
+
+.code-block-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.code-block-action {
+    background: none;
+    border: none;
+    color: #cccccc;
+    cursor: pointer;
+}
+
+.code-block-content {
+    display: flex;
+}
+
+.line-numbers {
+    padding: 16px 8px;
+    background-color: #252526;
+    color: #858585;
+    text-align: right;
+    user-select: none;
+}
+
+.code-block-container pre {
+    margin: 0;
+    padding: 16px;
+    overflow-x: auto;
+}
+
+.code-block-container code {
+    font-family: 'Fira Code', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+}
+

@@ -8,25 +8,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let messageHistory = [];
     
     function copyCode(button, code) {
-        const lines = code.split('\n');
-        const firstLine = lines[0].trim().toLowerCase();
-        const supportedLanguages = [
-            'javascript', 'python', 'html', 'css', 'java', 'cpp', 'csharp', 
-            'php', 'ruby', 'go', 'rust', 'swift', 'kotlin', 'typescript', 
-            'sql', 'bash', 'plaintext', 'shell', 'powershell'
-        ];
-        
-        const codeContent = supportedLanguages.includes(firstLine) ?
-            lines.slice(1).join('\n').trim() :
-            code.trim();
-        
-        navigator.clipboard.writeText(codeContent).then(() => {
-            button.textContent = 'Copiado!';
+        navigator.clipboard.writeText(code).then(() => {
+            const originalIcon = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-check"></i>';
             setTimeout(() => {
-                button.textContent = 'Copiar';
+                button.innerHTML = originalIcon;
             }, 2000);
-        }).catch(err => {
-            console.error('Erro ao copiar: ', err);
         });
     }
 
@@ -73,55 +60,49 @@ document.addEventListener('DOMContentLoaded', () => {
         const codeBlockHeader = document.createElement('div');
         codeBlockHeader.className = 'code-block-header';
 
-        // Mapeamento de aliases de linguagem
-        const languageAliases = {
-            'assembly': 'x86asm',
-            'asm': 'x86asm'
-        };
+        const codeBlockTabs = document.createElement('div');
+        codeBlockTabs.className = 'code-block-tabs';
+        const tab = document.createElement('div');
+        tab.className = 'code-block-tab active';
+        tab.textContent = 'JavaScript';
+        codeBlockTabs.appendChild(tab);
 
-        const lines = code.split('\n');
-        const firstLine = lines[0].trim().toLowerCase();
-        
-        // Verifica se é um alias e usa o mapeamento correspondente
-        let language = languageAliases[firstLine] || firstLine;
-
-        const supportedLanguages = [
-            'javascript', 'python', 'html', 'css', 'java', 'cpp', 'csharp', 
-            'php', 'ruby', 'go', 'rust', 'swift', 'kotlin', 'typescript', 
-            'sql', 'bash', 'plaintext', 'shell', 'powershell',
-            'x86asm'
-        ];
-
-        // Remove linhas que contenham apenas o nome da linguagem (em qualquer formato)
-        const cleanedLines = lines.filter(line => {
-            const trimmedLine = line.trim().toLowerCase();
-            // Remove linhas que são apenas o nome da linguagem
-            if (supportedLanguages.includes(trimmedLine)) return false;
-            // Remove linhas que contêm "Copiar"
-            if (trimmedLine === 'copiar') return false;
-            // Remove spans que contêm o nome da linguagem
-            if (trimmedLine.includes('<span') && supportedLanguages.some(lang => trimmedLine.toLowerCase().includes(lang))) return false;
-            return true;
-        });
-
-        const languageSpan = document.createElement('span');
-        languageSpan.textContent = language;
-        codeBlockHeader.appendChild(languageSpan);
-
+        const codeBlockActions = document.createElement('div');
+        codeBlockActions.className = 'code-block-actions';
         const copyButton = document.createElement('button');
-        copyButton.textContent = 'Copiar';
-        copyButton.onclick = () => copyCode(copyButton, cleanedLines.join('\n'));
-        codeBlockHeader.appendChild(copyButton);
+        copyButton.className = 'code-block-action';
+        copyButton.innerHTML = '<i class="fas fa-copy"></i>';
+        copyButton.onclick = () => copyCode(copyButton, code);
+        codeBlockActions.appendChild(copyButton);
+
+        codeBlockHeader.appendChild(codeBlockTabs);
+        codeBlockHeader.appendChild(codeBlockActions);
+
+        const codeBlockContent = document.createElement('div');
+        codeBlockContent.className = 'code-block-content';
+
+        const lineNumbers = document.createElement('div');
+        lineNumbers.className = 'line-numbers';
+
+        const codeElement = document.createElement('code');
+        codeElement.className = 'hljs language-javascript';
+        codeElement.textContent = code.trim();
+
+        const lines = code.trim().split('\n');
+        for (let i = 1; i <= lines.length; i++) {
+            const lineNumber = document.createElement('div');
+            lineNumber.textContent = i;
+            lineNumbers.appendChild(lineNumber);
+        }
+
+        const pre = document.createElement('pre');
+        pre.appendChild(codeElement);
+
+        codeBlockContent.appendChild(lineNumbers);
+        codeBlockContent.appendChild(pre);
 
         codeBlockContainer.appendChild(codeBlockHeader);
-
-        const codeBlock = document.createElement('pre');
-        const codeElement = document.createElement('code');
-        codeElement.className = `hljs language-${language}`;
-        codeElement.textContent = cleanedLines.join('\n').trim();
-
-        codeBlock.appendChild(codeElement);
-        codeBlockContainer.appendChild(codeBlock);
+        codeBlockContainer.appendChild(codeBlockContent);
 
         return { codeBlockContainer, codeElement };
     }
