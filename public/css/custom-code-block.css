@@ -46,7 +46,7 @@
 
 .code-block-content {
     display: flex;
-    min-height: 100%;
+    align-items: stretch;
 }
 
 .line-numbers {
@@ -59,11 +59,12 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-end;
+    min-width: 60px; /* Increased from 40px to 60px */
 }
 
 .line-numbers div {
-    height: 1.5em;
-    line-height: 1.5em;
+    line-height: 1.08;
+    height: 1.33em;
 }
 
 .code-block-container pre {
@@ -78,4 +79,5 @@
     font-size: 14px;
     line-height: 1.5em;
     display: block;
+    white-space: pre;
 }
