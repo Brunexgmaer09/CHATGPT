@@ -1,17 +1,10 @@
 .code-block-container {
     position: relative;
-    background-color: #282c34;
     border-radius: 8px;
     margin: 10px 0;
     overflow: hidden;
     width: 100%;
     max-width: 100%;
-}
-
-.code-block-container .typing-cursor {
-    position: absolute;
-    bottom: 12px;
-    right: 12px;
 }
 
 .code-block-header {
@@ -24,44 +17,19 @@
     border-radius: 8px 8px 0 0;
 }
 
-.code-block-header span {
-    color: #bbbbbb;  /* Azul claro similar ao React */
-    font-weight: 500;
-}
-
-.code-block-header button {
-    background-color: #3a404a;
-    color: #abb2bf;
-    border: none;
-    padding: 4px 8px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    font-size: 12px;
-}
-
-.code-block-header button:hover {
-    background-color: #5a6268;
-}
-
 .code-block-container pre {
     margin: 0;
-    padding: 12px;
+    padding: 0;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    white-space: pre;
-    width: 100%;
-    border-radius: 0 0 8px 8px;
 }
 
 .code-block-container code {
-    display: inline-block;
-    min-width: 100%;
+    display: block;
+    padding: 1em;
     font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
     font-size: 14px;
     line-height: 1.5;
-    white-space: pre;
-    word-wrap: normal;
 }
 
 /* Scrollbar Personalizada para Blocos de Código */
@@ -81,49 +49,4 @@
 
 .code-block-container pre::-webkit-scrollbar-thumb:hover {
     background: #555555;
-}
-
-.code-block-container .code-block-cursor {
-    display: inline-block;
-    width: 2px;
-    height: 1.2em;
-    background-color: #8ab4f8;
-    margin-left: 2px;
-    animation: blink 0.7s infinite;
-    vertical-align: middle;
-    position: relative;
-    z-index: 2;
-}
-
-pre code.hljs {
-    padding: 12px;
-    border-radius: 0 0 8px 8px;
-    background-color: #282c34;
-}
-
-/* Adicionar estilos para o tema claro */
-body.light-theme .code-block-header span {
-    color: #bbbbbb;  /* Azul um pouco mais escuro para melhor contraste no tema claro */
-}
-
-/* Estilo para listas ordenadas com SVG */
-.ordered-list-item {
-    list-style: none;
-    position: relative;
-    padding-left: 20px;
-    margin: 8px 0;
-}
-
-.ordered-list-item::before {
-    content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6"><circle cx="3" cy="3" r="2.5" fill="white"/></svg>');
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    margin-right: 8px;
-}
-
-/* Versão para o tema claro */
-body.light-theme .ordered-list-item::before {
-    content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6"><circle cx="3" cy="3" r="2.5" fill="%23333333"/></svg>');
 }

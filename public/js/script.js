@@ -73,14 +73,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const codeBlockHeader = document.createElement('div');
         codeBlockHeader.className = 'code-block-header';
 
-        // Detecta a linguagem e remove qualquer menção duplicada
+        // Mapeamento de aliases de linguagem
+        const languageAliases = {
+            'assembly': 'x86asm',
+            'asm': 'x86asm'
+        };
+
         const lines = code.split('\n');
         const firstLine = lines[0].trim().toLowerCase();
+        
+        // Verifica se é um alias e usa o mapeamento correspondente
+        let language = languageAliases[firstLine] || firstLine;
+
         const supportedLanguages = [
             'javascript', 'python', 'html', 'css', 'java', 'cpp', 'csharp', 
             'php', 'ruby', 'go', 'rust', 'swift', 'kotlin', 'typescript', 
             'sql', 'bash', 'plaintext', 'shell', 'powershell',
-            'assembly', 'x86asm'  // Adicione estas duas opções
+            'x86asm'
         ];
 
         // Remove linhas que contenham apenas o nome da linguagem (em qualquer formato)
@@ -95,8 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return true;
         });
 
-        const language = supportedLanguages.find(lang => firstLine.includes(lang)) || 'plaintext';
-        
         const languageSpan = document.createElement('span');
         languageSpan.textContent = language;
         codeBlockHeader.appendChild(languageSpan);
@@ -110,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const codeBlock = document.createElement('pre');
         const codeElement = document.createElement('code');
-        codeElement.className = `language-${language}`;
+        codeElement.className = `hljs language-${language}`;
         codeElement.textContent = cleanedLines.join('\n').trim();
 
         codeBlock.appendChild(codeElement);
