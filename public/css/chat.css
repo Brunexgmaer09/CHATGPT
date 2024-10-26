@@ -141,14 +141,16 @@
     background: #555555;
 }
 
-.typing-cursor {
+.typing-cursor-svg {
     display: inline-block;
-    width: 2px;
-    height: 1.2em;
-    background-color: #ffffff;
-    margin-left: 2px;
-    animation: blink 0.7s infinite;
+    width: 11px;          /* Aumentado de 4px para 8px */
+    height: 35px;        /* Aumentado de 24px para 32px */
+    margin-left: 7px;    /* Aumentado de 2px para 4px */
     vertical-align: middle;
+}
+
+.typing-cursor {
+    display: none; /* Esconde o cursor antigo */
 }
 
 .code-block-cursor {
@@ -435,4 +437,12 @@ body.light-theme .typing-text code {
     border-radius: 4px;
     font-family: 'Fira Code', monospace;
     font-size: 0.9em;
+}
+
+body.light-theme .typing-cursor-svg line {
+    stroke: #444444;
+}
+
+body:not(.light-theme) .typing-cursor-svg line {
+    stroke: #ffffff;
 }

@@ -483,6 +483,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const textSpan = typingContainer.querySelector('.typing-text');
             const cursor = typingContainer.querySelector('.typing-cursor');
             
+            // Remove o cursor antigo se existir
+            if (cursor) cursor.remove();
+            
             textSpan.innerHTML = '';
             
             const parts = content.split('```');
@@ -498,9 +501,63 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-            if (cursor) {
-                textSpan.appendChild(cursor);
-            }
+            // Adiciona o novo cursor SVG
+            const cursorSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            cursorSvg.setAttribute("class", "typing-cursor-svg");
+            cursorSvg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+            cursorSvg.setAttribute("viewBox", "0 0 20 30");
+            cursorSvg.innerHTML = `
+                <line 
+                    x1="4" y1="4"           /* Ajustado de 2 para 4 */
+                    x2="4" y2="28"          /* Ajustado de 2 para 4 */
+                    stroke="${document.body.classList.contains('light-theme') ? '#444444' : '#ffffff'}"
+                    stroke-width="6"        /* Aumentado de 4 para 6 */
+                    stroke-linecap="round">
+                    <animate
+                        attributeName="opacity"
+                        values="1;0;1"
+                        dur="1.4s"
+                        repeatCount="indefinite"
+                    />
+                    <animate
+                        attributeName="y2"
+                        values="28;24;28"
+                        dur="1.4s"
+                        repeatCount="indefinite"
+                    />
+                    <animate
+                        attributeName="stroke-width"
+                        values="6;4;6"      /* Aumentado de 4;3;4 para 6;4;6 */
+                        dur="1.4s"
+                        repeatCount="indefinite"
+                    />
+                </line>
+                <line 
+                    x1="4" y1="4"          /* Ajustado de 2 para 4 */
+                    x2="4" y2="28"         /* Ajustado de 2 para 4 */
+                    stroke="${document.body.classList.contains('light-theme') ? '#444444' : '#ffffff'}"
+                    stroke-width="3"       /* Aumentado de 2 para 3 */
+                    stroke-linecap="round"
+                    filter="url(#glow)"
+                    opacity="0.5">
+                    <animate
+                        attributeName="opacity"
+                        values="0.5;0;0.5"
+                        dur="1.4s"
+                        repeatCount="indefinite"
+                    />
+                </line>
+                <defs>
+                    <filter id="glow">
+                        <feGaussianBlur stdDeviation="2" result="coloredBlur"/>  /* Aumentado de 1 para 2 */
+                        <feMerge>
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+            `;
+            textSpan.appendChild(cursorSvg);
         } else {
             element.innerHTML = parseMarkdown(escapeHTML(content));
         }
