@@ -425,7 +425,14 @@ document.addEventListener('DOMContentLoaded', () => {
      
             while (true) {
                 const { done, value } = await reader.read();
-                if (done) break;
+                if (done) {
+                    // Remove o cursor SVG quando a mensagem estiver completa
+                    const cursorSvg = botMessageElement.querySelector('.typing-cursor-svg');
+                    if (cursorSvg) {
+                        cursorSvg.remove();
+                    }
+                    break;
+                }
     
                 const chunk = decoder.decode(value);
                 const lines = chunk.split('\n\n');
@@ -452,10 +459,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             }
-            const cursorElement = botMessageElement.querySelector('.typing-cursor');
-            if (cursorElement) {
-                cursorElement.remove();
-            }
 
             messageHistory.push({ role: "assistant", content: fullResponse });
 
@@ -471,6 +474,11 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error('Error:', error);
             updateBotMessage(botMessageElement, 'Desculpe, ocorreu um erro ao processar sua mensagem.');
+            // Também remove o cursor em caso de erro
+            const cursorSvg = botMessageElement.querySelector('.typing-cursor-svg');
+            if (cursorSvg) {
+                cursorSvg.remove();
+            }
         }
 
         applyHighlighting();
