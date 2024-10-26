@@ -79,7 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const supportedLanguages = [
             'javascript', 'python', 'html', 'css', 'java', 'cpp', 'csharp', 
             'php', 'ruby', 'go', 'rust', 'swift', 'kotlin', 'typescript', 
-            'sql', 'bash', 'plaintext', 'shell', 'powershell'
+            'sql', 'bash', 'plaintext', 'shell', 'powershell',
+            'assembly', 'x86asm'  // Adicione estas duas opções
         ];
 
         // Remove linhas que contenham apenas o nome da linguagem (em qualquer formato)
@@ -323,7 +324,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    let currentModel = 'chatgpt-4o-latest';
+    let currentModel = 'gpt-4o-mini-2024-07-18';
 
     function updateModel() {
         currentModel = document.getElementById('model-select').value;
@@ -707,3 +708,4 @@ document.addEventListener('DOMContentLoaded', () => {
         updateTheme(newTheme);
     });
 });
+
