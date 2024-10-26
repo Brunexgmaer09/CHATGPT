@@ -46,6 +46,7 @@
 
 .code-block-content {
     display: flex;
+    min-height: 100%;
 }
 
 .line-numbers {
@@ -54,17 +55,27 @@
     color: #858585;
     text-align: right;
     user-select: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+
+.line-numbers div {
+    height: 1.5em;
+    line-height: 1.5em;
 }
 
 .code-block-container pre {
     margin: 0;
     padding: 16px;
     overflow-x: auto;
+    flex-grow: 1;
 }
 
 .code-block-container code {
     font-family: 'Fira Code', monospace;
     font-size: 14px;
-    line-height: 1.5;
+    line-height: 1.5em;
+    display: block;
 }
-

@@ -129,14 +129,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return { codeBlockContainer, codeElement };
     }
 
-    function applyHighlightingToElement(element) {
-        element.querySelectorAll('pre code').forEach((block) => {
-            if (!block.classList.contains('hljs')) {
-                hljs.highlightElement(block);
-            }
-        });
-    }
-
     function escapeHTML(unsafe) {
         return unsafe
              .replace(/&/g, "&amp;")
