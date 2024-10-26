@@ -105,3 +105,25 @@ pre code.hljs {
 body.light-theme .code-block-header span {
     color: #bbbbbb;  /* Azul um pouco mais escuro para melhor contraste no tema claro */
 }
+
+/* Estilo para listas ordenadas com SVG */
+.ordered-list-item {
+    list-style: none;
+    position: relative;
+    padding-left: 20px;
+    margin: 8px 0;
+}
+
+.ordered-list-item::before {
+    content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6"><circle cx="3" cy="3" r="2.5" fill="white"/></svg>');
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-right: 8px;
+}
+
+/* Versão para o tema claro */
+body.light-theme .ordered-list-item::before {
+    content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6"><circle cx="3" cy="3" r="2.5" fill="%23333333"/></svg>');
+}

@@ -307,7 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Listas não ordenadas: * item
             .replace(/^\* (.*)$/gim, '<ul><li>$1</li></ul>')
             // Listas ordenadas: 1. item
-            .replace(/^\d+\. (.*)$/gim, '<ol><li>$1</li></ol>')
+            .replace(/^\d+\. (.*)$/gim, '<li class="ordered-list-item">$1</li>')
             // Código em linha: `código`
             .replace(/`([^`]+)`/g, '<code>$1</code>')
             // Quebras de linha
