@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balloon Shooter - Estoure os Balões!</title>
+    <link rel="stylesheet" href="css/balloon-shooter.css">
+</head>
+<body>
+    <div id="gameContainer">
+        <div id="header">
+            <h1>🎈 Balloon Shooter</h1>
+            <div id="gameStats">
+                <div class="stat">
+                    <span class="label">Pontuação:</span>
+                    <span id="score">0</span>
+                </div>
+                <div class="stat">
+                    <span class="label">Vidas:</span>
+                    <span id="lives">3</span>
+                </div>
+                <div class="stat">
+                    <span class="label">Nível:</span>
+                    <span id="level">1</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="gameArea">
+            <canvas id="gameCanvas"></canvas>
+            <div id="crosshair">+</div>
+            
+            <!-- Game Over Screen -->
+            <div id="gameOverScreen" class="hidden">
+                <div class="modal">
+                    <h2>Game Over!</h2>
+                    <p>Pontuação Final: <span id="finalScore">0</span></p>
+                    <button id="restartBtn" class="game-button">Jogar Novamente</button>
+                </div>
+            </div>
+
+            <!-- Start Screen -->
+            <div id="startScreen">
+                <div class="modal">
+                    <h2>🎈 Balloon Shooter</h2>
+                    <p>Estoure os balões antes que escapem!</p>
+                    <div class="instructions">
+                        <p><strong>Desktop:</strong> Use o mouse para mirar e clique para atirar</p>
+                        <p><strong>Mobile:</strong> Toque na tela para atirar nos balões</p>
+                    </div>
+                    <button id="startBtn" class="game-button">Começar Jogo</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="controls">
+            <button id="pauseBtn" class="control-button">⏸️ Pausar</button>
+            <button id="muteBtn" class="control-button">🔊 Som</button>
+        </div>
+    </div>
+
+    <script src="js/balloon-shooter.js"></script>
+</body>
+</html>
