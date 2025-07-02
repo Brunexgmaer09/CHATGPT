@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Balloon Shooter AI - Deep Q-Learning</title>
+    <link rel="stylesheet" href="css/balloon-shooter-ai.css">
+</head>
+<body>
+    <div id="gameContainer">
+        <div id="header">
+            <h1>🎈 Balloon Shooter AI</h1>
+            <div id="gameStats">
+                <div class="stat">
+                    <span class="label">Pontuação:</span>
+                    <span id="score">0</span>
+                </div>
+                <div class="stat">
+                    <span class="label">Vidas:</span>
+                    <span id="lives">3</span>
+                </div>
+                <div class="stat">
+                    <span class="label">Nível:</span>
+                    <span id="level">1</span>
+                </div>
+                <div class="stat">
+                    <span class="label">Episódio:</span>
+                    <span id="episode">0</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="aiControls">
+            <button id="modeToggle" class="ai-button">🤖 Modo IA</button>
+            <button id="trainBtn" class="ai-button">🧠 Treinar IA</button>
+            <button id="speedBtn" class="ai-button">⚡ Velocidade: 1x</button>
+            <div class="ai-stats">
+                <span>Epsilon: <span id="epsilon">1.0</span></span>
+                <span>Experiências: <span id="experiences">0</span></span>
+                <span>Acurácia: <span id="accuracy">0%</span></span>
+            </div>
+        </div>
+
+        <div id="gameArea">
+            <canvas id="gameCanvas"></canvas>
+            <div id="crosshair">
+                <div class="crosshair-outer"></div>
+                <div class="crosshair-inner"></div>
+                <div class="crosshair-dot"></div>
+            </div>
+            
+            <!-- Game Over Screen -->
+            <div id="gameOverScreen" class="hidden">
+                <div class="modal">
+                    <h2>Game Over!</h2>
+                    <p>Pontuação Final: <span id="finalScore">0</span></p>
+                    <p>Episódio: <span id="finalEpisode">0</span></p>
+                    <button id="restartBtn" class="game-button">Jogar Novamente</button>
+                </div>
+            </div>
+
+            <!-- Start Screen -->
+            <div id="startScreen">
+                <div class="modal">
+                    <h2>🎈 Balloon Shooter AI</h2>
+                    <p>Jogue você mesmo ou deixe a IA aprender!</p>
+                    <div class="instructions">
+                        <p><strong>Humano:</strong> Use mouse/toque para atirar</p>
+                        <p><strong>IA:</strong> Deep Q-Learning com Brain.js</p>
+                    </div>
+                    <button id="startBtn" class="game-button">Começar Jogo</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="controls">
+            <button id="pauseBtn" class="control-button">⏸️ Pausar</button>
+            <button id="muteBtn" class="control-button">🔊 Som</button>
+            <button id="resetAiBtn" class="control-button">🔄 Reset IA</button>
+        </div>
+    </div>
+
+    <script src="js/brain.min.js"></script>
+    <script src="js/balloon-shooter-ai.js"></script>
+</body>
+</html>

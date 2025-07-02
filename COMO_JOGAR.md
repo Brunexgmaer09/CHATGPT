@@ -2,27 +2,40 @@
 
 ## 🚀 Execução Rápida
 
-### ⭐ VERSÃO MOBILE RECOMENDADA (resolve erro no celular)
 ```bash
-cd public
-python3 -m http.server 8080
+python3 -m http.server 8080 --directory public
 ```
-**Depois acesse:** http://localhost:8080/balloon-shooter-mobile.html
 
-**💡 Esta versão standalone não depende de arquivos externos e funciona perfeitamente no mobile!**
+## 🎮 Versões Disponíveis
 
-### Opção 2: Versão Original (Desktop)
-**Acesse:** http://localhost:8080/balloon-shooter.html
+### 🤖 **NOVA! Versão AI com Deep Q-Learning**
+**URL:** http://localhost:8080/balloon-shooter-ai.html
+- ✨ **Mira avançada** com animações
+- 🧠 **IA que aprende** usando redes neurais
+- 📊 **Métricas de treinamento** em tempo real
+- ⚡ **Velocidade ajustável** (1x-8x)
 
-### Opção 3: Servidor Node.js
-```bash
-npm install
-npm start
-```
-**Depois acesse:** http://localhost:3000/balloon-shooter.html
+### 📱 **Versão Mobile Standalone**
+**URL:** http://localhost:8080/balloon-shooter-mobile.html
+- 💡 **Resolve erro no celular** (código inline)
+- 📱 **Otimizada para touch**
+- 🎯 **Funciona offline**
 
-### Opção 4: Arquivo Local
-- Abra diretamente o arquivo `public/balloon-shooter-mobile.html` no navegador
+### 💻 **Versão Desktop Original**
+**URL:** http://localhost:8080/balloon-shooter.html
+- 🖱️ **Controle com mouse**
+- 📁 **Arquivos separados**
+- 🎨 **Interface clássica**
+
+## 🆚 Comparação das Versões
+
+| Recurso | Original | Mobile | **AI** |
+|---------|----------|--------|--------|
+| **Mira** | Simples | Simples | **Avançada** |
+| **Mobile** | ✅ | ✅ | ✅ |
+| **IA** | ❌ | ❌ | **🧠 Deep Q-Learning** |
+| **Treinamento** | ❌ | ❌ | **🤖 Automático** |
+| **Métricas** | Básicas | Básicas | **📊 Completas** |
 
 ## 🎮 Como Jogar
 
