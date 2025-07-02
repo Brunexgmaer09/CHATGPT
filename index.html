@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#4a90e2">
+    <title>Balloon Shooter - Exploda os Balões!</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Menu Principal -->
+        <div id="mainMenu" class="menu">
+            <h1 class="game-title">
+                <span class="balloon-emoji">🎈</span>
+                Balloon Shooter
+                <span class="balloon-emoji">🎈</span>
+            </h1>
+            <p class="game-subtitle">Exploda todos os balões que subir!</p>
+            <button id="startButton" class="btn btn-primary">Começar Jogo</button>
+            <button id="instructionsButton" class="btn btn-secondary">Como Jogar</button>
+        </div>
+
+        <!-- Tela de Instruções -->
+        <div id="instructionsMenu" class="menu hidden">
+            <h2>Como Jogar</h2>
+            <div class="instructions">
+                <div class="instruction-item">
+                    <span class="icon">🎯</span>
+                    <p><strong>Desktop:</strong> Use o mouse para mirar e clique para atirar</p>
+                </div>
+                <div class="instruction-item">
+                    <span class="icon">📱</span>
+                    <p><strong>Mobile:</strong> Toque na tela para mirar e atirar</p>
+                </div>
+                <div class="instruction-item">
+                    <span class="icon">🎈</span>
+                    <p>Exploda os balões antes que eles escapem pela parte superior</p>
+                </div>
+                <div class="instruction-item">
+                    <span class="icon">⭐</span>
+                    <p>Ganhe pontos por cada balão explodido</p>
+                </div>
+                <div class="instruction-item">
+                    <span class="icon">❤️</span>
+                    <p>Você perde uma vida quando um balão escapa</p>
+                </div>
+            </div>
+            <button id="backButton" class="btn btn-secondary">Voltar</button>
+        </div>
+
+        <!-- Tela do Jogo -->
+        <div id="gameScreen" class="hidden">
+            <!-- HUD -->
+            <div class="hud">
+                <div class="hud-item">
+                    <span class="hud-label">Pontuação:</span>
+                    <span id="score" class="hud-value">0</span>
+                </div>
+                <div class="hud-item">
+                    <span class="hud-label">Vidas:</span>
+                    <span id="lives" class="hud-value">❤️❤️❤️</span>
+                </div>
+                <div class="hud-item">
+                    <span class="hud-label">Nível:</span>
+                    <span id="level" class="hud-value">1</span>
+                </div>
+            </div>
+
+            <!-- Canvas do Jogo -->
+            <canvas id="gameCanvas"></canvas>
+
+            <!-- Mira -->
+            <div id="crosshair" class="crosshair">+</div>
+
+            <!-- Botão de Pausa -->
+            <button id="pauseButton" class="btn btn-pause">⏸️</button>
+        </div>
+
+        <!-- Tela de Game Over -->
+        <div id="gameOverMenu" class="menu hidden">
+            <h2 class="game-over-title">Game Over!</h2>
+            <div class="final-score">
+                <p>Pontuação Final:</p>
+                <span id="finalScore" class="final-score-value">0</span>
+            </div>
+            <div class="stats">
+                <p>Nível Alcançado: <span id="finalLevel">1</span></p>
+                <p>Balões Explodidos: <span id="balloonsPopped">0</span></p>
+            </div>
+            <button id="restartButton" class="btn btn-primary">Jogar Novamente</button>
+            <button id="menuButton" class="btn btn-secondary">Menu Principal</button>
+        </div>
+
+        <!-- Tela de Pausa -->
+        <div id="pauseMenu" class="menu hidden">
+            <h2>Jogo Pausado</h2>
+            <button id="resumeButton" class="btn btn-primary">Continuar</button>
+            <button id="pauseMenuButton" class="btn btn-secondary">Menu Principal</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="game.js"></script>
+</body>
+</html>
