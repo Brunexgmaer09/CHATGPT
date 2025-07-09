@@ -334,54 +334,103 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Objeto com informações dos modelos
         const modelInfo = {
+            // OpenAI Models
             'gpt-4-turbo': {
+                provider: 'OpenAI',
                 contextWindow: '128,000 tokens',
                 maxOutput: '4,096 tokens',
                 trainingData: 'Up to Dec 2023'
             },
             'gpt-4-turbo-2024-04-09': {
+                provider: 'OpenAI',
                 contextWindow: '128,000 tokens',
                 maxOutput: '4,096 tokens',
                 trainingData: 'Up to Dec 2023'
             },
             'gpt-4-turbo-preview': {
+                provider: 'OpenAI',
                 contextWindow: '128,000 tokens',
                 maxOutput: '4,096 tokens',
                 trainingData: 'Up to Dec 2023'
             },
             'gpt-4-0125-preview': {
+                provider: 'OpenAI',
                 contextWindow: '128,000 tokens',
                 maxOutput: '4,096 tokens',
                 trainingData: 'Up to Dec 2023'
             },
             'o1-preview': {
+                provider: 'OpenAI',
                 contextWindow: '128,000 tokens',
                 maxOutput: '32,768 tokens',
                 trainingData: 'Up to Oct 2023'
             },
             'o1-preview-2024-09-12': {
+                provider: 'OpenAI',
                 contextWindow: '128,000 tokens',
                 maxOutput: '32,768 tokens',
                 trainingData: 'Up to Oct 2023'
             },
             'o1-mini': {
+                provider: 'OpenAI',
                 contextWindow: '128,000 tokens',
                 maxOutput: '65,536 tokens',
                 trainingData: 'Up to Oct 2023'
             },
             'o1-mini-2024-09-12': {
+                provider: 'OpenAI',
                 contextWindow: '128,000 tokens',
                 maxOutput: '65,536 tokens',
                 trainingData: 'Up to Oct 2023'
+            },
+            'gpt-4o-mini': {
+                provider: 'OpenAI',
+                contextWindow: '128,000 tokens',
+                maxOutput: '16,384 tokens',
+                trainingData: 'Up to Oct 2023'
+            },
+            'gpt-4o-mini-2024-07-18': {
+                provider: 'OpenAI',
+                contextWindow: '128,000 tokens',
+                maxOutput: '16,384 tokens',
+                trainingData: 'Up to Oct 2023'
+            },
+            // Gemini Models
+            'gemini-pro': {
+                provider: 'Google',
+                contextWindow: '32,000 tokens',
+                maxOutput: '8,192 tokens',
+                trainingData: 'Up to Feb 2024'
+            },
+            'gemini-pro-vision': {
+                provider: 'Google',
+                contextWindow: '32,000 tokens',
+                maxOutput: '8,192 tokens',
+                trainingData: 'Up to Feb 2024'
+            },
+            'gemini-1.5-pro': {
+                provider: 'Google',
+                contextWindow: '1,000,000 tokens',
+                maxOutput: '8,192 tokens',
+                trainingData: 'Up to Feb 2024'
+            },
+            'gemini-1.5-flash': {
+                provider: 'Google',
+                contextWindow: '1,000,000 tokens',
+                maxOutput: '8,192 tokens',
+                trainingData: 'Up to Feb 2024'
             }
         };
 
         // Atualiza informações do modelo na interface (opcional)
         const info = modelInfo[currentModel];
-        console.log(`Modelo: ${currentModel}`);
-        console.log(`Contexto: ${info.contextWindow}`);
-        console.log(`Saída máxima: ${info.maxOutput}`);
-        console.log(`Dados de treinamento: ${info.trainingData}`);
+        if (info) {
+            console.log(`Modelo: ${currentModel}`);
+            console.log(`Provedor: ${info.provider}`);
+            console.log(`Contexto: ${info.contextWindow}`);
+            console.log(`Saída máxima: ${info.maxOutput}`);
+            console.log(`Dados de treinamento: ${info.trainingData}`);
+        }
         
         // Limpa o histórico ao trocar de modelo
         messageHistory = [];
@@ -393,6 +442,9 @@ document.addEventListener('DOMContentLoaded', () => {
     async function sendMessage(overrideMessage = null) {
         const message = overrideMessage || userInput.value.trim();
         if (!message) return;
+
+        console.log('Enviando mensagem:', message);
+        console.log('Modelo atual:', currentModel);
 
         addMessage(message, true);
         userInput.value = '';
@@ -406,6 +458,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let fullResponse = '';
 
         try {
+            console.log('Fazendo request para /chat...');
             const response = await fetch('/chat', {
                 method: 'POST',
                 headers: {
@@ -417,9 +470,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     model: currentModel
                 }),
             });
+            
+            console.log('Response status:', response.status);
+            console.log('Response headers:', response.headers);
 
             if (!response.ok) {
                 console.error("Erro na resposta da API:", response.statusText);
+                const errorText = await response.text();
+                console.error("Erro detalhado:", errorText);
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
      
@@ -453,9 +511,13 @@ document.addEventListener('DOMContentLoaded', () => {
                                 updateBotMessage(botMessageElement, fullResponse);
                                 scrollToBottom();
                                 await new Promise(resolve => setTimeout(resolve, 0));
+                            } else if (parsedData.error) {
+                                console.error('API Error:', parsedData.error);
+                                updateBotMessage(botMessageElement, 'Erro: ' + parsedData.error);
+                                break;
                             }
                         } catch (error) {
-                            console.error('Error parsing JSON:', error);
+                            console.error('Error parsing JSON:', error, 'Data:', data);
                             // Continua a execução sem interromper o fluxo
                             continue;
                         }

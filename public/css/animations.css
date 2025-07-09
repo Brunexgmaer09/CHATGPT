@@ -1,0 +1,224 @@
+/* Animações suaves e transições */
+
+/* Animação de entrada para mensagens */
+@keyframes slideInFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInFromRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.bot-message {
+    animation: slideInFromLeft 0.5s ease-out;
+}
+
+.user-message {
+    animation: slideInFromRight 0.5s ease-out;
+}
+
+/* Animação de hover para elementos glassmorphism */
+.glass-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Animação de pulsação para o cursor */
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+.typing-cursor-svg {
+    animation: pulse 1.4s infinite;
+}
+
+/* Animação de bounce para botões */
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.3);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    70% {
+        transform: scale(0.9);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.action-button {
+    animation: bounceIn 0.3s ease-out;
+}
+
+/* Animação de glow para elementos ativos */
+@keyframes glow {
+    from {
+        box-shadow: 0 0 5px rgba(102, 126, 234, 0.5);
+    }
+    to {
+        box-shadow: 0 0 20px rgba(102, 126, 234, 0.8), 0 0 30px rgba(102, 126, 234, 0.6);
+    }
+}
+
+.input-wrapper:focus-within {
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+/* Animação de fade para sidebar */
+.sidebar {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-overlay {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Animação de typing dots para loading */
+@keyframes typing {
+    0%, 60%, 100% {
+        transform: translateY(0);
+    }
+    30% {
+        transform: translateY(-10px);
+    }
+}
+
+.typing-dots {
+    display: inline-flex;
+    gap: 4px;
+}
+
+.typing-dots span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    animation: typing 1.4s infinite;
+}
+
+.typing-dots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-dots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+/* Animação de shake para erros */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.error-shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+/* Animação de rotação para loading */
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-spinner {
+    animation: rotate 1s linear infinite;
+}
+
+/* Micro-interações */
+.micro-interaction {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.micro-interaction:hover {
+    transform: scale(1.05);
+}
+
+.micro-interaction:active {
+    transform: scale(0.95);
+}
+
+/* Animação de aparecimento para elementos */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+/* Animação de destaque para elementos importantes */
+@keyframes highlight {
+    0% {
+        background: rgba(255, 255, 255, 0.1);
+    }
+    50% {
+        background: rgba(255, 255, 255, 0.3);
+    }
+    100% {
+        background: rgba(255, 255, 255, 0.1);
+    }
+}
+
+.highlight-animation {
+    animation: highlight 2s ease-in-out;
+}
+
+/* Parallax suave para background */
+.parallax-bg {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: all 0.3s ease;
+}
+
+/* Suavização global */
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Animação de respiração para elementos de foco */
+@keyframes breathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+.breathe-animation {
+    animation: breathe 3s ease-in-out infinite;
+}

@@ -8,12 +8,14 @@
 /* Estilos básicos */
 body {
     font-family: 'Google Sans', 'Roboto', Arial, sans-serif;
-    background-color: #1f1f1f;
+    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 25%, #16213e 50%, #0f0f0f 100%);
+    background-attachment: fixed;
     color: #ffffff;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     min-width: 100vw;
+    overflow-x: hidden;
 }
 
 /* Cabeçalhos */
@@ -27,13 +29,16 @@ h1, h2, h3 {
 }
 
 body.light-theme {
-    background-color: #ffffff;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 25%, #e0eafc 50%, #f5f7fa 100%);
+    background-attachment: fixed;
     color: #1f1f1f;
 }
 
 body.light-theme .sidebar {
-    background-color: #f8f9fa;
-    border-right: 1px solid #e0e0e0;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 body.light-theme .sidebar-footer {

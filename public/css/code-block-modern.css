@@ -1,0 +1,184 @@
+/* Estilos modernos adicionais para blocos de código */
+
+/* Hover effects para container do bloco */
+.code-block-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Hover effects para botões de ação */
+.code-block-action:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.code-block-action:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Hover effects para tabs */
+.code-block-tab:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Scrollbar personalizada para código */
+.code-block-container pre::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+}
+
+.code-block-container pre::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+
+.code-block-container pre::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.4) 0%, rgba(118, 75, 162, 0.3) 100%);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.code-block-container pre::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.6) 0%, rgba(118, 75, 162, 0.5) 100%);
+}
+
+/* Animação para o botão de copiar */
+.code-block-action.copied {
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.3) 0%, rgba(56, 142, 60, 0.2) 100%);
+    border-color: rgba(76, 175, 80, 0.4);
+    color: #4caf50;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+/* Melhorias na tipografia do código */
+.code-block-container code {
+    font-feature-settings: 'liga' 1, 'calt' 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Estilo para diferentes linguagens (cores sutis) */
+.code-block-tab[data-language="python"] {
+    border-left: 3px solid #3776ab;
+}
+
+.code-block-tab[data-language="javascript"] {
+    border-left: 3px solid #f7df1e;
+}
+
+.code-block-tab[data-language="html"] {
+    border-left: 3px solid #e34c26;
+}
+
+.code-block-tab[data-language="css"] {
+    border-left: 3px solid #1572b6;
+}
+
+.code-block-tab[data-language="cpp"] {
+    border-left: 3px solid #00599c;
+}
+
+.code-block-tab[data-language="csharp"] {
+    border-left: 3px solid #239120;
+}
+
+/* Tema claro */
+body.light-theme .code-block-container {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.6) 100%);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+body.light-theme .code-block-header {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    color: #1f1f1f;
+}
+
+body.light-theme .code-block-tab {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: #1f1f1f;
+}
+
+body.light-theme .code-block-tab.active {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.1) 100%);
+    border-color: rgba(102, 126, 234, 0.3);
+    color: #1f1f1f;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+}
+
+body.light-theme .code-block-action {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: #1f1f1f;
+}
+
+body.light-theme .code-block-action:hover {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .line-numbers {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.2) 100%);
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.5);
+}
+
+body.light-theme .code-block-container code {
+    color: #1f1f1f;
+}
+
+body.light-theme .code-block-container:hover {
+    border-color: rgba(0, 0, 0, 0.2);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+body.light-theme .code-block-container pre::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+body.light-theme .code-block-container pre::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.2) 100%);
+}
+
+body.light-theme .code-block-container pre::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.5) 0%, rgba(118, 75, 162, 0.4) 100%);
+}
+
+/* Animação de entrada para blocos de código */
+.code-block-container {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Micro-animação para números de linha */
+.line-numbers div {
+    transition: color 0.3s ease;
+}
+
+.line-numbers div:hover {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+body.light-theme .line-numbers div:hover {
+    color: rgba(0, 0, 0, 0.7);
+}

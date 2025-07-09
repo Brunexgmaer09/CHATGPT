@@ -13,6 +13,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     
     <!-- Fontes e Estilos -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     
     <!-- Highlight.js com o tema Atom One Dark -->
@@ -23,7 +24,11 @@
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/chat.css">
     <link rel="stylesheet" href="css/buttons.css">
+    <link rel="stylesheet" href="css/suggestions.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/modern-layout.css">
     <link rel="stylesheet" href="css/custom-code-block.css">
+    <link rel="stylesheet" href="css/code-block-modern.css">
     
     <!-- Ícones Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -37,16 +42,24 @@
             <img src="favicon.ico" alt="Gemini">
         </div>
         <select id="model-select">
-            <option value="gpt-4-turbo">GPT-4 Turbo (128k)</option>
-            <option value="gpt-4-turbo-2024-04-09">GPT-4 Turbo with Vision</option>
-            <option value="gpt-4-turbo-preview">GPT-4 Turbo Preview</option>
-            <option value="gpt-4-0125-preview">GPT-4 0125 Preview</option>
-            <option value="o1-preview">O1 Preview (128k)</option>
-            <option value="o1-preview-2024-09-12">O1 Preview 2024-09-12</option>
-            <option value="o1-mini">O1 Mini (128k)</option>
-            <option value="o1-mini-2024-09-12">O1 Mini 2024-09-12</option>
-            <option value="gpt-4o-mini">GPT-4o Mini (128k)</option>
-            <option value="gpt-4o-mini-2024-07-18" selected>GPT-4o Mini 2024-07-18</option>
+            <optgroup label="OpenAI Models">
+                <option value="gpt-4-turbo">GPT-4 Turbo (128k)</option>
+                <option value="gpt-4-turbo-2024-04-09">GPT-4 Turbo with Vision</option>
+                <option value="gpt-4-turbo-preview">GPT-4 Turbo Preview</option>
+                <option value="gpt-4-0125-preview">GPT-4 0125 Preview</option>
+                <option value="o1-preview">O1 Preview (128k)</option>
+                <option value="o1-preview-2024-09-12">O1 Preview 2024-09-12</option>
+                <option value="o1-mini">O1 Mini (128k)</option>
+                <option value="o1-mini-2024-09-12">O1 Mini 2024-09-12</option>
+                <option value="gpt-4o-mini">GPT-4o Mini (128k)</option>
+                <option value="gpt-4o-mini-2024-07-18" selected>GPT-4o Mini 2024-07-18</option>
+            </optgroup>
+            <optgroup label="Google Gemini Models">
+                <option value="gemini-pro">Gemini Pro</option>
+                <option value="gemini-pro-vision">Gemini Pro Vision</option>
+                <option value="gemini-1.5-pro">Gemini 1.5 Pro</option>
+                <option value="gemini-1.5-flash">Gemini 1.5 Flash</option>
+            </optgroup>
         </select>
         <button id="theme-toggle" class="theme-button">
             <i class="fas fa-moon"></i>

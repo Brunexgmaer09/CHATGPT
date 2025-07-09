@@ -1,17 +1,28 @@
 .action-button {
-    background: none;
-    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 8px;
+    color: #ffffff;
     cursor: pointer;
-    margin-left: 10px;
-    color: #333333;
-    opacity: 0.7;
-    transition: opacity 0.3s, transform 0.3s;
-    font-size: 18px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    margin-left: 8px;
+    opacity: 0.8;
+    font-size: 16px;
 }
 
 .action-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     opacity: 1;
-    transform: scale(1.1);
 }
 
 .message-actions {
@@ -84,28 +95,38 @@ body.light-theme .input-action-button:hover {
 }
 
 #send-button {
-    background: transparent;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border: none;
-    color: #8ab4f8;
-    padding: 8px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    color: white;
     cursor: pointer;
+    transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
-    transition: background-color 0.2s;
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 #send-button:hover {
-    background-color: rgba(138, 180, 248, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
 }
 
 body.light-theme #send-button {
-    color: #1f1f1f;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
 }
 
 body.light-theme #send-button:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
 }
 
 #send-button i {
@@ -129,8 +150,22 @@ body.light-theme #send-button:hover {
 }
 
 #model-select option {
-    background-color: #2d2d2d;
+    background: rgba(30, 30, 30, 0.95);
     color: #ffffff;
+    padding: 10px 16px;
+    border-radius: 6px;
+    margin: 2px 0;
+    font-weight: 400;
+}
+
+#model-select optgroup {
+    background: rgba(20, 20, 20, 0.95);
+    color: #8ab4f8;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 8px 16px;
+    margin: 4px 0;
+    border-radius: 8px;
 }
 
 .theme-button {

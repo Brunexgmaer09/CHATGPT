@@ -1,0 +1,109 @@
+/* Sugestões com glassmorphism */
+#suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 30px;
+    padding: 20px;
+    justify-content: center;
+    position: relative;
+    z-index: 10;
+    pointer-events: auto;
+    min-height: 80px;
+}
+
+.suggestion-button {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 16px;
+    padding: 12px 20px;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    white-space: nowrap;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 10;
+}
+
+.suggestion-button:hover {
+    background: rgba(255, 255, 255, 0.35);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.suggestion-button:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Animação de fade out */
+#suggestions.fade-out {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Tema claro */
+body.light-theme .suggestion-button {
+    background: rgba(255, 255, 255, 0.8);
+    color: #1f1f1f;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+    font-weight: 600;
+}
+
+body.light-theme .suggestion-button:hover {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    border-color: rgba(0, 0, 0, 0.25);
+    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
+}
+
+/* Botões de ação das mensagens com glassmorphism */
+.message-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    gap: 8px;
+}
+
+.message:hover .message-actions {
+    opacity: 1;
+}
+
+.message-actions.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Tema claro para action buttons */
+body.light-theme .action-button {
+    background: rgba(255, 255, 255, 0.6);
+    color: #1f1f1f;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .action-button:hover {
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .action-button.liked {
+    background: rgba(76, 175, 80, 0.3);
+    color: #4caf50;
+    border-color: rgba(76, 175, 80, 0.5);
+}
